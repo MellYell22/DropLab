@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { createPageUrl } from "./utils";
+import { createPageUrl } from "../utils";
 import { motion } from "framer-motion";
 import { Sparkles, Music, Headphones, Sliders, Download, Mic2, ArrowRight, Zap, Shield, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
