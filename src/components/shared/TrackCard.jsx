@@ -155,12 +155,14 @@ export default function TrackCard({ track, onPlay, isPlaying, variant = "default
                 className={`w-3.5 h-3.5 transition-colors ${liked ? "fill-pink-500 text-pink-500" : "text-zinc-600"}`}
               />
             </button>
-            <button
+            <a
+              href={track.audio_url}
+              download={`${track.title}.mp3`}
               onClick={(e) => e.stopPropagation()}
               className="p-1 hover:bg-white/5 rounded-md transition-colors"
             >
               <Download className="w-3.5 h-3.5 text-zinc-600" />
-            </button>
+            </a>
           </div>
         </div>
       </div>

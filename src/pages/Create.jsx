@@ -71,7 +71,7 @@ export default function Create() {
         darkness: mood.darkness,
         status: "completed",
         cover_url: coverResult?.url || "",
-        audio_url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+        audio_url: `https://www.soundhelix.com/examples/mp3/SoundHelix-Song-${Math.floor(Math.random() * 16) + 1}.mp3`,
         is_public: false,
         likes: 0,
         plays: 0,

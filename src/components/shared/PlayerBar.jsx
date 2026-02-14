@@ -166,9 +166,13 @@ export default function PlayerBar({ track, isPlaying, onTogglePlay }) {
                 className="cursor-pointer"
               />
             </div>
-            <button className="text-zinc-500 hover:text-white transition-colors">
+            <a
+              href={track.audio_url}
+              download={`${track.title}.mp3`}
+              className="text-zinc-500 hover:text-white transition-colors"
+            >
               <Download className="w-3.5 h-3.5" />
-            </button>
+            </a>
           </div>
         </div>
       </motion.div>
