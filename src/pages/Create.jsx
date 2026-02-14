@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
-import { Settings2, ChevronDown, ChevronUp, Sliders, Mic2, LayoutList, Music } from "lucide-react";
+import { Settings2, ChevronDown, ChevronUp, Sliders, Mic2, LayoutList, Music, Clock, Repeat, Sparkles } from "lucide-react";
 import PromptInput from "../components/generator/PromptInput";
 import GenreSelector from "../components/generator/GenreSelector";
 import MoodSliders from "../components/generator/MoodSliders";
@@ -65,7 +65,7 @@ export default function Create() {
           return acc;
         }, "calm"),
         bpm,
-        duration: Math.floor(Math.random() * 120) + 120,
+        duration,
         structure,
         vocal_type: vocalType,
         energy: mood.energy,
