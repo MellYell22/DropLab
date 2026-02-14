@@ -17,6 +17,8 @@ export default function Create() {
   const [vocalType, setVocalType] = useState("none");
   const [structure, setStructure] = useState(["intro", "verse", "chorus", "verse", "chorus", "outro"]);
   const [bpm, setBpm] = useState(120);
+  const [duration, setDuration] = useState(60);
+  const [isLoopable, setIsLoopable] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [appliedStyle, setAppliedStyle] = useState(null);
@@ -152,6 +154,56 @@ export default function Create() {
             <h2 className="text-sm font-semibold text-zinc-300">Mood & Feel</h2>
           </div>
           <MoodSliders values={mood} onChange={setMood} />
+        </motion.div>
+
+        {/* Track Length */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35 }}
+          className="glass rounded-2xl p-5 space-y-4"
+        >
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+              <Clock className="w-4 h-4 text-violet-400" />
+              Track Length
+            </h3>
+            <span className="text-xs text-zinc-500">{duration}s</span>
+          </div>
+          
+          <div className="grid grid-cols-5 gap-2">
+            {[15, 30, 60, 120, 180].map((len) => (
+              <button
+                key={len}
+                onClick={() => setDuration(len)}
+                className={`py-2 rounded-lg text-xs font-medium transition-all ${
+                  duration === len
+                    ? "bg-violet-500/20 text-violet-300 ring-1 ring-violet-500/30"
+                    : "text-zinc-500 hover:text-zinc-300 hover:bg-white/5"
+                }`}
+              >
+                {len}s
+              </button>
+            ))}
+          </div>
+
+          <div className="flex items-center justify-between pt-2">
+            <label className="text-xs text-zinc-400 flex items-center gap-2">
+              <Repeat className="w-3.5 h-3.5" />
+              Seamless Loop
+            </label>
+            <button
+              onClick={() => setIsLoopable(!isLoopable)}
+              className={`relative w-11 h-6 rounded-full transition-all ${
+                isLoopable ? "bg-violet-500" : "bg-zinc-700"
+              }`}
+            >
+              <motion.div
+                animate={{ x: isLoopable ? 20 : 2 }}
+                className="absolute top-1 w-4 h-4 bg-white rounded-full"
+              />
+            </button>
+          </div>
         </motion.div>
 
         {/* Advanced toggle */}
