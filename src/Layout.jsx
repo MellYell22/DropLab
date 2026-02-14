@@ -14,6 +14,7 @@ import {
   X,
   LogOut,
   Crown,
+  ShoppingBag,
 } from "lucide-react";
 import PlayerBar from "./components/shared/PlayerBar";
 
@@ -22,6 +23,8 @@ const navItems = [
   { name: "Create", icon: Music, page: "Create" },
   { name: "Library", icon: Library, page: "Library" },
   { name: "Explore", icon: Compass, page: "Explore" },
+  { name: "Marketplace", icon: ShoppingBag, page: "Marketplace" },
+  { name: "Style DNA", icon: Crown, page: "StyleDNA" },
 ];
 
 export default function Layout({ children, currentPageName }) {

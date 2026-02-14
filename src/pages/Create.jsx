@@ -19,8 +19,26 @@ export default function Create() {
   const [bpm, setBpm] = useState(120);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [appliedStyle, setAppliedStyle] = useState(null);
 
   const queryClient = useQueryClient();
+
+  // Check for applied Style DNA
+  React.useEffect(() => {
+    const styleData = localStorage.getItem("applied_style_dna");
+    if (styleData) {
+      try {
+        const style = JSON.parse(styleData);
+        setGenre(style.genre);
+        setMood(style.mood_settings);
+        setVocalType(style.vocal_type);
+        setStructure(style.structure);
+        setBpm(style.bpm);
+        setAppliedStyle(style.name);
+        localStorage.removeItem("applied_style_dna");
+      } catch (e) {}
+    }
+  }, []);
 
   const generateMutation = useMutation({
     mutationFn: async () => {
@@ -53,6 +71,7 @@ export default function Create() {
         darkness: mood.darkness,
         status: "completed",
         cover_url: coverResult?.url || "",
+        audio_url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
         is_public: false,
         likes: 0,
         plays: 0,
@@ -85,6 +104,12 @@ export default function Create() {
         >
           <h1 className="text-3xl sm:text-4xl font-bold gradient-text">Create Music</h1>
           <p className="text-sm text-zinc-500">Describe your vision and let AI compose it</p>
+          {appliedStyle && (
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-violet-500/15 text-violet-300 text-xs">
+              <Sparkles className="w-3 h-3" />
+              Using style: {appliedStyle}
+            </div>
+          )}
         </motion.div>
 
         {/* Prompt */}
