@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 240 10% 4%;
+  --foreground: 0 0% 95%;
+  --card: 240 10% 7%;
+  --card-foreground: 0 0% 95%;
+  --popover: 240 10% 7%;
+  --popover-foreground: 0 0% 95%;
+  --primary: 263 70% 58%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 240 10% 12%;
+  --secondary-foreground: 0 0% 95%;
+  --muted: 240 10% 14%;
+  --muted-foreground: 240 5% 55%;
+  --accent: 160 84% 39%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 240 10% 14%;
+  --input: 240 10% 14%;
+  --ring: 263 70% 58%;
+  --radius: 0.75rem;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(240 10% 14%) transparent;
+}
+
+body {
+  background: hsl(240 10% 4%);
+  color: hsl(0 0% 95%);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.6); }
+}
+
+@keyframes waveform {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.glass {
+  background: rgba(19, 19, 26, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(139, 92, 246, 0.1);
+}
+
+.glass-strong {
+  background: rgba(19, 19, 26, 0.85);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(139, 92, 246, 0.15);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #8B5CF6, #06D6A0, #38BDF8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-purple {
+  background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, #06D6A0, #38BDF8);
+}
+
+.noise-bg {
+  position: relative;
+}
+
+.noise-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
