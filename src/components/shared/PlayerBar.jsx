@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Heart, Download, Repeat, Shuffle, Music } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
@@ -11,31 +11,80 @@ const genreColors = {
 };
 
 export default function PlayerBar({ track, isPlaying, onTogglePlay }) {
+  const audioRef = useRef(null);
   const [volume, setVolume] = useState(80);
   const [muted, setMuted] = useState(false);
-  const [progress, setProgress] = useState(35);
+  const [progress, setProgress] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const [liked, setLiked] = useState(false);
+
+  // Load and play audio when track changes
+  useEffect(() => {
+    if (track?.audio_url && audioRef.current) {
+      audioRef.current.src = track.audio_url;
+      audioRef.current.load();
+      if (isPlaying) {
+        audioRef.current.play().catch(console.error);
+      }
+    }
+  }, [track]);
+
+  // Handle play/pause
+  useEffect(() => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.play().catch(console.error);
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [isPlaying]);
+
+  // Handle volume changes
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = muted ? 0 : volume / 100;
+    }
+  }, [volume, muted]);
+
+  // Update progress as audio plays
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      const current = audioRef.current.currentTime;
+      const total = audioRef.current.duration || track?.duration || 0;
+      setCurrentTime(current);
+      setDuration(total);
+      setProgress((current / total) * 100);
+    }
+  };
+
+  // Seek when user drags progress bar
+  const handleSeek = (value) => {
+    if (audioRef.current && duration) {
+      const newTime = (value / 100) * duration;
+      audioRef.current.currentTime = newTime;
+      setProgress(value);
+    }
+  };
 
   if (!track) return null;
   const color = genreColors[track.genre] || "#8B5CF6";
 
-  const formatTime = (pct) => {
-    const total = track.duration || 204;
-    const current = (pct / 100) * total;
-    const m = Math.floor(current / 60);
-    const s = Math.floor(current % 60);
-    return `${m}:${s.toString().padStart(2, "0")}`;
-  };
-
-  const totalTime = () => {
-    const total = track.duration || 204;
-    const m = Math.floor(total / 60);
-    const s = Math.floor(total % 60);
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
     return `${m}:${s.toString().padStart(2, "0")}`;
   };
 
   return (
     <AnimatePresence>
+      <audio
+        ref={audioRef}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleTimeUpdate}
+        onEnded={() => onTogglePlay()}
+      />
       <motion.div
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -46,7 +95,7 @@ export default function PlayerBar({ track, isPlaying, onTogglePlay }) {
         <div className="px-4">
           <Slider
             value={[progress]}
-            onValueChange={([v]) => setProgress(v)}
+            onValueChange={([v]) => handleSeek(v)}
             max={100}
             step={0.1}
             className="cursor-pointer -mt-1.5"
@@ -103,7 +152,7 @@ export default function PlayerBar({ track, isPlaying, onTogglePlay }) {
           {/* Time + Volume */}
           <div className="flex items-center gap-3 w-64 justify-end">
             <span className="text-[10px] tabular-nums text-zinc-500">
-              {formatTime(progress)} / {totalTime()}
+              {formatTime(currentTime)} / {formatTime(duration || track.duration || 0)}
             </span>
             <button onClick={() => setMuted(!muted)} className="text-zinc-500 hover:text-white transition-colors">
               {muted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}

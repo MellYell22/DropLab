@@ -12,7 +12,6 @@ export default function Library() {
   const [view, setView] = useState("grid");
   const [search, setSearch] = useState("");
   const [activeGenre, setActiveGenre] = useState("all");
-  const [playingTrackId, setPlayingTrackId] = useState(null);
 
   const { data: tracks = [], isLoading } = useQuery({
     queryKey: ["tracks"],
@@ -25,8 +24,19 @@ export default function Library() {
     return matchesSearch && matchesGenre;
   });
 
+  const playerState = typeof window !== 'undefined' ? window.__playerState : null;
+  const currentTrack = playerState?.currentTrack;
+  const isPlaying = playerState?.isPlaying;
+
   const handlePlay = (track) => {
-    setPlayingTrackId(playingTrackId === track.id ? null : track.id);
+    if (playerState) {
+      if (currentTrack?.id === track.id) {
+        playerState.setIsPlaying(!isPlaying);
+      } else {
+        playerState.setCurrentTrack(track);
+        playerState.setIsPlaying(true);
+      }
+    }
   };
 
   return (
@@ -115,7 +125,7 @@ export default function Library() {
               <TrackCard
                 key={track.id}
                 track={track}
-                isPlaying={playingTrackId === track.id}
+                isPlaying={currentTrack?.id === track.id && isPlaying}
                 onPlay={handlePlay}
               />
             ))}
@@ -127,7 +137,7 @@ export default function Library() {
                 key={track.id}
                 track={track}
                 variant="list"
-                isPlaying={playingTrackId === track.id}
+                isPlaying={currentTrack?.id === track.id && isPlaying}
                 onPlay={handlePlay}
               />
             ))}

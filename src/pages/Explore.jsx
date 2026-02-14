@@ -6,7 +6,6 @@ import { TrendingUp, Clock, Flame, Music, Loader2 } from "lucide-react";
 import TrackCard from "../components/shared/TrackCard";
 
 export default function Explore() {
-  const [playingTrackId, setPlayingTrackId] = useState(null);
   const [tab, setTab] = useState("trending");
 
   const { data: tracks = [], isLoading } = useQuery({
@@ -14,8 +13,19 @@ export default function Explore() {
     queryFn: () => base44.entities.Track.filter({ is_public: true }, "-created_date", 50),
   });
 
+  const playerState = typeof window !== 'undefined' ? window.__playerState : null;
+  const currentTrack = playerState?.currentTrack;
+  const isPlaying = playerState?.isPlaying;
+
   const handlePlay = (track) => {
-    setPlayingTrackId(playingTrackId === track.id ? null : track.id);
+    if (playerState) {
+      if (currentTrack?.id === track.id) {
+        playerState.setIsPlaying(!isPlaying);
+      } else {
+        playerState.setCurrentTrack(track);
+        playerState.setIsPlaying(true);
+      }
+    }
   };
 
   const tabs = [
@@ -90,7 +100,7 @@ export default function Explore() {
               <TrackCard
                 key={track.id}
                 track={track}
-                isPlaying={playingTrackId === track.id}
+                isPlaying={currentTrack?.id === track.id && isPlaying}
                 onPlay={handlePlay}
               />
             ))}

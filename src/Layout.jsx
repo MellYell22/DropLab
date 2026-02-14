@@ -36,6 +36,11 @@ export default function Layout({ children, currentPageName }) {
     staleTime: Infinity,
   });
 
+  // Pass playback state through React context
+  useEffect(() => {
+    window.__playerState = { currentTrack, setCurrentTrack, isPlaying, setIsPlaying };
+  }, [currentTrack, isPlaying]);
+
   return (
     <div className="min-h-screen bg-[hsl(240,10%,4%)] text-white noise-bg">
       <style>{`
