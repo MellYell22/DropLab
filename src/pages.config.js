@@ -54,6 +54,7 @@ import Home from './pages/Home';
 import Marketplace from './pages/Marketplace';
 import StyleDNA from './pages/StyleDNA';
 import VideoSync from './pages/VideoSync';
+import Analytics from './pages/Analytics';
 import __Layout from './Layout.jsx';
 
 
@@ -65,6 +66,7 @@ export const PAGES = {
     "Marketplace": Marketplace,
     "StyleDNA": StyleDNA,
     "VideoSync": VideoSync,
+    "Analytics": Analytics,
 }
 
 export const pagesConfig = {

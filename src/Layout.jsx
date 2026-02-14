@@ -25,6 +25,7 @@ const navItems = [
   { name: "Explore", icon: Compass, page: "Explore" },
   { name: "Marketplace", icon: ShoppingBag, page: "Marketplace" },
   { name: "Style DNA", icon: Crown, page: "StyleDNA" },
+  { name: "Analytics", icon: User, page: "Analytics" },
 ];
 
 export default function Layout({ children, currentPageName }) {
