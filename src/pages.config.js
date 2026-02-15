@@ -47,26 +47,26 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
+import Analytics from './pages/Analytics';
 import Create from './pages/Create';
-import Library from './pages/Library';
 import Explore from './pages/Explore';
 import Home from './pages/Home';
+import Library from './pages/Library';
 import Marketplace from './pages/Marketplace';
 import StyleDNA from './pages/StyleDNA';
 import VideoSync from './pages/VideoSync';
-import Analytics from './pages/Analytics';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
+    "Analytics": Analytics,
     "Create": Create,
-    "Library": Library,
     "Explore": Explore,
     "Home": Home,
+    "Library": Library,
     "Marketplace": Marketplace,
     "StyleDNA": StyleDNA,
     "VideoSync": VideoSync,
-    "Analytics": Analytics,
 }
 
 export const pagesConfig = {

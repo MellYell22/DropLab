@@ -166,6 +166,8 @@ export default function TrackCard({ track, onPlay, isPlaying, variant = "default
           </div>
         </div>
       </div>
+
+      {showEditor && <TrackEditor track={track} onClose={() => setShowEditor(false)} />}
     </motion.div>
   );
 }

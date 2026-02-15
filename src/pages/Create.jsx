@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
-import { Settings2, ChevronDown, ChevronUp, Sliders, Mic2, LayoutList, Music, Clock, Repeat, Sparkles } from "lucide-react";
+import { Settings2, ChevronDown, ChevronUp, Sliders, Mic2, LayoutList, Music, Clock, Repeat, Sparkles, Piano, GitBranch } from "lucide-react";
 import PromptInput from "../components/generator/PromptInput";
 import GenreSelector from "../components/generator/GenreSelector";
 import MoodSliders from "../components/generator/MoodSliders";
 import VocalSelector from "../components/generator/VocalSelector";
 import StructureBuilder from "../components/generator/StructureBuilder";
+import InstrumentSelector from "../components/generator/InstrumentSelector";
+import AdvancedControls from "../components/generator/AdvancedControls";
 import GeneratingOverlay from "../components/shared/GeneratingOverlay";
 
 export default function Create() {
@@ -19,6 +21,11 @@ export default function Create() {
   const [bpm, setBpm] = useState(120);
   const [duration, setDuration] = useState(60);
   const [isLoopable, setIsLoopable] = useState(false);
+  const [instruments, setInstruments] = useState(["piano", "drums", "bass"]);
+  const [musicalKey, setMusicalKey] = useState("C");
+  const [keyMode, setKeyMode] = useState("Major");
+  const [melodyComplexity, setMelodyComplexity] = useState(50);
+  const [harmonicComplexity, setHarmonicComplexity] = useState(50);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [appliedStyle, setAppliedStyle] = useState(null);
@@ -56,6 +63,22 @@ export default function Create() {
         prompt: `Abstract album cover art for ${genre} music. ${prompt}. Minimal, modern, dark background with vibrant ${genre === 'edm' ? 'neon purple and cyan' : genre === 'lofi' ? 'warm sunset tones' : genre === 'cinematic' ? 'gold and deep blue' : 'violet and emerald'} accents. No text, artistic, high quality.`,
       });
 
+      // Generate actual music with proper duration
+      const musicResult = await base44.functions.invoke('generateMusic', {
+        prompt,
+        genre,
+        mood,
+        duration,
+        bpm,
+        key: musicalKey,
+        vocalType,
+        structure,
+        instruments,
+        melodyComplexity,
+        harmonicComplexity,
+        isLoopable
+      });
+
       const track = await base44.entities.Track.create({
         title: titleResult.trim().replace(/"/g, ""),
         prompt,
@@ -65,6 +88,12 @@ export default function Create() {
           return acc;
         }, "calm"),
         bpm,
+        key: musicalKey,
+        key_mode: keyMode,
+        instruments,
+        melody_complexity: melodyComplexity,
+        harmonic_complexity: harmonicComplexity,
+        is_loopable: isLoopable,
         duration,
         structure,
         vocal_type: vocalType,
@@ -73,7 +102,7 @@ export default function Create() {
         darkness: mood.darkness,
         status: "completed",
         cover_url: coverResult?.url || "",
-        audio_url: `https://www.soundhelix.com/examples/mp3/SoundHelix-Song-${Math.floor(Math.random() * 16) + 1}.mp3`,
+        audio_url: musicResult.data?.audio_url || `https://www.soundhelix.com/examples/mp3/SoundHelix-Song-${Math.floor(Math.random() * 16) + 1}.mp3`,
         is_public: false,
         likes: 0,
         plays: 0,
@@ -142,6 +171,20 @@ export default function Create() {
           <GenreSelector selected={genre} onSelect={setGenre} />
         </motion.div>
 
+        {/* Instruments */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25 }}
+          className="glass rounded-2xl p-5 space-y-4"
+        >
+          <div className="flex items-center gap-2">
+            <Piano className="w-4 h-4 text-cyan-400" />
+            <h2 className="text-sm font-semibold text-zinc-300">Instruments</h2>
+          </div>
+          <InstrumentSelector selected={instruments} onChange={setInstruments} />
+        </motion.div>
+
         {/* Mood */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -206,6 +249,29 @@ export default function Create() {
           </div>
         </motion.div>
 
+        {/* Musical Theory Controls */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.38 }}
+          className="glass rounded-2xl p-5 space-y-4"
+        >
+          <div className="flex items-center gap-2">
+            <GitBranch className="w-4 h-4 text-emerald-400" />
+            <h2 className="text-sm font-semibold text-zinc-300">Musical Theory</h2>
+          </div>
+          <AdvancedControls
+            musicalKey={musicalKey}
+            keyMode={keyMode}
+            melodyComplexity={melodyComplexity}
+            harmonicComplexity={harmonicComplexity}
+            onKeyChange={setMusicalKey}
+            onModeChange={setKeyMode}
+            onMelodyChange={setMelodyComplexity}
+            onHarmonicChange={setHarmonicComplexity}
+          />
+        </motion.div>
+
         {/* Advanced toggle */}
         <motion.button
           initial={{ opacity: 0 }}
@@ -215,7 +281,7 @@ export default function Create() {
           className="flex items-center gap-2 text-sm text-zinc-500 hover:text-zinc-300 transition-colors mx-auto"
         >
           <Settings2 className="w-4 h-4" />
-          Advanced Options
+          More Options
           {showAdvanced ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
         </motion.button>
 
