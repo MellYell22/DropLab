@@ -3,6 +3,32 @@ import { motion } from "framer-motion";
 import WaveformVisualizer from "./WaveformVisualizer";
 
 export default function GeneratingOverlay({ prompt }) {
+  const [step, setStep] = React.useState(0);
+  const [progress, setProgress] = React.useState(0);
+
+  const steps = [
+    "Analyzing musical structure...",
+    "Composing melody & harmony...",
+    "Generating audio waveforms...",
+    "Applying effects & mixing...",
+    "Finalizing your track..."
+  ];
+
+  React.useEffect(() => {
+    const stepInterval = setInterval(() => {
+      setStep((prev) => (prev + 1) % steps.length);
+    }, 2000);
+    
+    const progressInterval = setInterval(() => {
+      setProgress((prev) => Math.min(prev + Math.random() * 15, 95));
+    }, 500);
+    
+    return () => {
+      clearInterval(stepInterval);
+      clearInterval(progressInterval);
+    };
+  }, []);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -38,24 +64,31 @@ export default function GeneratingOverlay({ prompt }) {
         <div className="space-y-3">
           <h2 className="text-xl font-semibold text-white">Creating your music...</h2>
           <p className="text-sm text-zinc-400 leading-relaxed">"{prompt}"</p>
+          <motion.p
+            key={step}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="text-sm text-violet-400 font-medium"
+          >
+            {steps[step]}
+          </motion.p>
         </div>
 
         <div className="w-64">
           <WaveformVisualizer isPlaying={true} color="#8B5CF6" bars={30} height={32} />
         </div>
 
-        <div className="flex items-center gap-2">
-          {["Composing melody", "Layering instruments", "Mixing & mastering"].map((step, i) => (
-            <motion.span
-              key={step}
-              initial={{ opacity: 0.3 }}
-              animate={{ opacity: [0.3, 1, 0.3] }}
-              transition={{ duration: 2, delay: i * 0.8, repeat: Infinity }}
-              className="text-[11px] text-zinc-500 px-2 py-1 rounded-full bg-white/5"
-            >
-              {step}
-            </motion.span>
-          ))}
+        <div className="w-full max-w-xs space-y-2">
+          <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+            <motion.div
+              className="h-full bg-gradient-to-r from-violet-500 to-emerald-500"
+              initial={{ width: "0%" }}
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 0.5 }}
+            />
+          </div>
+          <p className="text-xs text-zinc-600">{Math.floor(progress)}% complete</p>
         </div>
       </motion.div>
     </motion.div>
