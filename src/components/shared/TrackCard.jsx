@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Play, Pause, Heart, Download, Share2, MoreHorizontal, Clock, Music } from "lucide-react";
+import { Play, Pause, Heart, Download, Share2, MoreHorizontal, Clock, Music, Edit } from "lucide-react";
 import WaveformVisualizer from "./WaveformVisualizer";
+import TrackEditor from "../editor/TrackEditor";
 
 const genreColors = {
   pop: "#EC4899",
@@ -20,6 +21,7 @@ const genreColors = {
 
 export default function TrackCard({ track, onPlay, isPlaying, variant = "default" }) {
   const [liked, setLiked] = useState(false);
+  const [showEditor, setShowEditor] = useState(false);
   const color = genreColors[track.genre] || "#8B5CF6";
 
   const formatDuration = (seconds) => {
@@ -154,6 +156,13 @@ export default function TrackCard({ track, onPlay, isPlaying, variant = "default
               <Heart
                 className={`w-3.5 h-3.5 transition-colors ${liked ? "fill-pink-500 text-pink-500" : "text-zinc-600"}`}
               />
+            </button>
+            <button
+              onClick={(e) => { e.stopPropagation(); setShowEditor(true); }}
+              className="p-1 hover:bg-white/5 rounded-md transition-colors"
+              title="Edit & Export"
+            >
+              <Edit className="w-3.5 h-3.5 text-zinc-600" />
             </button>
             <a
               href={track.audio_url}
