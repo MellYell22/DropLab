@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { useMutation } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { Scissors, GitBranch, Download, FileMusic, Layers, Wand2, Loader2 } from "lucide-react";
+import { Scissors, GitBranch, Download, FileMusic, Layers, Wand2, Loader2, Sparkles, History } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import MasteringControls from "./MasteringControls";
+import VersionHistory from "./VersionHistory";
 
 export default function TrackEditor({ track, onClose }) {
   const [activeTab, setActiveTab] = useState("stems");
@@ -43,6 +45,8 @@ export default function TrackEditor({ track, onClose }) {
   const tabs = [
     { id: "stems", label: "Stem Separation", icon: Layers },
     { id: "remix", label: "AI Remix", icon: Wand2 },
+    { id: "mastering", label: "AI Mastering", icon: Sparkles },
+    { id: "versions", label: "Version History", icon: History },
     { id: "export", label: "Export", icon: Download },
   ];
 
@@ -154,6 +158,24 @@ export default function TrackEditor({ track, onClose }) {
                   <span className="text-xs">Trim/Loop</span>
                 </Button>
               </div>
+            </div>
+          )}
+
+          {activeTab === "mastering" && (
+            <div className="space-y-4">
+              <p className="text-sm text-zinc-400">
+                Professional AI-powered mastering for streaming, radio, or club playback.
+              </p>
+              <MasteringControls track={track} />
+            </div>
+          )}
+
+          {activeTab === "versions" && (
+            <div className="space-y-4">
+              <p className="text-sm text-zinc-400">
+                View and restore previous versions of your track.
+              </p>
+              <VersionHistory track={track} />
             </div>
           )}
 
