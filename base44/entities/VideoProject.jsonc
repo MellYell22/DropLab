@@ -1,0 +1,90 @@
+{
+  "name": "VideoProject",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "video_url": {
+      "type": "string",
+      "description": "Uploaded video file"
+    },
+    "track_id": {
+      "type": "string",
+      "description": "Generated soundtrack"
+    },
+    "analysis": {
+      "type": "object",
+      "description": "AI video analysis data"
+    },
+    "sync_points": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "number"
+          },
+          "event": {
+            "type": "string"
+          },
+          "intensity": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "analyzing",
+        "generating",
+        "syncing",
+        "completed"
+      ],
+      "default": "analyzing"
+    },
+    "output_url": {
+      "type": "string",
+      "description": "Final video with soundtrack"
+    }
+  },
+  "required": [
+    "name",
+    "video_url"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "isAuthenticated": true
+      }
+    },
+    "read": {
+      "created_by": "{{user.email}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

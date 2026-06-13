@@ -1,0 +1,122 @@
+{
+  "name": "StyleDNA",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Style profile name"
+    },
+    "description": {
+      "type": "string",
+      "description": "What this style is for"
+    },
+    "genre": {
+      "type": "string",
+      "enum": [
+        "pop",
+        "edm",
+        "hip_hop",
+        "rock",
+        "classical",
+        "lofi",
+        "ambient",
+        "cinematic",
+        "jazz",
+        "rnb",
+        "folk",
+        "metal"
+      ]
+    },
+    "mood_settings": {
+      "type": "object",
+      "properties": {
+        "energy": {
+          "type": "number"
+        },
+        "complexity": {
+          "type": "number"
+        },
+        "darkness": {
+          "type": "number"
+        }
+      }
+    },
+    "vocal_type": {
+      "type": "string",
+      "enum": [
+        "none",
+        "male",
+        "female",
+        "choir",
+        "rap",
+        "whisper",
+        "robotic"
+      ]
+    },
+    "bpm": {
+      "type": "number"
+    },
+    "structure": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "is_public": {
+      "type": "boolean",
+      "default": false
+    },
+    "uses": {
+      "type": "number",
+      "default": 0
+    },
+    "cover_image": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "genre"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "isAuthenticated": true
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "data.is_public": true
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

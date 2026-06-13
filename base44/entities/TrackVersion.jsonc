@@ -1,0 +1,72 @@
+{
+  "name": "TrackVersion",
+  "type": "object",
+  "properties": {
+    "parent_track_id": {
+      "type": "string",
+      "description": "Original track ID"
+    },
+    "version_number": {
+      "type": "number",
+      "description": "Version number"
+    },
+    "title": {
+      "type": "string",
+      "description": "Version title"
+    },
+    "changes": {
+      "type": "string",
+      "description": "What changed in this version"
+    },
+    "audio_url": {
+      "type": "string",
+      "description": "Audio file URL"
+    },
+    "settings": {
+      "type": "object",
+      "description": "Generation settings used"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Current active version"
+    }
+  },
+  "required": [
+    "parent_track_id",
+    "version_number",
+    "title"
+  ],
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    },
+    "read": {
+      "created_by": "{{user.email}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

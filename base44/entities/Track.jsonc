@@ -1,0 +1,176 @@
+{
+  "name": "Track",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Generated track title"
+    },
+    "prompt": {
+      "type": "string",
+      "description": "The text prompt used to generate"
+    },
+    "genre": {
+      "type": "string",
+      "enum": [
+        "pop",
+        "edm",
+        "hip_hop",
+        "rock",
+        "classical",
+        "lofi",
+        "ambient",
+        "cinematic",
+        "jazz",
+        "rnb",
+        "folk",
+        "metal"
+      ],
+      "description": "Primary genre"
+    },
+    "mood": {
+      "type": "string",
+      "enum": [
+        "happy",
+        "sad",
+        "energetic",
+        "calm",
+        "dark",
+        "romantic",
+        "epic",
+        "mysterious"
+      ],
+      "description": "Track mood"
+    },
+    "bpm": {
+      "type": "number",
+      "description": "Beats per minute"
+    },
+    "key": {
+      "type": "string",
+      "description": "Musical key",
+      "default": "C"
+    },
+    "key_mode": {
+      "type": "string",
+      "description": "Key mode (Major, Minor, etc)",
+      "default": "Major"
+    },
+    "instruments": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Selected instruments"
+    },
+    "melody_complexity": {
+      "type": "number",
+      "description": "Melodic complexity 0-100",
+      "default": 50
+    },
+    "harmonic_complexity": {
+      "type": "number",
+      "description": "Harmonic complexity 0-100",
+      "default": 50
+    },
+    "is_loopable": {
+      "type": "boolean",
+      "description": "Whether track is seamlessly loopable",
+      "default": false
+    },
+    "duration": {
+      "type": "number",
+      "description": "Duration in seconds"
+    },
+    "structure": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Song structure parts"
+    },
+    "vocal_type": {
+      "type": "string",
+      "enum": [
+        "none",
+        "male",
+        "female",
+        "choir",
+        "rap",
+        "whisper",
+        "robotic"
+      ],
+      "description": "Type of vocals"
+    },
+    "energy": {
+      "type": "number",
+      "description": "Energy level 0-100"
+    },
+    "complexity": {
+      "type": "number",
+      "description": "Complexity level 0-100"
+    },
+    "darkness": {
+      "type": "number",
+      "description": "Dark vs bright 0-100"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "generating",
+        "completed",
+        "failed"
+      ],
+      "default": "generating"
+    },
+    "audio_url": {
+      "type": "string",
+      "description": "URL to generated audio file"
+    },
+    "cover_url": {
+      "type": "string",
+      "description": "URL to generated cover art"
+    },
+    "is_public": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether track is shared publicly"
+    },
+    "likes": {
+      "type": "number",
+      "default": 0
+    },
+    "plays": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "title",
+    "prompt",
+    "genre"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "isAuthenticated": true
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "data.is_public": true
+        }
+      ]
+    },
+    "update": {
+      "created_by": "{{user.email}}"
+    },
+    "delete": {
+      "created_by": "{{user.email}}"
+    }
+  }
+}

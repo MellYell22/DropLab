@@ -1,0 +1,116 @@
+{
+  "name": "MarketplaceItem",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Item name"
+    },
+    "description": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "style",
+        "template",
+        "voice_pack"
+      ],
+      "description": "Type of marketplace item"
+    },
+    "price": {
+      "type": "number",
+      "description": "Price in credits"
+    },
+    "preview_url": {
+      "type": "string",
+      "description": "Audio or image preview"
+    },
+    "data": {
+      "type": "object",
+      "description": "Item configuration data"
+    },
+    "seller_id": {
+      "type": "string",
+      "description": "Creator user ID"
+    },
+    "revenue_share": {
+      "type": "number",
+      "default": 70,
+      "description": "Percentage creator receives"
+    },
+    "sales": {
+      "type": "number",
+      "default": 0
+    },
+    "rating": {
+      "type": "number",
+      "default": 0
+    },
+    "downloads": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "title",
+    "type",
+    "price"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "isAuthenticated": true
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "data.is_active": true
+        },
+        {
+          "data.seller_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.seller_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.seller_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

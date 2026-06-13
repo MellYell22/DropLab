@@ -1,0 +1,89 @@
+{
+  "name": "Collaboration",
+  "type": "object",
+  "properties": {
+    "track_id": {
+      "type": "string",
+      "description": "Track being collaborated on"
+    },
+    "collaborator_email": {
+      "type": "string",
+      "description": "Collaborator's email"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "viewer",
+        "editor",
+        "co-owner"
+      ],
+      "default": "editor",
+      "description": "Collaboration role"
+    },
+    "invited_by": {
+      "type": "string",
+      "description": "Who sent the invite"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "accepted",
+        "declined"
+      ],
+      "default": "pending"
+    },
+    "message": {
+      "type": "string",
+      "description": "Invite message"
+    }
+  },
+  "required": [
+    "track_id",
+    "collaborator_email"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "isAuthenticated": true
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "data.collaborator_email": "{{user.email}}"
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "data.collaborator_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

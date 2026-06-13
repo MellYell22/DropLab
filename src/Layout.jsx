@@ -115,14 +115,26 @@ export default function Layout({ children, currentPageName }) {
           </div>
         </div>
 
-        {/* Mobile menu */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
+      </header>
+
+      {/* Mobile menu - rendered outside sticky header as overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <>
+            {/* Backdrop */}
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden border-t border-white/5 overflow-hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="md:hidden fixed inset-0 z-30 bg-black/50"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            {/* Menu panel */}
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              className="md:hidden fixed top-14 left-0 right-0 z-40 border-b border-white/5 bg-[hsl(240,10%,6%)]"
             >
               <div className="p-3 space-y-1">
                 {navItems.map((item) => {
@@ -146,9 +158,9 @@ export default function Layout({ children, currentPageName }) {
                 })}
               </div>
             </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Main content */}
       <main className="relative z-10">
