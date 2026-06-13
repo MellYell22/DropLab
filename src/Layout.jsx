@@ -167,6 +167,11 @@ export default function Layout({ children, currentPageName }) {
         {children}
       </main>
 
+      {/* Footer */}
+      <footer className="text-center py-3 text-[11px] text-zinc-600">
+        Created by AA Designs
+      </footer>
+
       {/* Player */}
       <PlayerBar
         track={currentTrack}
