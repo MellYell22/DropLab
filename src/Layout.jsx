@@ -15,7 +15,9 @@ import {
   LogOut,
   Crown,
   ShoppingBag,
+  ChevronLeft,
 } from "lucide-react";
+import BottomNav from "./components/shared/BottomNav";
 import PlayerBar from "./components/shared/PlayerBar";
 
 const navItems = [
@@ -32,6 +34,9 @@ export default function Layout({ children, currentPageName }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const location = useLocation();
+
+  const isMainPage = currentPageName === "Create";
 
   const { data: user } = useQuery({
     queryKey: ["currentUser"],
@@ -53,18 +58,29 @@ export default function Layout({ children, currentPageName }) {
       `}</style>
 
       {/* Top nav */}
-      <header className="sticky top-0 z-40 glass-strong border-b border-white/5">
+      <header className="sticky top-0 z-40 glass-strong border-b border-white/5" style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}>
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
-          {/* Logo */}
-          <Link to={createPageUrl("Home")} className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl gradient-purple flex items-center justify-center shadow-lg shadow-violet-500/20">
-              <Music className="w-4 h-4 text-white" />
-            </div>
-            <span className="text-sm font-bold tracking-tight hidden sm:block">
-              <span className="text-white">Sonic</span>
-              <span className="text-violet-400">Mint</span>
-            </span>
-          </Link>
+          {/* Back button (mobile, non-root pages) */}
+          <div className="flex items-center gap-2">
+            {!isMainPage && (
+              <button
+                onClick={() => window.history.back()}
+                className="md:hidden p-1 -ml-1 rounded-lg hover:bg-white/5 text-zinc-400"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+            )}
+            {/* Logo */}
+            <Link to={createPageUrl("Home")} className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl gradient-purple flex items-center justify-center shadow-lg shadow-violet-500/20">
+                <Music className="w-4 h-4 text-white" />
+              </div>
+              <span className="text-sm font-bold tracking-tight hidden sm:block">
+                <span className="text-white">Sonic</span>
+                <span className="text-violet-400">Mint</span>
+              </span>
+            </Link>
+          </div>
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
@@ -162,15 +178,27 @@ export default function Layout({ children, currentPageName }) {
         )}
       </AnimatePresence>
 
-      {/* Main content */}
-      <main className="relative z-10">
-        {children}
-      </main>
+      {/* Main content with page transitions */}
+      <AnimatePresence mode="wait">
+        <motion.main
+          key={currentPageName}
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -30 }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+          className="relative z-10 md:pb-0 pb-20"
+        >
+          {children}
+        </motion.main>
+      </AnimatePresence>
 
       {/* Footer */}
-      <footer className="text-center py-3 text-[11px] text-zinc-600">
+      <footer className="text-center py-3 pb-20 md:pb-3 text-[11px] text-zinc-600">
         Created by AA Designs
       </footer>
+
+      {/* Bottom navigation (mobile only) */}
+      <BottomNav currentPageName={currentPageName} />
 
       {/* Player */}
       <PlayerBar

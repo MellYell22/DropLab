@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Grid3X3, List, Search, SlidersHorizontal, Music, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import TrackCard from "../components/shared/TrackCard";
+import PullToRefresh from "../components/shared/PullToRefresh";
 
 const genres = ["all", "pop", "edm", "hip_hop", "rock", "classical", "lofi", "ambient", "cinematic", "jazz", "rnb", "folk", "metal"];
 
@@ -103,6 +104,7 @@ export default function Library() {
         </motion.div>
 
         {/* Content */}
+        <PullToRefresh onRefresh={() => {}} isLoading={isLoading}>
         {isLoading ? (
           <div className="flex items-center justify-center py-32">
             <Loader2 className="w-6 h-6 text-violet-400 animate-spin" />
@@ -143,6 +145,7 @@ export default function Library() {
             ))}
           </div>
         )}
+        </PullToRefresh>
       </div>
     </div>
   );

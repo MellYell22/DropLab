@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { TrendingUp, Clock, Flame, Music, Loader2 } from "lucide-react";
 import TrackCard from "../components/shared/TrackCard";
+import PullToRefresh from "../components/shared/PullToRefresh";
 
 export default function Explore() {
   const [tab, setTab] = useState("trending");
@@ -78,6 +79,7 @@ export default function Explore() {
         </div>
 
         {/* Content */}
+        <PullToRefresh onRefresh={() => {}} isLoading={isLoading}>
         {isLoading ? (
           <div className="flex items-center justify-center py-32">
             <Loader2 className="w-6 h-6 text-violet-400 animate-spin" />
@@ -106,6 +108,7 @@ export default function Explore() {
             ))}
           </div>
         )}
+        </PullToRefresh>
       </div>
     </div>
   );
