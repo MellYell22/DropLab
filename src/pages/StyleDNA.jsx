@@ -40,17 +40,52 @@ export default function StyleDNA() {
       }
       return await base44.entities.StyleDNA.create(data);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["style-dna"] });
+    onMutate: async (data) => {
+      await queryClient.cancelQueries({ queryKey: ["style-dna"] });
+      const previousStyles = queryClient.getQueryData(["style-dna"]);
+      if (!editingStyle) {
+        const optimisticStyle = {
+          id: `temp-${Date.now()}`,
+          ...data,
+          created_date: new Date().toISOString(),
+        };
+        queryClient.setQueryData(["style-dna"], (old) => [optimisticStyle, ...(old || [])]);
+      } else {
+        queryClient.setQueryData(["style-dna"], (old) =>
+          old?.map((s) =>
+            s.id === editingStyle.id ? { ...s, ...data } : s
+          )
+        );
+      }
       setShowCreate(false);
       setEditingStyle(null);
       resetForm();
+      return { previousStyles };
+    },
+    onError: (_err, _data, context) => {
+      if (context?.previousStyles) {
+        queryClient.setQueryData(["style-dna"], context.previousStyles);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["style-dna"] });
     },
   });
 
   const deleteMutation = useMutation({
     mutationFn: (id) => base44.entities.StyleDNA.delete(id),
-    onSuccess: () => {
+    onMutate: async (id) => {
+      await queryClient.cancelQueries({ queryKey: ["style-dna"] });
+      const previousStyles = queryClient.getQueryData(["style-dna"]);
+      queryClient.setQueryData(["style-dna"], (old) => old?.filter((s) => s.id !== id));
+      return { previousStyles };
+    },
+    onError: (_err, _id, context) => {
+      if (context?.previousStyles) {
+        queryClient.setQueryData(["style-dna"], context.previousStyles);
+      }
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["style-dna"] });
     },
   });

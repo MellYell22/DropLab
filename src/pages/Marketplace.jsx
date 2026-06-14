@@ -38,7 +38,22 @@ export default function Marketplace() {
         sales: (item.sales || 0) + 1,
       });
     },
-    onSuccess: () => {
+    onMutate: async (item) => {
+      await queryClient.cancelQueries({ queryKey: ["marketplace-items"] });
+      const previousItems = queryClient.getQueryData(["marketplace-items"]);
+      queryClient.setQueryData(["marketplace-items"], (old) =>
+        old?.map((i) =>
+          i.id === item.id ? { ...i, sales: (i.sales || 0) + 1 } : i
+        )
+      );
+      return { previousItems };
+    },
+    onError: (_err, _item, context) => {
+      if (context?.previousItems) {
+        queryClient.setQueryData(["marketplace-items"], context.previousItems);
+      }
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["marketplace-items"] });
     },
   });

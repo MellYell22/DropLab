@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState, useEffect, Suspense } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { createPageUrl } from "./utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { base44 } from "@/api/base44Client";
 import { useQuery } from "@tanstack/react-query";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { PAGES } from "./pages.config";
 import {
   Sparkles,
   Music,
@@ -35,8 +37,30 @@ export default function Layout({ children, currentPageName }) {
   const [currentTrack, setCurrentTrack] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   const isMainPage = currentPageName === "Create";
+
+  // Tab stack preservation for primary tabs on mobile
+  const primaryTabs = ["Home", "Create", "Library", "Explore"];
+  const [visitedTabs, setVisitedTabs] = useState(() => {
+    const initial = {};
+    primaryTabs.forEach((t) => { initial[t] = false; });
+    initial[currentPageName] = true;
+    return initial;
+  });
+
+  // Track visited tabs
+  useEffect(() => {
+    if (primaryTabs.includes(currentPageName)) {
+      setVisitedTabs((prev) => ({ ...prev, [currentPageName]: true }));
+    }
+  }, [currentPageName]);
+
+  const handleTabChange = (page) => {
+    setVisitedTabs((prev) => ({ ...prev, [page]: true }));
+  };
 
   const { data: user } = useQuery({
     queryKey: ["currentUser"],
@@ -188,7 +212,26 @@ export default function Layout({ children, currentPageName }) {
           transition={{ duration: 0.2, ease: "easeInOut" }}
           className="relative z-10 md:pb-0 pb-20"
         >
-          {children}
+          {/* Tab stack preservation: on mobile, keep all primary tab pages mounted */}
+          {isMobile && primaryTabs.includes(currentPageName) ? (
+            <>
+              {primaryTabs.map((tab) => {
+                const TabComponent = PAGES[tab];
+                const isActive = tab === currentPageName;
+                const hasVisited = visitedTabs[tab];
+                if (!hasVisited) return null;
+                return (
+                  <div key={tab} style={{ display: isActive ? "block" : "none" }}>
+                    <Suspense fallback={<div className="flex justify-center py-20"><div className="w-6 h-6 border-2 border-violet-500/20 border-t-violet-400 rounded-full animate-spin" /></div>}>
+                      <TabComponent />
+                    </Suspense>
+                  </div>
+                );
+              })}
+            </>
+          ) : (
+            children
+          )}
         </motion.main>
       </AnimatePresence>
 
@@ -198,7 +241,7 @@ export default function Layout({ children, currentPageName }) {
       </footer>
 
       {/* Bottom navigation (mobile only) */}
-      <BottomNav currentPageName={currentPageName} />
+      <BottomNav currentPageName={currentPageName} onTabChange={handleTabChange} />
 
       {/* Player */}
       <PlayerBar

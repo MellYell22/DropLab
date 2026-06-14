@@ -25,15 +25,69 @@
   --radius: 0.75rem;
 }
 
+/* System light mode */
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 240 10% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
+    --primary: 263 70% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 10% 15%;
+    --muted: 240 5% 95%;
+    --muted-foreground: 240 4% 46%;
+    --accent: 160 84% 35%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 57%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 6% 90%;
+    --input: 240 6% 92%;
+    --ring: 263 70% 50%;
+  }
+
+  body {
+    background: hsl(0 0% 98%);
+    color: hsl(240 10% 10%);
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(139, 92, 246, 0.08);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(139, 92, 246, 0.1);
+  }
+
+  .noise-bg::before {
+    opacity: 0.01;
+  }
+}
+
 * {
   scrollbar-width: thin;
   scrollbar-color: hsl(240 10% 14%) transparent;
 }
 
 body {
-  background: hsl(240 10% 4%);
-  color: hsl(0 0% 95%);
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
   font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Touch target minimum 44px for all interactive elements */
+@media (pointer: coarse) {
+  button, a, [role="button"], input[type="button"], input[type="submit"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
 
 @keyframes pulse-glow {
