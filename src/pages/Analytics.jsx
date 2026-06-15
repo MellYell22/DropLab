@@ -143,13 +143,13 @@ export default function Analytics() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Top Tracks */}
           <Card className="glass border-white/10">
-            <CardHeader>
+            <CardHeader className="bg-[hsl(var(--foreground))]">
               <CardTitle className="text-white flex items-center gap-2">
                 <Music className="w-4 h-4 text-violet-400" />
                 Top Performing Tracks
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="space-y-3 bg-[hsl(var(--popover-foreground))]">
               {topTracks.length === 0 ?
                 <p className="text-sm text-zinc-500 text-center py-8">No tracks yet</p> :
 
