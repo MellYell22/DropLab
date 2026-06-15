@@ -36,27 +36,27 @@ export default function PullToRefresh({ onRefresh, children, isLoading }) {
   return (
     <div
       ref={containerRef}
-      className="h-full overflow-y-auto overscroll-none"
+      className="h-full overflow-y-auto overscroll-none text-[#a22a2a]"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-    >
+      onTouchEnd={handleTouchEnd}>
+      
       {/* Pull indicator */}
       <motion.div
         animate={{ height: pullDistance }}
-        className="flex items-center justify-center overflow-hidden"
-      >
+        className="flex items-center justify-center overflow-hidden">
+        
         <div className="flex items-center gap-2 text-zinc-500 pb-2">
-          {isLoading ? (
-            <Loader2 className="w-4 h-4 animate-spin text-violet-400" />
-          ) : pullDistance > threshold ? (
-            <span className="text-xs text-violet-400">Release to refresh</span>
-          ) : (
-            <ChevronDown className="w-4 h-4" />
-          )}
+          {isLoading ?
+          <Loader2 className="w-4 h-4 animate-spin text-violet-400" /> :
+          pullDistance > threshold ?
+          <span className="text-xs text-violet-400">Release to refresh</span> :
+
+          <ChevronDown className="w-4 h-4" />
+          }
         </div>
       </motion.div>
       {children}
-    </div>
-  );
+    </div>);
+
 }
