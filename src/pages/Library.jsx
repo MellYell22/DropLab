@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import { Grid3X3, List, Search, SlidersHorizontal, Music, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -13,11 +13,16 @@ export default function Library() {
   const [view, setView] = useState("grid");
   const [search, setSearch] = useState("");
   const [activeGenre, setActiveGenre] = useState("all");
+  const queryClient = useQueryClient();
 
-  const { data: tracks = [], isLoading } = useQuery({
+  const { data: tracks = [], isLoading, refetch } = useQuery({
     queryKey: ["tracks"],
     queryFn: () => base44.entities.Track.list("-created_date", 100),
   });
+
+  const handleRefresh = () => {
+    queryClient.invalidateQueries({ queryKey: ["tracks"] });
+  };
 
   const filteredTracks = tracks.filter((t) => {
     const matchesSearch = !search || t.title?.toLowerCase().includes(search.toLowerCase()) || t.prompt?.toLowerCase().includes(search.toLowerCase());
@@ -104,7 +109,7 @@ export default function Library() {
         </motion.div>
 
         {/* Content */}
-        <PullToRefresh onRefresh={() => {}} isLoading={isLoading}>
+        <PullToRefresh onRefresh={handleRefresh} isLoading={isLoading}>
         {isLoading ? (
           <div className="flex items-center justify-center py-32">
             <Loader2 className="w-6 h-6 text-violet-400 animate-spin" />

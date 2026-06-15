@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
-import { BarChart3, TrendingUp, DollarSign, Download, Play, Heart, Music, Dna, ShoppingBag, Star, Loader2, Trash2, AlertTriangle, User } from "lucide-react";
+import { BarChart3, TrendingUp, DollarSign, Download, Play, Heart, Music, Dna, ShoppingBag, Star, Loader2, Trash2, AlertTriangle, User, CheckCircle2, XCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import PullToRefresh from "../components/shared/PullToRefresh";
 
 export default function Analytics() {
   const [timeRange, setTimeRange] = useState("30d");
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteStatus, setDeleteStatus] = useState(null); // 'success' | 'error' | null
+  const queryClient = useQueryClient();
 
   const { data: user } = useQuery({
     queryKey: ["currentUser"],
@@ -37,6 +41,13 @@ export default function Analytics() {
     queryFn: () => base44.entities.MarketplaceItem.filter({ seller_id: user?.id }),
     enabled: !!user,
   });
+
+  const handleRefresh = () => {
+    queryClient.invalidateQueries({ queryKey: ["analytics-tracks"] });
+    queryClient.invalidateQueries({ queryKey: ["analytics-styles"] });
+    queryClient.invalidateQueries({ queryKey: ["analytics-purchases"] });
+    queryClient.invalidateQueries({ queryKey: ["analytics-items"] });
+  };
 
   if (!user || tracksLoading || stylesLoading || purchasesLoading || itemsLoading) {
     return (
@@ -74,6 +85,7 @@ export default function Analytics() {
 
   return (
     <div className="min-h-screen pb-32">
+      <PullToRefresh onRefresh={handleRefresh} isLoading={tracksLoading || stylesLoading || purchasesLoading || itemsLoading}>
       <div className="max-w-7xl mx-auto px-4 pt-8 space-y-8">
         {/* Header */}
         <motion.div
@@ -319,38 +331,98 @@ export default function Analytics() {
                 onClick={(e) => e.stopPropagation()}
                 className="glass-strong rounded-2xl p-6 max-w-sm w-full space-y-4 border border-white/10"
               >
-                <div className="text-center">
-                  <div className="w-12 h-12 rounded-full bg-red-500/15 flex items-center justify-center mx-auto mb-3">
-                    <AlertTriangle className="w-6 h-6 text-red-400" />
+                {deleteStatus === "success" ? (
+                  <div className="text-center">
+                    <div className="w-12 h-12 rounded-full bg-green-500/15 flex items-center justify-center mx-auto mb-3">
+                      <CheckCircle2 className="w-6 h-6 text-green-400" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-white">Account Deleted</h3>
+                    <p className="text-sm text-zinc-400 mt-2">
+                      Your account and all associated data have been permanently removed. Redirecting...
+                    </p>
                   </div>
-                  <h3 className="text-lg font-semibold text-white">Delete Account</h3>
-                  <p className="text-sm text-zinc-400 mt-2">
-                    This action is permanent. All your data, tracks, styles, and purchases will be permanently removed.
-                  </p>
-                </div>
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => setShowDeleteConfirm(false)}
-                    className="flex-1 py-2.5 rounded-xl text-sm font-medium text-zinc-300 bg-white/5 hover:bg-white/10 transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={async () => {
-                      try {
-                        await base44.auth.logout();
-                      } catch (e) {}
-                    }}
-                    className="flex-1 py-2.5 rounded-xl text-sm font-medium text-white bg-red-500 hover:bg-red-600 transition-colors"
-                  >
-                    Delete
-                  </button>
-                </div>
+                ) : deleteStatus === "error" ? (
+                  <div className="text-center">
+                    <div className="w-12 h-12 rounded-full bg-red-500/15 flex items-center justify-center mx-auto mb-3">
+                      <XCircle className="w-6 h-6 text-red-400" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-white">Deletion Failed</h3>
+                    <p className="text-sm text-zinc-400 mt-2">
+                      Something went wrong while deleting your account. Please try again.
+                    </p>
+                    <button
+                      onClick={() => { setDeleteStatus(null); setDeleting(false); }}
+                      className="mt-4 py-2.5 px-6 rounded-xl text-sm font-medium text-zinc-300 bg-white/5 hover:bg-white/10 transition-colors"
+                    >
+                      Close
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <div className="text-center">
+                      <div className="w-12 h-12 rounded-full bg-red-500/15 flex items-center justify-center mx-auto mb-3">
+                        <AlertTriangle className="w-6 h-6 text-red-400" />
+                      </div>
+                      <h3 className="text-lg font-semibold text-white">Delete Account</h3>
+                      <p className="text-sm text-zinc-400 mt-2">
+                        This action is permanent. All your data, tracks, styles, and purchases will be permanently removed.
+                      </p>
+                    </div>
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => setShowDeleteConfirm(false)}
+                        className="flex-1 py-2.5 rounded-xl text-sm font-medium text-zinc-300 bg-white/5 hover:bg-white/10 transition-colors"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={async () => {
+                          setDeleting(true);
+                          try {
+                            for (const track of tracks) {
+                              await base44.entities.Track.delete(track.id);
+                            }
+                            for (const style of styles) {
+                              await base44.entities.StyleDNA.delete(style.id);
+                            }
+                            for (const item of items) {
+                              await base44.entities.MarketplaceItem.delete(item.id);
+                            }
+                            const collabs = await base44.entities.Collaboration.filter({ created_by: user.email });
+                            for (const c of collabs) {
+                              await base44.entities.Collaboration.delete(c.id);
+                            }
+                            const videos = await base44.entities.VideoProject.filter({ created_by: user.email });
+                            for (const v of videos) {
+                              await base44.entities.VideoProject.delete(v.id);
+                            }
+                            const versions = await base44.entities.TrackVersion.filter({ created_by: user.email });
+                            for (const v of versions) {
+                              await base44.entities.TrackVersion.delete(v.id);
+                            }
+                            setDeleteStatus("success");
+                            setTimeout(async () => {
+                              await base44.auth.logout("/");
+                            }, 1200);
+                          } catch (e) {
+                            setDeleteStatus("error");
+                            setDeleting(false);
+                          }
+                        }}
+                        disabled={deleting}
+                        className="flex-1 py-2.5 rounded-xl text-xs font-medium text-white bg-red-500 hover:bg-red-600 transition-colors disabled:opacity-50 min-h-[44px]"
+                      >
+                        {deleting ? "Deleting..." : "Delete"}
+                      </button>
+                    </div>
+                  </>
+                )}
               </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+      </PullToRefresh>
     </div>
   );
 }

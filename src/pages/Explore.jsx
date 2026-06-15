@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { TrendingUp, Clock, Flame, Music, Loader2 } from "lucide-react";
 import TrackCard from "../components/shared/TrackCard";
@@ -8,11 +8,16 @@ import PullToRefresh from "../components/shared/PullToRefresh";
 
 export default function Explore() {
   const [tab, setTab] = useState("trending");
+  const queryClient = useQueryClient();
 
   const { data: tracks = [], isLoading } = useQuery({
     queryKey: ["public-tracks"],
     queryFn: () => base44.entities.Track.filter({ is_public: true }, "-created_date", 50),
   });
+
+  const handleRefresh = () => {
+    queryClient.invalidateQueries({ queryKey: ["public-tracks"] });
+  };
 
   const playerState = typeof window !== 'undefined' ? window.__playerState : null;
   const currentTrack = playerState?.currentTrack;
@@ -79,7 +84,7 @@ export default function Explore() {
         </div>
 
         {/* Content */}
-        <PullToRefresh onRefresh={() => {}} isLoading={isLoading}>
+        <PullToRefresh onRefresh={handleRefresh} isLoading={isLoading}>
         {isLoading ? (
           <div className="flex items-center justify-center py-32">
             <Loader2 className="w-6 h-6 text-violet-400 animate-spin" />

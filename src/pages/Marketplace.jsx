@@ -6,6 +6,7 @@ import { ShoppingBag, Star, Download, TrendingUp, Filter, Search, Music, Mic2, F
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import PullToRefresh from "../components/shared/PullToRefresh";
 
 const typeIcons = {
   style: Music,
@@ -57,6 +58,10 @@ export default function Marketplace() {
       queryClient.invalidateQueries({ queryKey: ["marketplace-items"] });
     },
   });
+
+  const handleRefresh = () => {
+    queryClient.invalidateQueries({ queryKey: ["marketplace-items"] });
+  };
 
   const filteredItems = items.filter((item) => {
     const matchesSearch = !search || item.title?.toLowerCase().includes(search.toLowerCase());
@@ -116,6 +121,7 @@ export default function Marketplace() {
         </div>
 
         {/* Grid */}
+        <PullToRefresh onRefresh={handleRefresh} isLoading={isLoading}>
         {isLoading ? (
           <div className="flex justify-center py-20">
             <Loader2 className="w-6 h-6 text-violet-400 animate-spin" />
@@ -173,6 +179,7 @@ export default function Marketplace() {
             })}
           </div>
         )}
+        </PullToRefresh>
       </div>
     </div>
   );
