@@ -186,13 +186,13 @@ export default function Analytics() {
 
           {/* Top Style DNA */}
           <Card className="glass border-white/10">
-            <CardHeader>
+            <CardHeader className="bg-[hsl(var(--foreground))]">
               <CardTitle className="text-white flex items-center gap-2">
                 <Dna className="w-4 h-4 text-emerald-400" />
                 Popular Style DNA
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="space-y-3 bg-[hsl(var(--popover-foreground))]">
               {topStyles.length === 0 ?
                 <p className="text-sm text-zinc-500 text-center py-8">No styles yet</p> :
 
