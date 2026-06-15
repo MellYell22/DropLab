@@ -36,7 +36,7 @@ export default function PullToRefresh({ onRefresh, children, isLoading }) {
   return (
     <div
       ref={containerRef}
-      className="h-full overflow-y-auto overscroll-none text-[#a22a2a] bg-gray-950"
+      className="h-full overflow-y-auto overscroll-none text-[#a22a2a] bg-[#000000]"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}>
