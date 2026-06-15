@@ -1,0 +1,11 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "credits": {
+      "type": "number",
+      "default": 0,
+      "description": "User credit balance for marketplace purchases"
+    }
+  }
+}

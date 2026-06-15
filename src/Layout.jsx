@@ -18,6 +18,7 @@ import {
   Crown,
   ShoppingBag,
   ChevronLeft,
+  Coins,
 } from "lucide-react";
 import BottomNav from "./components/shared/BottomNav";
 import PlayerBar from "./components/shared/PlayerBar";
@@ -27,6 +28,7 @@ const navItems = [
   { name: "Create", icon: Music, page: "Create" },
   { name: "Library", icon: Library, page: "Library" },
   { name: "Explore", icon: Compass, page: "Explore" },
+  { name: "Credits", icon: Coins, page: "Credits" },
   { name: "Marketplace", icon: ShoppingBag, page: "Marketplace" },
   { name: "Style DNA", icon: Crown, page: "StyleDNA" },
   { name: "Analytics", icon: User, page: "Analytics" },
