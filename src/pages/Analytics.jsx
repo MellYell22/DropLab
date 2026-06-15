@@ -96,7 +96,7 @@ export default function Analytics() {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <BarChart3 className="w-6 h-6 text-violet-400" />
-              <h1 className="text-3xl font-bold gradient-text text-[#7c75b3]">Creator Analytics</h1>
+              <h1 className="text-3xl font-bold gradient-text text-[#c696e3]">Creator Analytics</h1>
             </div>
             <p className="text-sm text-zinc-500">Track your performance and earnings</p>
           </div>
