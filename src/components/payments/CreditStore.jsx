@@ -1,19 +1,13 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { useQuery } from "@tanstack/react-query";
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
 import { motion } from "framer-motion";
 import { Sparkles, Check, Loader2, CreditCard, ArrowRight, Shield } from "lucide-react";
 
-const STRIPE_PUBLISHABLE_KEY = "pk_live_placeholder"; // Replace with your live key from Stripe Dashboard
-
-const stripePromise = STRIPE_PUBLISHABLE_KEY.includes("placeholder") ? null : loadStripe(STRIPE_PUBLISHABLE_KEY);
-
 const creditPackages = [
-  { id: "price_basic", name: "10 Credits", price: 5, credits: 10, popular: false, color: "from-violet-500 to-purple-500" },
-  { id: "price_popular", name: "50 Credits", price: 20, credits: 50, popular: true, color: "from-emerald-500 to-teal-500" },
-  { id: "price_pro", name: "150 Credits", price: 50, credits: 150, popular: false, color: "from-amber-500 to-orange-500" },
+  { id: "price_basic", name: "10 Credits", price: 5, credits: 10, popular: false, color: "from-violet-500 to-purple-500", priceId: "price_1TkVfBA0mO1R25OFPuKzAD4f" },
+  { id: "price_popular", name: "50 Credits", price: 20, credits: 50, popular: true, color: "from-emerald-500 to-teal-500", priceId: "price_1TkVfBA0mO1R25OFT7wySJLf" },
+  { id: "price_pro", name: "150 Credits", price: 50, credits: 150, popular: false, color: "from-amber-500 to-orange-500", priceId: "price_1TkVfBA0mO1R25OFe4tCWKxL" },
 ];
 
 export default function CreditStore() {
@@ -29,6 +23,12 @@ export default function CreditStore() {
   const handleCheckout = async (pkg) => {
     setCheckingOut(pkg.id);
     setError(null);
+
+    if (window.self !== window.top) {
+      setError("Checkout works only from a published app. Please open this page directly.");
+      setCheckingOut(null);
+      return;
+    }
 
     try {
       const result = await base44.functions.invoke("createStripeCheckout", {
