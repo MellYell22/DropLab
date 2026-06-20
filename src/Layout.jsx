@@ -102,8 +102,7 @@ export default function Layout({ children, currentPageName }) {
                 <Music className="w-4 h-4 text-white" />
               </div>
               <span className="text-sm font-bold tracking-tight hidden sm:block">
-                <span className="text-white">Sonic</span>
-                <span className="text-violet-400">Mint</span>
+                <span className="text-white">MelodAI</span>
               </span>
             </Link>
           </div>
