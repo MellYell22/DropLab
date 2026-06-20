@@ -101,9 +101,7 @@ export default function Layout({ children, currentPageName }) {
               <div className="w-8 h-8 rounded-xl gradient-purple flex items-center justify-center shadow-lg shadow-violet-500/20">
                 <Music className="w-4 h-4 text-white" />
               </div>
-              <span className="text-sm font-bold tracking-tight hidden sm:block">
-                <span className="text-white">MelodAI</span>
-              </span>
+              <span className="text-sm font-bold tracking-tight hidden sm:block text-white">DropLab</span>
             </Link>
           </div>
 
