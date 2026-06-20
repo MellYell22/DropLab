@@ -42,10 +42,10 @@ export default function Layout({ children, currentPageName }) {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
 
-  const isRootTab = primaryTabs.includes(currentPageName);
-
   // Tab stack preservation for primary tabs on mobile
   const primaryTabs = ["Home", "Create", "Library", "Explore"];
+
+  const isRootTab = primaryTabs.includes(currentPageName);
   const [visitedTabs, setVisitedTabs] = useState(() => {
     const initial = {};
     primaryTabs.forEach((t) => { initial[t] = false; });
