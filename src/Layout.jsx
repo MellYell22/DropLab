@@ -42,7 +42,7 @@ export default function Layout({ children, currentPageName }) {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
 
-  const isMainPage = currentPageName === "Create";
+  const isRootTab = primaryTabs.includes(currentPageName);
 
   // Tab stack preservation for primary tabs on mobile
   const primaryTabs = ["Home", "Create", "Library", "Explore"];
@@ -88,7 +88,7 @@ export default function Layout({ children, currentPageName }) {
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
           {/* Back button (mobile, non-root pages) */}
           <div className="flex items-center gap-2">
-            {!isMainPage && (
+            {!isRootTab && (
               <button
                 onClick={() => window.history.back()}
                 className="md:hidden p-1 -ml-1 rounded-lg hover:bg-white/5 text-zinc-400"

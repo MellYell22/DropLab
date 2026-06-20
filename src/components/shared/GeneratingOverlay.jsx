@@ -35,6 +35,7 @@ export default function GeneratingOverlay({ prompt }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-xl"
+      style={{ paddingTop: "env(safe-area-inset-top)", paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}

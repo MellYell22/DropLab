@@ -54,7 +54,8 @@ export default function TrackEditor({ track, onClose }) {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center"
+      style={{ paddingTop: "max(1rem, env(safe-area-inset-top))", paddingBottom: "max(1rem, env(safe-area-inset-bottom))", paddingLeft: "1rem", paddingRight: "1rem" }}
       onClick={onClose}
     >
       <motion.div
