@@ -3,6 +3,8 @@ import { base44 } from "@/api/base44Client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import { BarChart3, TrendingUp, DollarSign, Download, Play, Heart, Music, Dna, ShoppingBag, Star, Loader2, Trash2, AlertTriangle, User, CheckCircle2, XCircle } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import moment from "moment";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PullToRefresh from "../components/shared/PullToRefresh";
 
@@ -65,6 +67,23 @@ export default function Analytics() {
   const avgRating = items.length > 0 ?
   (items.reduce((sum, i) => sum + (i.rating || 0), 0) / items.length).toFixed(1) :
   0;
+
+  // Build daily revenue chart data for last 30 days
+  const dailyRevenue = (() => {
+    const days = [];
+    for (let i = 29; i >= 0; i--) {
+      const date = moment().subtract(i, "days").format("YYYY-MM-DD");
+      days.push({ date, revenue: 0 });
+    }
+    purchases.forEach((p) => {
+      const day = moment(p.created_date).format("YYYY-MM-DD");
+      const entry = days.find((d) => d.date === day);
+      if (entry) entry.revenue += p.creator_revenue || 0;
+    });
+    return days.map((d) => ({ ...d, label: moment(d.date).format("MMM D") }));
+  })();
+
+  const hasRevenueData = dailyRevenue.some((d) => d.revenue > 0);
 
   const topTracks = [...tracks].
   sort((a, b) => (b.plays || 0) - (a.plays || 0)).
@@ -139,6 +158,44 @@ export default function Analytics() {
             })}
         </div>
 
+        {/* Revenue Trend Chart */}
+        <Card className="glass border-white/10">
+          <CardHeader>
+            <CardTitle className="text-white flex items-center gap-2">
+              <TrendingUp className="w-4 h-4 text-green-400" />
+              Revenue Trend — Last 30 Days
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {hasRevenueData ? (
+              <ResponsiveContainer width="100%" height={280}>
+                <BarChart data={dailyRevenue} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                  <XAxis
+                    dataKey="label"
+                    tick={{ fontSize: 11, fill: "#71717a" }}
+                    interval="preserveStartEnd"
+                  />
+                  <YAxis tick={{ fontSize: 11, fill: "#71717a" }} tickFormatter={(v) => `$${v}`} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#18181b",
+                      border: "1px solid rgba(139,92,246,0.2)",
+                      borderRadius: "12px",
+                      fontSize: "13px",
+                    }}
+                    formatter={(value) => [`$${Number(value).toFixed(2)}", "Revenue"]}
+                    labelStyle={{ color: "#a1a1aa" }}
+                  />
+                  <Bar dataKey="revenue" fill="#8B5CF6" radius={[4, 4, 0, 0]} maxBarSize={24} />
+                </BarChart>
+              </ResponsiveContainer>
+            ) : (
+              <p className="text-sm text-zinc-500 text-center py-12">No revenue data yet. Start selling to see your earnings trend.</p>
+            )}
+          </CardContent>
+        </Card>
+
         {/* Charts Row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Top Tracks */}
@@ -174,7 +231,7 @@ export default function Analytics() {
                     <div
                       key={j}
                       className="flex-1 bg-violet-500/30 rounded-sm"
-                      style={{ height: `${20 + Math.random() * 80}%` }} />
+                      style={{ height: (20 + Math.random() * 80) + "%" }} />
 
                     )}
                     </div>
