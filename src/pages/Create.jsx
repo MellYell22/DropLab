@@ -12,6 +12,7 @@ import InstrumentSelector from "../components/generator/InstrumentSelector";
 import AdvancedControls from "../components/generator/AdvancedControls";
 import GeneratingOverlay from "../components/shared/GeneratingOverlay";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export default function Create() {
   const [prompt, setPrompt] = useState("");
@@ -51,22 +52,25 @@ export default function Create() {
   }, []);
 
   const generateMutation = useMutation({
-    mutationFn: async () => {
+    onMutate: () => {
       setIsGenerating(true);
-
+    },
+    mutationFn: async () => {
+      const desc = prompt.trim() || `${genre} music in ${musicalKey} ${keyMode} at ${bpm} BPM`;
+      
       // Generate a title using LLM
       const titleResult = await base44.integrations.Core.InvokeLLM({
-        prompt: `Generate a creative, short (2-4 words) song title for this music description: "${prompt}". Genre: ${genre}. Mood: energy ${mood.energy}/100, complexity ${mood.complexity}/100. Just return the title, nothing else.`,
+        prompt: `Generate a creative, short (2-4 words) song title for this music: "${desc}". Genre: ${genre}. Mood: energy ${mood.energy}/100, complexity ${mood.complexity}/100. Just return the title, nothing else.`,
       });
 
       // Generate cover art
       const coverResult = await base44.integrations.Core.GenerateImage({
-        prompt: `Abstract album cover art for ${genre} music. ${prompt}. Minimal, modern, dark background with vibrant ${genre === 'edm' ? 'neon purple and cyan' : genre === 'lofi' ? 'warm sunset tones' : genre === 'cinematic' ? 'gold and deep blue' : 'violet and emerald'} accents. No text, artistic, high quality.`,
+        prompt: `Abstract album cover art for ${genre} music. ${desc}. Minimal, modern, dark background with vibrant ${genre === 'edm' ? 'neon purple and cyan' : genre === 'lofi' ? 'warm sunset tones' : genre === 'cinematic' ? 'gold and deep blue' : 'violet and emerald'} accents. No text, artistic, high quality.`,
       });
 
-      // Generate actual music with proper duration
+      // Generate actual music
       const musicResult = await base44.functions.invoke('generateMusic', {
-        prompt,
+        prompt: desc,
         genre,
         mood,
         duration,
@@ -81,8 +85,8 @@ export default function Create() {
       });
 
       const track = await base44.entities.Track.create({
-        title: titleResult.trim().replace(/"/g, ""),
-        prompt,
+        title: typeof titleResult === 'string' ? titleResult.trim().replace(/"/g, "") : `${genre} track`,
+        prompt: desc,
         genre,
         mood: Object.keys(mood).reduce((acc, k) => {
           if (mood[k] > 60) return k;
@@ -115,9 +119,11 @@ export default function Create() {
       queryClient.invalidateQueries({ queryKey: ["tracks"] });
       setIsGenerating(false);
       setPrompt("");
+      toast.success("Track created! Check your Library.");
     },
-    onError: () => {
+    onError: (error) => {
       setIsGenerating(false);
+      toast.error(error?.message || "Something went wrong. Please try again.");
     },
   });
 
@@ -346,7 +352,7 @@ export default function Create() {
         >
           <Button
             onClick={() => generateMutation.mutate()}
-            disabled={!prompt.trim() || isGenerating}
+            disabled={isGenerating}
             className="gradient-purple text-white rounded-xl px-10 py-6 text-base font-bold shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 transition-all disabled:opacity-40"
             size="lg"
           >
