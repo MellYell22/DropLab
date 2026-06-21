@@ -7,6 +7,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import moment from "moment";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PullToRefresh from "../components/shared/PullToRefresh";
+import DashboardTrackList from "../components/analytics/DashboardTrackList";
 
 export default function Analytics() {
   const [timeRange, setTimeRange] = useState("30d");
@@ -272,6 +273,20 @@ export default function Analytics() {
             </CardContent>
           </Card>
         </div>
+
+        {/* Full Track Library */}
+        <Card className="glass border-white/10">
+          <CardHeader>
+            <CardTitle className="text-white flex items-center gap-2">
+              <Music className="w-4 h-4 text-blue-400" />
+              Track Library
+              <span className="text-xs text-zinc-500 font-normal ml-1">({tracks.length} tracks)</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <DashboardTrackList tracks={[...tracks].sort((a, b) => new Date(b.created_date) - new Date(a.created_date))} />
+          </CardContent>
+        </Card>
 
         {/* Marketplace Performance */}
         {items.length > 0 &&
