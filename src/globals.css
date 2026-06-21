@@ -139,18 +139,23 @@ body {
 .header-glow {
   position: fixed;
   top: 0;
-  left: 0;
-  right: 0;
-  height: 500px;
+  left: -10%;
+  right: -10%;
+  height: 600px;
   background:
-    /* Layer 3 — cyan-blue pinpoint glow at very top center */
-    radial-gradient(ellipse 20% 14% at 50% 4%, rgba(56, 189, 248, 0.17) 0%, transparent 50%),
-    /* Layer 2 — rich deep purple horizontal band across hero */
-    radial-gradient(ellipse 95% 38% at 50% 28%, rgba(124, 58, 237, 0.24) 0%, transparent 55%),
-    /* Layer 2b — indigo bridge blending purple downward */
-    radial-gradient(ellipse 80% 30% at 50% 42%, rgba(79, 70, 229, 0.15) 0%, transparent 50%),
-    /* Layer 4 — black falloff vignette around edges */
-    radial-gradient(ellipse 100% 100% at 50% 50%, transparent 35%, rgba(0, 0, 0, 0.65) 100%);
+    /* Cyan-blue arc — thin, bright, right at the top center */
+    radial-gradient(ellipse 35% 7% at 50% 1%, rgba(56, 189, 248, 0.35) 0%, rgba(56, 189, 248, 0.08) 30%, transparent 55%),
+    /* Full-width purple horizontal band — extends beyond viewport edges */
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(56, 189, 248, 0.08) 2%,
+      rgba(124, 58, 237, 0.32) 10%,
+      rgba(88, 28, 135, 0.22) 22%,
+      rgba(88, 28, 135, 0.10) 38%,
+      rgba(79, 70, 229, 0.04) 50%,
+      rgba(0, 0, 0, 0) 62%
+    );
   pointer-events: none;
   z-index: 0;
 }
