@@ -33,8 +33,8 @@ export default function Home() {
       <section className="relative px-4 pt-16 pb-24 flex flex-col items-center text-center radial-glow">
         {/* Background effects */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-1/4 w-96 h-96 rounded-full blur-[120px]" style={{ background: "rgba(48, 147, 160, 0.10)" }} />
-          <div className="absolute top-40 right-1/4 w-80 h-80 rounded-full blur-[100px]" style={{ background: "rgba(29, 111, 187, 0.08)" }} />
+          <div className="absolute top-20 left-1/4 w-96 h-96 rounded-full blur-[120px]" style={{ background: "rgba(108, 92, 231, 0.08)" }} />
+          <div className="absolute top-40 right-1/4 w-80 h-80 rounded-full blur-[100px]" style={{ background: "rgba(90, 75, 209, 0.06)" }} />
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-64 bg-gradient-to-t from-black to-transparent" />
         </div>
 
@@ -49,7 +49,7 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-xs text-[#3093A0]"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-xs text-[#8B7CFF]"
           >
             <Zap className="w-3 h-3" />
             AI Music Generation
@@ -67,7 +67,7 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
             <Link to={createPageUrl("Create")}>
-              <Button className="gradient-purple text-white px-8 py-6 text-base rounded-2xl transition-all" style={{ boxShadow: "0 8px 32px rgba(48, 147, 160, 0.25)" }}>
+              <Button className="gradient-purple text-white px-8 py-6 text-base rounded-2xl transition-all" style={{ boxShadow: "0 8px 32px rgba(108, 92, 231, 0.22)" }}>
                 <Sparkles className="w-5 h-5 mr-2" />
                 Start Creating — Free
               </Button>
@@ -88,7 +88,7 @@ export default function Home() {
           transition={{ delay: 0.6 }}
           className="relative z-10 w-full max-w-2xl mt-12"
         >
-          <WaveformVisualizer isPlaying={true} color="#3093A0" bars={60} height={50} />
+          <WaveformVisualizer isPlaying={true} color="#6C5CE7" bars={60} height={50} />
         </motion.div>
       </section>
 
@@ -179,7 +179,7 @@ export default function Home() {
             Start generating copyright-free music in seconds. No credit card required.
           </p>
           <Link to={createPageUrl("Create")}>
-            <Button className="gradient-purple text-white px-8 py-6 text-base rounded-2xl transition-all" style={{ boxShadow: "0 8px 32px rgba(48, 147, 160, 0.25)" }}>
+            <Button className="gradient-purple text-white px-8 py-6 text-base rounded-2xl transition-all" style={{ boxShadow: "0 8px 32px rgba(108, 92, 231, 0.22)" }}>
               <Sparkles className="w-5 h-5 mr-2" />
               Generate Your First Track
               <ArrowRight className="w-5 h-5 ml-2" />

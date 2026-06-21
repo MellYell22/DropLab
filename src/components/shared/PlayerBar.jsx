@@ -69,7 +69,7 @@ export default function PlayerBar({ track, isPlaying, onTogglePlay }) {
   };
 
   if (!track) return null;
-  const color = genreColors[track.genre] || "#3093A0";
+  const color = genreColors[track.genre] || "#6C5CE7";
 
   const formatTime = (seconds) => {
     const m = Math.floor(seconds / 60);
