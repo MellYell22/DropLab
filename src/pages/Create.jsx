@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
-import { Settings2, ChevronDown, ChevronUp, Sliders, Mic2, LayoutList, Music, Clock, Repeat, Sparkles, Piano, GitBranch } from "lucide-react";
+import { Settings2, ChevronDown, ChevronUp, Sliders, Mic2, LayoutList, Music, Clock, Repeat, Sparkles, Piano, GitBranch, Loader2 } from "lucide-react";
 import PromptInput from "../components/generator/PromptInput";
 import GenreSelector from "../components/generator/GenreSelector";
 import MoodSliders from "../components/generator/MoodSliders";
@@ -11,6 +11,7 @@ import StructureBuilder from "../components/generator/StructureBuilder";
 import InstrumentSelector from "../components/generator/InstrumentSelector";
 import AdvancedControls from "../components/generator/AdvancedControls";
 import GeneratingOverlay from "../components/shared/GeneratingOverlay";
+import { Button } from "@/components/ui/button";
 
 export default function Create() {
   const [prompt, setPrompt] = useState("");
@@ -335,6 +336,33 @@ export default function Create() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Generate Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="flex justify-center pt-2"
+        >
+          <Button
+            onClick={() => generateMutation.mutate()}
+            disabled={!prompt.trim() || isGenerating}
+            className="gradient-purple text-white rounded-xl px-10 py-6 text-base font-bold shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 transition-all disabled:opacity-40"
+            size="lg"
+          >
+            {isGenerating ? (
+              <>
+                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                Generating Your Track...
+              </>
+            ) : (
+              <>
+                <Sparkles className="w-5 h-5 mr-2" />
+                Generate Track
+              </>
+            )}
+          </Button>
+        </motion.div>
       </div>
     </div>
   );
