@@ -77,14 +77,16 @@ export default function Layout({ children, currentPageName }) {
   }, [currentTrack, isPlaying]);
 
   return (
-    <div className="min-h-screen bg-[hsl(220,15%,5%)] text-white noise-bg">
+    <div className="min-h-screen bg-[#0a0c12] text-white noise-bg">
+      {/* Top gradient glow — matches GitHub header style */}
+      <div className="header-glow" />
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
 
       {/* Top nav */}
-      <header className="sticky top-0 z-40 glass-strong border-b border-white/5" style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}>
+      <header className="sticky top-0 z-40 bg-transparent border-b border-white/[0.04]" style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}>
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
           {/* Back button (mobile, non-root pages) */}
           <div className="flex items-center gap-2">
@@ -173,7 +175,7 @@ export default function Layout({ children, currentPageName }) {
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
-              className="md:hidden fixed top-14 left-0 right-0 z-40 border-b border-white/5 bg-[hsl(220,15%,7%)]"
+              className="md:hidden fixed top-14 left-0 right-0 z-40 border-b border-white/5 bg-[#0a0c12]/95 backdrop-blur-xl"
             >
               <div className="p-3 space-y-1">
                 {navItems.map((item) => {
