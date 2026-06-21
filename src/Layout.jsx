@@ -235,7 +235,7 @@ export default function Layout({ children, currentPageName }) {
       </AnimatePresence>
 
       {/* Footer */}
-      <footer className="text-center py-3 pb-20 md:pb-3 text-[11px] text-zinc-600">
+      <footer className="text-center py-3 text-[11px] text-zinc-600" style={{ paddingBottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))" }}>
         Created by AA Designs
       </footer>
 
