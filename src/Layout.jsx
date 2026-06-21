@@ -5,6 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { base44 } from "@/api/base44Client";
 import { useQuery } from "@tanstack/react-query";
 import { useIsMobile } from "@/hooks/use-mobile";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { PAGES } from "./pages.config";
 import {
   Sparkles,
@@ -132,11 +138,23 @@ export default function Layout({ children, currentPageName }) {
           {/* Right side */}
           <div className="flex items-center gap-2">
             {user ? (
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-[10px] font-bold">
-                  {user.full_name?.[0]?.toUpperCase() || "U"}
-                </div>
-              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-[10px] font-bold hover:ring-2 hover:ring-blue-400/50 transition-all cursor-pointer">
+                    {user.full_name?.[0]?.toUpperCase() || "U"}
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-40 mt-2 bg-[#0a0a10] border-white/10">
+                  <DropdownMenuItem onClick={() => navigate(createPageUrl("Analytics"))} className="cursor-pointer text-zinc-300 hover:text-white focus:text-white">
+                    <User className="w-3.5 h-3.5 mr-2" />
+                    Dashboard
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => base44.auth.logout()} className="cursor-pointer text-zinc-400 hover:text-red-400 focus:text-red-400">
+                    <LogOut className="w-3.5 h-3.5 mr-2" />
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
               <button
                 onClick={() => base44.auth.redirectToLogin()}
