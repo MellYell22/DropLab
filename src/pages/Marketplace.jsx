@@ -76,9 +76,9 @@ export default function Marketplace() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="relative overflow-hidden rounded-3xl p-8 sm:p-12 radial-glow"
+          className="relative overflow-hidden rounded-3xl p-8 sm:p-12"
           style={{
-            background: "linear-gradient(135deg, rgba(108,92,231,0.10), rgba(90,75,209,0.06))",
+            background: "linear-gradient(135deg, rgba(139,92,246,0.15), rgba(236,72,153,0.1))",
           }}
         >
           <div className="relative z-10">

@@ -110,7 +110,7 @@ export default function Analytics() {
         <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center justify-between radial-glow">
+            className="flex items-center justify-between">
             
           <div>
             <div className="flex items-center gap-2 mb-2">
@@ -200,13 +200,13 @@ export default function Analytics() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Top Tracks */}
           <Card className="glass border-white/10">
-            <CardHeader>
+            <CardHeader className="bg-[hsl(var(--foreground))]">
               <CardTitle className="text-white flex items-center gap-2">
                 <Music className="w-4 h-4 text-blue-400" />
                 Top Performing Tracks
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="space-y-3 bg-[hsl(var(--popover-foreground))]">
               {topTracks.length === 0 ?
                 <p className="text-sm text-zinc-500 text-center py-8">No tracks yet</p> :
 
@@ -243,13 +243,13 @@ export default function Analytics() {
 
           {/* Top Style DNA */}
           <Card className="glass border-white/10">
-            <CardHeader>
+            <CardHeader className="bg-[hsl(var(--foreground))]">
               <CardTitle className="text-white flex items-center gap-2">
                 <Dna className="w-4 h-4 text-cyan-400" />
                 Popular Style DNA
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="space-y-3 bg-[hsl(var(--popover-foreground))]">
               {topStyles.length === 0 ?
                 <p className="text-sm text-zinc-500 text-center py-8">No styles yet</p> :
 

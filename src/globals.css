@@ -2,161 +2,97 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ===== DropLab — GitHub-Inspired Premium Theme ===== */
-/* Colors: deep purple/navy → blue → teal → cyan-green */
-
 :root {
-  --bg-deep: #20035E;
-  --bg-purple: #210493;
-  --bg-violet: #22038A;
-  --bg-blue: #1D6FBB;
-  --bg-ocean: #227DB0;
-  --bg-teal: #3093A0;
-  --bg-seafoam: #379C7C;
-
-  --text-primary: #FFFFFF;
-  --text-secondary: #CBD5E1;
-  --text-muted: #94A3B8;
-
-  --accent: #6C5CE7;
-  --accent-soft: rgba(108, 92, 231, 0.15);
-  --accent-glow: rgba(108, 92, 231, 0.20);
-  --highlight: #7B6CF0;
-
-  --card-bg: rgba(25, 10, 80, 0.75);
-  --card-border: rgba(48, 147, 160, 0.12);
-  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
-
-  --nav-bg: rgba(12, 4, 50, 0.88);
-
-  --radius: 20px;
+  --background: 220 15% 5%;
+  --foreground: 0 0% 95%;
+  --card: 220 15% 7%;
+  --card-foreground: 0 0% 95%;
+  --popover: 220 15% 7%;
+  --popover-foreground: 0 0% 95%;
+  --primary: 217 70% 55%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 220 15% 12%;
+  --secondary-foreground: 0 0% 95%;
+  --muted: 220 15% 14%;
+  --muted-foreground: 220 5% 55%;
+  --accent: 200 84% 45%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 220 15% 14%;
+  --input: 220 15% 14%;
+  --ring: 217 70% 55%;
+  --radius: 0.75rem;
 }
 
-/* ===== Base Body — Dark cinematic gradient (GitHub-style) ===== */
-body {
-  background: linear-gradient(
-    180deg,
-    #0D0628 0%,
-    #0C0525 20%,
-    #09031F 40%,
-    #060218 60%,
-    #030111 80%,
-    #000000 100%
-  );
-  background-attachment: fixed;
-  color: var(--text-primary);
-  font-family: 'Inter', system-ui, sans-serif;
-  min-height: 100vh;
-}
+/* System light mode */
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 240 10% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
+    --primary: 217 70% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 5% 96%;
+    --secondary-foreground: 220 10% 15%;
+    --muted: 220 5% 95%;
+    --muted-foreground: 220 4% 46%;
+    --accent: 200 84% 40%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 57%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 6% 90%;
+    --input: 220 6% 92%;
+    --ring: 217 70% 50%;
+  }
 
-/* ===== Subtle noise texture to prevent banding ===== */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  body {
+    background: hsl(0 0% 98%);
+    color: hsl(240 10% 10%);
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(59, 130, 246, 0.08);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(59, 130, 246, 0.1);
+  }
+
+  .noise-bg::before {
+    opacity: 0.01;
+  }
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(108, 92, 231, 0.2) transparent;
+  scrollbar-color: hsl(220 15% 14%) transparent;
 }
 
-/* ===== Glassmorphism Cards ===== */
-.glass {
-  background: var(--card-bg);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius);
-  box-shadow: var(--card-shadow);
+body {
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: 'Inter', system-ui, sans-serif;
 }
 
-.glass-strong {
-  background: rgba(20, 8, 70, 0.88);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(108, 92, 231, 0.10);
-  border-radius: var(--radius);
-  box-shadow: var(--card-shadow);
+/* Touch target minimum 44px for all interactive elements */
+@media (pointer: coarse) {
+  button, a, [role="button"], input[type="button"], input[type="submit"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
 
-/* ===== Radial glow behind page titles ===== */
-.radial-glow {
-  position: relative;
-}
-
-.radial-glow::before {
-  content: '';
-  position: absolute;
-  top: -20%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 600px;
-  max-width: 90vw;
-  height: 400px;
-  background: radial-gradient(ellipse at center, rgba(108, 92, 231, 0.10) 0%, rgba(108, 92, 231, 0.03) 40%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ===== Gradient Utilities ===== */
-.gradient-text {
-  background: linear-gradient(135deg, #8B7CFF, #6C5CE7, #5A4BD1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-blue {
-  background: linear-gradient(135deg, #5A4BD1, #6C5CE7);
-}
-
-.gradient-accent {
-  background: linear-gradient(135deg, #6C5CE7, #4A3EC4);
-}
-
-.gradient-purple {
-  background: linear-gradient(135deg, #5A4BD1, #7B6CF0);
-}
-
-/* ===== Button gradient ===== */
-.btn-primary {
-  background: linear-gradient(135deg, #5A4BD1, #7B6CF0);
-  color: #FFFFFF;
-  transition: all 0.2s ease;
-}
-
-.btn-primary:hover {
-  background: linear-gradient(135deg, #6C5CE7, #8B7CFF);
-  box-shadow: 0 4px 20px rgba(108, 92, 231, 0.30);
-}
-
-.btn-primary:active {
-  background: linear-gradient(135deg, #5A4BD1, #6C5CE7);
-}
-
-/* ===== Navigation overlays ===== */
-.noise-bg {
-  position: relative;
-}
-
-.noise-bg::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ===== Animations ===== */
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(48, 147, 160, 0.25); }
-  50% { box-shadow: 0 0 40px rgba(48, 147, 160, 0.5); }
+  0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.6); }
 }
 
 @keyframes waveform {
@@ -173,14 +109,42 @@ body::after {
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
-/* ===== Touch targets ===== */
-@media (pointer: coarse) {
-  button, a, [role="button"], input[type="button"], input[type="submit"] {
-    min-height: 44px;
-    min-width: 44px;
-  }
+.glass {
+  background: rgba(13, 17, 26, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(59, 130, 246, 0.1);
 }
 
-/* ===== Utilities ===== */
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.glass-strong {
+  background: rgba(13, 17, 26, 0.85);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #3B82F6, #06B6D4, #60A5FA);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-purple {
+  background: linear-gradient(135deg, #3B82F6, #60A5FA);
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, #06B6D4, #38BDF8);
+}
+
+.noise-bg {
+  position: relative;
+}
+
+.noise-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}

@@ -131,7 +131,7 @@ export default function Create() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center space-y-2 radial-glow"
+          className="text-center space-y-2"
         >
           <h1 className="text-3xl sm:text-4xl font-bold gradient-text">Create Music</h1>
           <p className="text-sm text-zinc-500">Describe your vision and let AI compose it</p>

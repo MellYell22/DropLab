@@ -130,7 +130,7 @@ export default function StyleDNA() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-between radial-glow"
+          className="flex items-center justify-between"
         >
           <div>
             <div className="flex items-center gap-2 mb-2">

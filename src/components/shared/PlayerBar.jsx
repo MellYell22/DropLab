@@ -69,7 +69,7 @@ export default function PlayerBar({ track, isPlaying, onTogglePlay }) {
   };
 
   if (!track) return null;
-  const color = genreColors[track.genre] || "#6C5CE7";
+  const color = genreColors[track.genre] || "#8B5CF6";
 
   const formatTime = (seconds) => {
     const m = Math.floor(seconds / 60);
@@ -89,8 +89,8 @@ export default function PlayerBar({ track, isPlaying, onTogglePlay }) {
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 100, opacity: 0 }}
-        className="fixed bottom-16 md:bottom-0 left-0 right-0 z-50 border-t border-white/[0.06]"
-        style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)", background: "rgba(14, 6, 58, 0.92)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}
+        className="fixed bottom-16 md:bottom-0 left-0 right-0 z-50 glass-strong border-t border-white/5"
+        style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
       >
         {/* Progress bar */}
         <div className="px-4">
