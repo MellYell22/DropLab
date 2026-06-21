@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <div className="min-h-screen pb-32 overflow-hidden">
       {/* Hero Section */}
-      <section className="relative px-4 pt-16 pb-24 flex flex-col items-center text-center">
+      <section className="relative px-4 pt-16 pb-24 flex flex-col items-center text-center radial-glow">
         {/* Background effects */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-1/4 w-96 h-96 rounded-full bg-blue-600/10 blur-[120px]" />

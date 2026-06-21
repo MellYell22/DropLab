@@ -52,7 +52,7 @@ export default function Library() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+          className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 radial-glow"
         >
           <div>
             <h1 className="text-3xl font-bold gradient-text">My Library</h1>

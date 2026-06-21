@@ -84,14 +84,14 @@ export default function Layout({ children, currentPageName }) {
       `}</style>
 
       {/* Top nav */}
-      <header className="sticky top-0 z-40 glass-strong border-b border-white/5" style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}>
+      <header className="sticky top-0 z-40 border-b border-white/[0.06]" style={{ paddingTop: "env(safe-area-inset-top, 0px)", background: "rgba(8, 14, 32, 0.85)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
           {/* Back button (mobile, non-root pages) */}
           <div className="flex items-center gap-2">
             {!isRootTab && (
               <button
                 onClick={() => window.history.back()}
-                className="md:hidden p-1 -ml-1 rounded-lg hover:bg-white/5 text-zinc-400"
+                className="md:hidden p-1 -ml-1 rounded-lg hover:bg-white/5 text-[#94A3B8]"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -116,8 +116,8 @@ export default function Layout({ children, currentPageName }) {
                   to={createPageUrl(item.page)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                     isActive
-                      ? "bg-blue-500/15 text-blue-300"
-                      : "text-zinc-500 hover:text-zinc-300 hover:bg-white/5"
+                      ? "bg-[#38BDF8]/15 text-[#38BDF8]"
+                      : "text-[#94A3B8] hover:text-[#CBD5E1] hover:bg-white/5"
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" />
@@ -138,7 +138,7 @@ export default function Layout({ children, currentPageName }) {
             ) : (
               <button
                 onClick={() => base44.auth.redirectToLogin()}
-                className="text-xs text-zinc-400 hover:text-white transition-colors"
+                className="text-xs text-[#94A3B8] hover:text-white transition-colors"
               >
                 Sign In
               </button>
@@ -147,7 +147,7 @@ export default function Layout({ children, currentPageName }) {
             {/* Mobile menu toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-1.5 rounded-lg hover:bg-white/5 text-zinc-400"
+              className="md:hidden p-1.5 rounded-lg hover:bg-white/5 text-[#94A3B8]"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -173,7 +173,7 @@ export default function Layout({ children, currentPageName }) {
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
-              className="md:hidden fixed top-14 left-0 right-0 z-40 border-b border-white/5 bg-[hsl(220,15%,7%)]"
+              className="md:hidden fixed top-14 left-0 right-0 z-40 border-b border-white/[0.06]" style={{ background: "rgba(8, 14, 32, 0.92)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}
             >
               <div className="p-3 space-y-1">
                 {navItems.map((item) => {
@@ -186,7 +186,7 @@ export default function Layout({ children, currentPageName }) {
                       onClick={() => setMobileMenuOpen(false)}
                       className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
                         isActive
-                          ? "bg-blue-500/15 text-blue-300"
+                          ? "bg-[#38BDF8]/15 text-[#38BDF8]"
                           : "text-zinc-500 hover:text-zinc-300"
                       }`}
                     >
@@ -221,7 +221,7 @@ export default function Layout({ children, currentPageName }) {
                 if (!hasVisited) return null;
                 return (
                   <div key={tab} style={{ display: isActive ? "block" : "none" }}>
-                    <Suspense fallback={<div className="flex justify-center py-20"><div className="w-6 h-6 border-2 border-violet-500/20 border-t-violet-400 rounded-full animate-spin" /></div>}>
+                    <Suspense fallback={<div className="flex justify-center py-20"><div className="w-6 h-6 border-2 border-blue-500/20 border-t-blue-400 rounded-full animate-spin" /></div>}>
                       <TabComponent />
                     </Suspense>
                   </div>
@@ -235,7 +235,7 @@ export default function Layout({ children, currentPageName }) {
       </AnimatePresence>
 
       {/* Footer */}
-      <footer className="text-center py-3 text-[11px] text-zinc-600" style={{ paddingBottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))" }}>
+      <footer className="text-center py-3 text-[11px] text-[#64748B]" style={{ paddingBottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))" }}>
         Created by AA Designs
       </footer>
 
