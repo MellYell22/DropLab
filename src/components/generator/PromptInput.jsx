@@ -32,7 +32,7 @@ export default function PromptInput({ value, onChange, onGenerate, isGenerating 
           <div className="absolute bottom-3 right-3 flex items-center gap-2">
             <Button
               onClick={onGenerate}
-              disabled={!value.trim() || isGenerating}
+              disabled={isGenerating}
               className="gradient-purple text-white rounded-xl px-5 py-2 text-sm font-semibold shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all disabled:opacity-40"
             >
               {isGenerating ? (

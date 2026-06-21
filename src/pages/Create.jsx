@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
@@ -125,7 +125,12 @@ export default function Create() {
     },
     onError: (error) => {
       setIsGenerating(false);
-      toast.error(error?.message || "Something went wrong. Please try again.");
+      const msg = error?.response?.data?.error 
+        || error?.data?.error 
+        || error?.message 
+        || "Something went wrong. Please try again.";
+      toast.error(msg);
+      console.error("Generation failed:", error);
     },
   });
 
