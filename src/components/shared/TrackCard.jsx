@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Play, Pause, Heart, Download, Share2, MoreHorizontal, Clock, Music, Edit } from "lucide-react";
 import WaveformVisualizer from "./WaveformVisualizer";
 import TrackEditor from "../editor/TrackEditor";
+import TrackShareDialog from "./TrackShareDialog";
 
 const genreColors = {
   pop: "#EC4899",
@@ -22,6 +23,7 @@ const genreColors = {
 export default function TrackCard({ track, onPlay, isPlaying, variant = "default" }) {
   const [liked, setLiked] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
+  const [showShare, setShowShare] = useState(false);
   const color = genreColors[track.genre] || "#8B5CF6";
 
   const formatDuration = (seconds) => {
@@ -81,6 +83,12 @@ export default function TrackCard({ track, onPlay, isPlaying, variant = "default
           >
             {track.genre?.replace("_", " ")}
           </span>
+          <button
+            onClick={(e) => { e.stopPropagation(); setShowShare(true); }}
+            className="p-1.5 hover:bg-white/5 rounded-lg transition-colors"
+          >
+            <Share2 className="w-3.5 h-3.5 text-zinc-500 hover:text-white transition-colors" />
+          </button>
         </div>
       </motion.div>
     );
@@ -164,6 +172,13 @@ export default function TrackCard({ track, onPlay, isPlaying, variant = "default
             >
               <Edit className="w-3.5 h-3.5 text-zinc-600" />
             </button>
+            <button
+              onClick={(e) => { e.stopPropagation(); setShowShare(true); }}
+              className="p-1 hover:bg-white/5 rounded-md transition-colors"
+              title="Share to Stories"
+            >
+              <Share2 className="w-3.5 h-3.5 text-zinc-600" />
+            </button>
             <a
               href={track.audio_url}
               download={`${track.title}.mp3`}
@@ -177,6 +192,7 @@ export default function TrackCard({ track, onPlay, isPlaying, variant = "default
       </div>
 
       {showEditor && <TrackEditor track={track} onClose={() => setShowEditor(false)} />}
+      {showShare && <TrackShareDialog track={track} onClose={() => setShowShare(false)} />}
     </motion.div>
   );
 }
