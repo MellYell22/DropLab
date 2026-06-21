@@ -11,6 +11,7 @@ import StructureBuilder from "../components/generator/StructureBuilder";
 import InstrumentSelector from "../components/generator/InstrumentSelector";
 import AdvancedControls from "../components/generator/AdvancedControls";
 import GeneratingOverlay from "../components/shared/GeneratingOverlay";
+import InlineTrackPlayer from "../components/generator/InlineTrackPlayer";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -30,6 +31,7 @@ export default function Create() {
   const [harmonicComplexity, setHarmonicComplexity] = useState(50);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedTrack, setGeneratedTrack] = useState(null);
   const [appliedStyle, setAppliedStyle] = useState(null);
 
   const queryClient = useQueryClient();
@@ -115,11 +117,11 @@ export default function Create() {
 
       return track;
     },
-    onSuccess: () => {
+    onSuccess: (track) => {
       queryClient.invalidateQueries({ queryKey: ["tracks"] });
       setIsGenerating(false);
-      setPrompt("");
-      toast.success("Track created! Check your Library.");
+      setGeneratedTrack(track);
+      toast.success("Track created! Listen below.");
     },
     onError: (error) => {
       setIsGenerating(false);
@@ -344,31 +346,60 @@ export default function Create() {
         </AnimatePresence>
 
         {/* Generate Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="flex justify-center pt-2"
-        >
-          <Button
-            onClick={() => generateMutation.mutate()}
-            disabled={isGenerating}
-            className="gradient-purple text-white rounded-xl px-10 py-6 text-base font-bold shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 transition-all disabled:opacity-40"
-            size="lg"
+        {!generatedTrack && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="flex justify-center pt-2"
           >
-            {isGenerating ? (
-              <>
-                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                Generating Your Track...
-              </>
-            ) : (
-              <>
-                <Sparkles className="w-5 h-5 mr-2" />
-                Generate Track
-              </>
-            )}
-          </Button>
-        </motion.div>
+            <Button
+              onClick={() => generateMutation.mutate()}
+              disabled={isGenerating}
+              className="gradient-purple text-white rounded-xl px-10 py-6 text-base font-bold shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 transition-all disabled:opacity-40"
+              size="lg"
+            >
+              {isGenerating ? (
+                <>
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  Generating Your Track...
+                </>
+              ) : (
+                <>
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  Generate Track
+                </>
+              )}
+            </Button>
+          </motion.div>
+        )}
+
+        {/* Inline Player */}
+        <AnimatePresence>
+          {generatedTrack && (
+            <InlineTrackPlayer
+              track={generatedTrack}
+              onDismiss={() => setGeneratedTrack(null)}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Create Another */}
+        {generatedTrack && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex justify-center"
+          >
+            <Button
+              onClick={() => setGeneratedTrack(null)}
+              variant="outline"
+              className="text-zinc-400 border-zinc-700 hover:text-white hover:border-zinc-500 rounded-xl"
+            >
+              Create Another Track
+            </Button>
+          </motion.div>
+        )}
       </div>
     </div>
   );
