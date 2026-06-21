@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, Download, Music, X, Loader2 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
+import TrackVersionManager from "./TrackVersionManager";
 
 const genreColors = {
   pop: "#EC4899", edm: "#8B5CF6", hip_hop: "#F59E0B", rock: "#EF4444",
@@ -9,7 +10,7 @@ const genreColors = {
   jazz: "#F97316", rnb: "#E879F9", folk: "#22C55E", metal: "#DC2626",
 };
 
-export default function InlineTrackPlayer({ track, onDismiss }) {
+export default function InlineTrackPlayer({ track, onDismiss, onSwitchVersion }) {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -153,6 +154,9 @@ export default function InlineTrackPlayer({ track, onDismiss }) {
             {isDownloading ? "Downloading..." : "Download MP3"}
           </button>
         </div>
+
+        {/* Version manager */}
+        <TrackVersionManager track={track} onSwitchVersion={onSwitchVersion} />
       </div>
     </motion.div>
   );

@@ -385,6 +385,7 @@ export default function Create() {
             <InlineTrackPlayer
               track={generatedTrack}
               onDismiss={() => setGeneratedTrack(null)}
+              onSwitchVersion={(updatedTrack) => setGeneratedTrack(updatedTrack)}
             />
           )}
         </AnimatePresence>
