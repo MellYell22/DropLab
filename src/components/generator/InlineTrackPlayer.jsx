@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, Download, Music, X } from "lucide-react";
+import { Play, Pause, Download, Music, X, Loader2 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 
 const genreColors = {
@@ -50,6 +50,29 @@ export default function InlineTrackPlayer({ track, onDismiss }) {
       const newTime = (value / 100) * duration;
       audioRef.current.currentTime = newTime;
       setProgress(value);
+    }
+  };
+
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownload = async () => {
+    if (!track?.audio_url) return;
+    setIsDownloading(true);
+    try {
+      const response = await fetch(track.audio_url);
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${track.title || "track"}.mp3`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Download failed:", err);
+    } finally {
+      setIsDownloading(false);
     }
   };
 
@@ -121,14 +144,14 @@ export default function InlineTrackPlayer({ track, onDismiss }) {
             {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
           </motion.button>
           
-          <a
-            href={track.audio_url}
-            download={`${track.title}.mp3`}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-300 text-sm font-medium transition-colors"
+          <button
+            onClick={handleDownload}
+            disabled={isDownloading}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-300 text-sm font-medium transition-colors disabled:opacity-50"
           >
-            <Download className="w-4 h-4" />
-            Download MP3
-          </a>
+            {isDownloading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
+            {isDownloading ? "Downloading..." : "Download MP3"}
+          </button>
         </div>
       </div>
     </motion.div>
