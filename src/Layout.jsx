@@ -77,7 +77,7 @@ export default function Layout({ children, currentPageName }) {
   }, [currentTrack, isPlaying]);
 
   return (
-    <div className="min-h-screen bg-[#0a0c12] text-white noise-bg">
+    <div className="min-h-screen bg-[#030407] text-white noise-bg">
       {/* Top gradient glow — matches GitHub header style */}
       <div className="header-glow" />
       <style>{`
@@ -175,7 +175,7 @@ export default function Layout({ children, currentPageName }) {
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
-              className="md:hidden fixed top-14 left-0 right-0 z-40 border-b border-white/5 bg-[#0a0c12]/95 backdrop-blur-xl"
+              className="md:hidden fixed top-14 left-0 right-0 z-40 border-b border-white/5 bg-[#030407]/95 backdrop-blur-xl"
             >
               <div className="p-3 space-y-1">
                 {navItems.map((item) => {

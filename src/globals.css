@@ -3,24 +3,24 @@
 @tailwind utilities;
 
 :root {
-  --background: 220 15% 5%;
+  --background: 225 25% 2%;
   --foreground: 0 0% 95%;
-  --card: 220 15% 7%;
+  --card: 225 25% 3%;
   --card-foreground: 0 0% 95%;
-  --popover: 220 15% 7%;
+  --popover: 225 25% 3%;
   --popover-foreground: 0 0% 95%;
   --primary: 217 70% 55%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 220 15% 12%;
+  --secondary: 225 25% 5%;
   --secondary-foreground: 0 0% 95%;
-  --muted: 220 15% 14%;
-  --muted-foreground: 220 5% 55%;
+  --muted: 225 25% 6%;
+  --muted-foreground: 225 10% 55%;
   --accent: 200 84% 45%;
   --accent-foreground: 0 0% 100%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
-  --border: 220 15% 14%;
-  --input: 220 15% 14%;
+  --border: 225 25% 8%;
+  --input: 225 25% 8%;
   --ring: 217 70% 55%;
   --radius: 0.75rem;
 }
@@ -73,7 +73,7 @@
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: hsl(220 15% 14%) transparent;
+  scrollbar-color: hsl(225 25% 8%) transparent;
 }
 
 body {
@@ -110,15 +110,15 @@ body {
 }
 
 .glass {
-  background: rgba(13, 17, 26, 0.7);
+  background: rgba(3, 4, 7, 0.72);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(88, 28, 135, 0.12);
 }
 
 .glass-strong {
-  background: rgba(13, 17, 26, 0.85);
+  background: rgba(3, 4, 7, 0.88);
   backdrop-filter: blur(30px);
-  border: 1px solid rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(88, 28, 135, 0.16);
 }
 
 .gradient-text {
@@ -141,11 +141,16 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 320px;
+  height: 420px;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(6, 182, 212, 0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 50% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 55%),
-    radial-gradient(ellipse 30% 25% at 50% 5%, rgba(99, 102, 241, 0.06) 0%, transparent 50%);
+    /* subtle cyan-blue pinpoint at very top center */
+    radial-gradient(ellipse 18% 12% at 50% 3%, rgba(34, 211, 238, 0.11) 0%, transparent 50%),
+    /* deep purple horizontal band — upper hero area */
+    radial-gradient(ellipse 85% 32% at 50% 28%, rgba(88, 28, 135, 0.16) 0%, transparent 55%),
+    /* darker indigo band slightly below for depth */
+    radial-gradient(ellipse 75% 28% at 50% 38%, rgba(49, 46, 129, 0.10) 0%, transparent 50%),
+    /* soft vignette — darken edges */
+    radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.6) 100%);
   pointer-events: none;
   z-index: 0;
 }
