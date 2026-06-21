@@ -35,7 +35,7 @@ export default function Home() {
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-1/4 w-96 h-96 rounded-full bg-blue-600/10 blur-[120px]" />
           <div className="absolute top-40 right-1/4 w-80 h-80 rounded-full bg-cyan-500/8 blur-[100px]" />
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-64 bg-gradient-to-t from-[hsl(240,10%,4%)] to-transparent" />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-64 bg-gradient-to-t from-black to-transparent" />
         </div>
 
         <motion.div
@@ -88,7 +88,7 @@ export default function Home() {
           transition={{ delay: 0.6 }}
           className="relative z-10 w-full max-w-2xl mt-12"
         >
-          <WaveformVisualizer isPlaying={true} color="#8B5CF6" bars={60} height={50} />
+          <WaveformVisualizer isPlaying={true} color="#3B82F6" bars={60} height={50} />
         </motion.div>
       </section>
 

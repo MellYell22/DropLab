@@ -48,17 +48,17 @@ export default function GeneratingOverlay({ prompt }) {
           <motion.div
             animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-600/30 via-emerald-500/20 to-sky-500/30 blur-2xl"
+            className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-600/30 via-cyan-500/20 to-sky-500/30 blur-2xl"
           />
           <motion.div
             animate={{ scale: [1.1, 0.9, 1.1] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute inset-4 rounded-full bg-gradient-to-br from-blue-600 to-emerald-500 opacity-60 blur-lg"
+            className="absolute inset-4 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 opacity-60 blur-lg"
           />
           <motion.div
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute inset-8 rounded-full bg-gradient-to-br from-blue-500 to-emerald-400 shadow-2xl"
+            className="absolute inset-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 shadow-2xl"
           />
         </div>
 
@@ -77,13 +77,13 @@ export default function GeneratingOverlay({ prompt }) {
         </div>
 
         <div className="w-64">
-          <WaveformVisualizer isPlaying={true} color="#8B5CF6" bars={30} height={32} />
+          <WaveformVisualizer isPlaying={true} color="#3B82F6" bars={30} height={32} />
         </div>
 
         <div className="w-full max-w-xs space-y-2">
           <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
             <motion.div
-              className="h-full bg-gradient-to-r from-blue-500 to-emerald-500"
+              className="h-full bg-gradient-to-r from-blue-500 to-cyan-500"
               initial={{ width: "0%" }}
               animate={{ width: `${progress}%` }}
               transition={{ duration: 0.5 }}

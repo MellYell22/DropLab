@@ -49,7 +49,7 @@ export default function Explore() {
           animate={{ opacity: 1, y: 0 }}
           className="relative overflow-hidden rounded-3xl p-8 sm:p-12"
           style={{
-            background: "linear-gradient(135deg, rgba(139,92,246,0.15), rgba(6,214,160,0.1), rgba(56,189,248,0.1))",
+            background: "linear-gradient(135deg, rgba(59,130,246,0.15), rgba(6,182,212,0.1), rgba(96,165,250,0.1))",
           }}
         >
           <div className="relative z-10">

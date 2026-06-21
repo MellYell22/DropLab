@@ -41,7 +41,7 @@ const AuthenticatedApp = () => {
   }
 
   const LoadingFallback = () => (
-    <div className="fixed inset-0 flex items-center justify-center bg-[hsl(220,15%,5%)]">
+    <div className="fixed inset-0 flex items-center justify-center bg-transparent">
       <div className="w-8 h-8 border-4 border-blue-500/20 border-t-blue-400 rounded-full animate-spin" />
     </div>
   );

@@ -78,7 +78,7 @@ export default function Marketplace() {
           animate={{ opacity: 1, y: 0 }}
           className="relative overflow-hidden rounded-3xl p-8 sm:p-12"
           style={{
-            background: "linear-gradient(135deg, rgba(139,92,246,0.15), rgba(236,72,153,0.1))",
+            background: "linear-gradient(135deg, rgba(59,130,246,0.15), rgba(6,182,212,0.1))",
           }}
         >
           <div className="relative z-10">

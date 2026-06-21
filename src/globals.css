@@ -2,94 +2,98 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===== Blue-to-Black Gradient Theme ===== */
+/* Single source of truth for all global styling */
+
 :root {
-  --background: 220 15% 5%;
-  --foreground: 0 0% 95%;
-  --card: 220 15% 7%;
-  --card-foreground: 0 0% 95%;
-  --popover: 220 15% 7%;
-  --popover-foreground: 0 0% 95%;
-  --primary: 217 70% 55%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 220 15% 12%;
-  --secondary-foreground: 0 0% 95%;
-  --muted: 220 15% 14%;
-  --muted-foreground: 220 5% 55%;
-  --accent: 200 84% 45%;
-  --accent-foreground: 0 0% 100%;
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 100%;
-  --border: 220 15% 14%;
-  --input: 220 15% 14%;
-  --ring: 217 70% 55%;
+  --bg-top: #1E3A8A;
+  --bg-mid: #0F172A;
+  --bg-bottom: #000000;
+
+  --text-primary: #FFFFFF;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+
+  --blue-400: #60A5FA;
+  --blue-500: #3B82F6;
+  --blue-600: #2563EB;
+  --cyan-400: #22D3EE;
+  --cyan-500: #06B6D4;
+
+  --card-bg: rgba(15, 23, 42, 0.55);
+  --card-border: rgba(59, 130, 246, 0.12);
+  --card-bg-strong: rgba(15, 23, 42, 0.75);
+  --card-border-strong: rgba(59, 130, 246, 0.18);
+
   --radius: 0.75rem;
 }
 
-/* System light mode */
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: 0 0% 98%;
-    --foreground: 240 10% 10%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 10%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 10%;
-    --primary: 217 70% 50%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 5% 96%;
-    --secondary-foreground: 220 10% 15%;
-    --muted: 220 5% 95%;
-    --muted-foreground: 220 4% 46%;
-    --accent: 200 84% 40%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 57%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 220 6% 90%;
-    --input: 220 6% 92%;
-    --ring: 217 70% 50%;
-  }
-
-  body {
-    background: hsl(0 0% 98%);
-    color: hsl(240 10% 10%);
-  }
-
-  .glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(59, 130, 246, 0.08);
-  }
-
-  .glass-strong {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(30px);
-    border: 1px solid rgba(59, 130, 246, 0.1);
-  }
-
-  .noise-bg::before {
-    opacity: 0.01;
-  }
+/* ===== Base Body ===== */
+body {
+  background: linear-gradient(180deg, #1E3A8A 0%, #0F172A 40%, #000000 100%);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: hsl(220 15% 14%) transparent;
+  scrollbar-color: rgba(59, 130, 246, 0.2) transparent;
 }
 
-body {
-  background: hsl(var(--background));
-  color: hsl(var(--foreground));
-  font-family: 'Inter', system-ui, sans-serif;
+/* ===== Glassmorphism Cards ===== */
+.glass {
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
 }
 
-/* Touch target minimum 44px for all interactive elements */
-@media (pointer: coarse) {
-  button, a, [role="button"], input[type="button"], input[type="submit"] {
-    min-height: 44px;
-    min-width: 44px;
-  }
+.glass-strong {
+  background: var(--card-bg-strong);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid var(--card-border-strong);
+  border-radius: var(--radius);
 }
 
+/* ===== Gradient Utilities ===== */
+.gradient-text {
+  background: linear-gradient(135deg, #60A5FA, #06B6D4, #3B82F6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-blue {
+  background: linear-gradient(135deg, #3B82F6, #60A5FA);
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, #06B6D4, #38BDF8);
+}
+
+.gradient-purple {
+  background: linear-gradient(135deg, #3B82F6, #60A5FA);
+}
+
+/* ===== Noise Texture Overlay ===== */
+.noise-bg {
+  position: relative;
+}
+
+.noise-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== Animations ===== */
 @keyframes pulse-glow {
   0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
   50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.6); }
@@ -109,42 +113,14 @@ body {
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
-.glass {
-  background: rgba(13, 17, 26, 0.7);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(59, 130, 246, 0.1);
+/* ===== Accessibility: Touch targets ===== */
+@media (pointer: coarse) {
+  button, a, [role="button"], input[type="button"], input[type="submit"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
 
-.glass-strong {
-  background: rgba(13, 17, 26, 0.85);
-  backdrop-filter: blur(30px);
-  border: 1px solid rgba(59, 130, 246, 0.15);
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, #3B82F6, #06B6D4, #60A5FA);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-purple {
-  background: linear-gradient(135deg, #3B82F6, #60A5FA);
-}
-
-.gradient-accent {
-  background: linear-gradient(135deg, #06B6D4, #38BDF8);
-}
-
-.noise-bg {
-  position: relative;
-}
-
-.noise-bg::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
-}
+/* ===== Hide scrollbar utility ===== */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

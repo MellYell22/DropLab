@@ -77,7 +77,7 @@ export default function Layout({ children, currentPageName }) {
   }, [currentTrack, isPlaying]);
 
   return (
-    <div className="min-h-screen bg-[hsl(220,15%,5%)] text-white noise-bg">
+    <div className="min-h-screen text-white noise-bg">
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
