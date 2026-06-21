@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { BarChart3, TrendingUp, DollarSign, Download, Play, Heart, Music, Dna, ShoppingBag, Star, Loader2, Trash2, AlertTriangle, User, CheckCircle2, XCircle } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import moment from "moment";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// Card components replaced with dark glass divs for consistent dark theme
 import PullToRefresh from "../components/shared/PullToRefresh";
 import DashboardTrackList from "../components/analytics/DashboardTrackList";
 
@@ -160,14 +160,14 @@ export default function Analytics() {
         </div>
 
         {/* Revenue Trend Chart */}
-        <Card className="glass border-white/10">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+        <div className="glass rounded-2xl border border-white/[0.06]">
+          <div className="px-5 pt-5 pb-3 border-b border-white/[0.04]">
+            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-green-400" />
               Revenue Trend — Last 30 Days
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
+            </h3>
+          </div>
+          <div className="p-5">
             {hasRevenueData ? (
               <ResponsiveContainer width="100%" height={280}>
                 <BarChart data={dailyRevenue} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
@@ -180,7 +180,7 @@ export default function Analytics() {
                   <YAxis tick={{ fontSize: 11, fill: "#71717a" }} tickFormatter={(v) => `$${v}`} />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: "#18181b",
+                      backgroundColor: "#0d0d14",
                       border: "1px solid rgba(59,130,246,0.2)",
                       borderRadius: "12px",
                       fontSize: "13px",
@@ -194,28 +194,27 @@ export default function Analytics() {
             ) : (
               <p className="text-sm text-zinc-500 text-center py-12">No revenue data yet. Start selling to see your earnings trend.</p>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Charts Row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Top Tracks */}
-          <Card className="glass border-white/10">
-            <CardHeader className="bg-[hsl(var(--foreground))]">
-              <CardTitle className="text-white flex items-center gap-2">
+          <div className="glass rounded-2xl border border-white/[0.06]">
+            <div className="px-5 pt-5 pb-3 border-b border-white/[0.04]">
+              <h3 className="text-sm font-semibold text-white flex items-center gap-2">
                 <Music className="w-4 h-4 text-blue-400" />
                 Top Performing Tracks
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 bg-[hsl(var(--popover-foreground))]">
+              </h3>
+            </div>
+            <div className="p-4 space-y-1">
               {topTracks.length === 0 ?
-                <p className="text-sm text-zinc-500 text-center py-8">No tracks yet</p> :
-
+                <p className="text-sm text-zinc-600 text-center py-8">No tracks yet</p> :
                 topTracks.map((track, i) =>
-                <div key={track.id} className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors">
-                    <span className="text-lg font-bold text-zinc-600 w-6">{i + 1}</span>
+                <div key={track.id} className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/[0.04] transition-colors">
+                    <span className="text-sm font-bold text-zinc-600 w-5 text-center">{i + 1}</span>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-white truncate">{track.title}</p>
+                      <p className="text-sm font-medium text-zinc-100 truncate">{track.title}</p>
                       <div className="flex items-center gap-3 mt-1 text-xs text-zinc-500">
                         <span className="flex items-center gap-1">
                           <Play className="w-3 h-3" />
@@ -227,38 +226,33 @@ export default function Analytics() {
                         </span>
                       </div>
                     </div>
-                    <div className="h-8 w-24 flex items-end gap-0.5">
+                    <div className="h-8 w-20 flex items-end gap-0.5">
                       {[...Array(7)].map((_, j) =>
-                    <div
-                      key={j}
-                      className="flex-1 bg-blue-500/30 rounded-sm"
-                      style={{ height: (20 + Math.random() * 80) + "%" }} />
-
-                    )}
+                        <div key={j} className="flex-1 bg-blue-500/30 rounded-sm" style={{ height: (20 + Math.random() * 80) + "%" }} />
+                      )}
                     </div>
                   </div>
                 )
-                }
-            </CardContent>
-          </Card>
+              }
+            </div>
+          </div>
 
           {/* Top Style DNA */}
-          <Card className="glass border-white/10">
-            <CardHeader className="bg-[hsl(var(--foreground))]">
-              <CardTitle className="text-white flex items-center gap-2">
+          <div className="glass rounded-2xl border border-white/[0.06]">
+            <div className="px-5 pt-5 pb-3 border-b border-white/[0.04]">
+              <h3 className="text-sm font-semibold text-white flex items-center gap-2">
                 <Dna className="w-4 h-4 text-cyan-400" />
                 Popular Style DNA
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 bg-[hsl(var(--popover-foreground))]">
+              </h3>
+            </div>
+            <div className="p-4 space-y-1">
               {topStyles.length === 0 ?
-                <p className="text-sm text-zinc-500 text-center py-8">No styles yet</p> :
-
+                <p className="text-sm text-zinc-600 text-center py-8">No styles yet</p> :
                 topStyles.map((style, i) =>
-                <div key={style.id} className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors">
-                    <span className="text-lg font-bold text-zinc-600 w-6">{i + 1}</span>
+                <div key={style.id} className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/[0.04] transition-colors">
+                    <span className="text-sm font-bold text-zinc-600 w-5 text-center">{i + 1}</span>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-white truncate">{style.name}</p>
+                      <p className="text-sm font-medium text-zinc-100 truncate">{style.name}</p>
                       <div className="flex items-center gap-2 mt-1">
                         <span className="text-[10px] px-2 py-0.5 rounded-md bg-cyan-500/15 text-cyan-400">
                           {style.genre}
@@ -269,41 +263,41 @@ export default function Analytics() {
                     <TrendingUp className="w-4 h-4 text-cyan-400" />
                   </div>
                 )
-                }
-            </CardContent>
-          </Card>
+              }
+            </div>
+          </div>
         </div>
 
         {/* Full Track Library */}
-        <Card className="glass border-white/10">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+        <div className="glass rounded-2xl border border-white/[0.06]">
+          <div className="px-5 pt-5 pb-3 border-b border-white/[0.04]">
+            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
               <Music className="w-4 h-4 text-blue-400" />
               Track Library
-              <span className="text-xs text-zinc-500 font-normal ml-1">({tracks.length} tracks)</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
+              <span className="text-xs text-zinc-600 font-normal ml-1">({tracks.length} tracks)</span>
+            </h3>
+          </div>
+          <div className="p-4">
             <DashboardTrackList tracks={[...tracks].sort((a, b) => new Date(b.created_date) - new Date(a.created_date))} />
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Marketplace Performance */}
         {items.length > 0 &&
-          <Card className="glass border-white/10">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
+          <div className="glass rounded-2xl border border-white/[0.06]">
+            <div className="px-5 pt-5 pb-3 border-b border-white/[0.04]">
+              <h3 className="text-sm font-semibold text-white flex items-center gap-2">
                 <ShoppingBag className="w-4 h-4 text-blue-400" />
                 Marketplace Items
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
+              </h3>
+            </div>
+            <div className="p-5">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {items.map((item) =>
-                <div key={item.id} className="glass-strong rounded-xl p-4 space-y-3">
+                <div key={item.id} className="glass-strong rounded-xl p-4 space-y-3 border border-white/[0.05]">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <h4 className="text-sm font-semibold text-white">{item.title}</h4>
+                        <h4 className="text-sm font-semibold text-zinc-100">{item.title}</h4>
                         <p className="text-[10px] text-zinc-500 mt-1">{item.type?.replace("_", " ")}</p>
                       </div>
                       <span className="text-xs font-bold text-cyan-400">${item.price}</span>
@@ -311,11 +305,11 @@ export default function Analytics() {
                     <div className="grid grid-cols-3 gap-2 pt-2 border-t border-white/5">
                       <div>
                         <p className="text-xs text-zinc-600">Sales</p>
-                        <p className="text-sm font-bold text-white">{item.sales || 0}</p>
+                        <p className="text-sm font-bold text-zinc-100">{item.sales || 0}</p>
                       </div>
                       <div>
                         <p className="text-xs text-zinc-600">Rating</p>
-                        <p className="text-sm font-bold text-white">{item.rating || 0}</p>
+                        <p className="text-sm font-bold text-zinc-100">{item.rating || 0}</p>
                       </div>
                       <div>
                         <p className="text-xs text-zinc-600">Revenue</p>
@@ -327,38 +321,36 @@ export default function Analytics() {
                   </div>
                 )}
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
           }
 
         {/* Revenue Breakdown */}
         {purchases.length > 0 &&
-          <Card className="glass border-white/10">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
+          <div className="glass rounded-2xl border border-white/[0.06]">
+            <div className="px-5 pt-5 pb-3 border-b border-white/[0.04]">
+              <h3 className="text-sm font-semibold text-white flex items-center gap-2">
                 <DollarSign className="w-4 h-4 text-green-400" />
                 Recent Sales
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                {purchases.slice(-10).reverse().map((purchase) =>
-                <div key={purchase.id} className="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 transition-colors">
-                    <div className="flex-1">
-                      <p className="text-sm text-white">Item ID: {purchase.item_id?.slice(0, 8)}...</p>
-                      <p className="text-xs text-zinc-500 mt-0.5">
-                        {new Date(purchase.created_date).toLocaleDateString()}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm font-bold text-green-400">+${purchase.creator_revenue?.toFixed(2)}</p>
-                      <p className="text-xs text-zinc-500">${purchase.amount?.toFixed(2)} total</p>
-                    </div>
+              </h3>
+            </div>
+            <div className="p-4 space-y-1">
+              {purchases.slice(-10).reverse().map((purchase) =>
+              <div key={purchase.id} className="flex items-center justify-between p-3 rounded-xl hover:bg-white/[0.04] transition-colors">
+                  <div className="flex-1">
+                    <p className="text-sm text-zinc-200">Item ID: {purchase.item_id?.slice(0, 8)}...</p>
+                    <p className="text-xs text-zinc-500 mt-0.5">
+                      {new Date(purchase.created_date).toLocaleDateString()}
+                    </p>
                   </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+                  <div className="text-right">
+                    <p className="text-sm font-bold text-green-400">+${purchase.creator_revenue?.toFixed(2)}</p>
+                    <p className="text-xs text-zinc-500">${purchase.amount?.toFixed(2)} total</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
           }
 
         {/* Profile / Account Section */}
