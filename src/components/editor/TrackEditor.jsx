@@ -81,7 +81,7 @@ export default function TrackEditor({ track, onClose }) {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all ${
                     activeTab === tab.id
-                      ? "text-violet-300 border-b-2 border-violet-500"
+                      ? "text-blue-300 border-b-2 border-blue-500"
                       : "text-zinc-500 hover:text-zinc-300"
                   }`}
                 >

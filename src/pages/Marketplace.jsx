@@ -83,7 +83,7 @@ export default function Marketplace() {
         >
           <div className="relative z-10">
             <div className="flex items-center gap-2 mb-3">
-              <ShoppingBag className="w-6 h-6 text-violet-400" />
+              <ShoppingBag className="w-6 h-6 text-blue-400" />
               <h1 className="text-3xl sm:text-4xl font-bold text-white">Marketplace</h1>
             </div>
             <p className="text-sm text-zinc-400 max-w-md">
@@ -110,7 +110,7 @@ export default function Marketplace() {
                 onClick={() => setTypeFilter(type)}
                 className={`px-4 py-2 rounded-xl text-xs font-medium transition-all ${
                   typeFilter === type
-                    ? "bg-violet-500/20 text-violet-300 ring-1 ring-violet-500/30"
+                    ? "bg-blue-500/20 text-blue-300 ring-1 ring-blue-500/30"
                     : "text-zinc-500 hover:text-zinc-300 hover:bg-white/5"
                 }`}
               >
@@ -124,7 +124,7 @@ export default function Marketplace() {
         <PullToRefresh onRefresh={handleRefresh} isLoading={isLoading}>
         {isLoading ? (
           <div className="flex justify-center py-20">
-            <Loader2 className="w-6 h-6 text-violet-400 animate-spin" />
+            <Loader2 className="w-6 h-6 text-blue-400 animate-spin" />
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -139,8 +139,8 @@ export default function Marketplace() {
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-10 h-10 rounded-xl bg-violet-500/15 flex items-center justify-center">
-                        <Icon className="w-5 h-5 text-violet-400" />
+                      <div className="w-10 h-10 rounded-xl bg-blue-500/15 flex items-center justify-center">
+                        <Icon className="w-5 h-5 text-blue-400" />
                       </div>
                       <div>
                         <h3 className="text-sm font-semibold text-white">{item.title}</h3>
@@ -149,7 +149,7 @@ export default function Marketplace() {
                         </p>
                       </div>
                     </div>
-                    <Badge className="bg-emerald-500/20 text-emerald-400 border-0">
+                    <Badge className="bg-cyan-500/20 text-cyan-400 border-0">
                       {item.price} credits
                     </Badge>
                   </div>

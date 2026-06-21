@@ -54,7 +54,7 @@ export default function Analytics() {
   if (!user || tracksLoading || stylesLoading || purchasesLoading || itemsLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="w-6 h-6 text-violet-400 animate-spin" />
+        <Loader2 className="w-6 h-6 text-blue-400 animate-spin" />
       </div>);
 
   }
@@ -95,7 +95,7 @@ export default function Analytics() {
 
   const stats = [
   { label: "Total Revenue", value: `$${totalRevenue.toFixed(2)}`, icon: DollarSign, color: "text-green-400", bg: "bg-green-500/15" },
-  { label: "Total Sales", value: totalSales, icon: ShoppingBag, color: "text-violet-400", bg: "bg-violet-500/15" },
+  { label: "Total Sales", value: totalSales, icon: ShoppingBag, color: "text-blue-400", bg: "bg-blue-500/15" },
   { label: "Total Plays", value: totalPlays.toLocaleString(), icon: Play, color: "text-blue-400", bg: "bg-blue-500/15" },
   { label: "Total Likes", value: totalLikes, icon: Heart, color: "text-pink-400", bg: "bg-pink-500/15" },
   { label: "Downloads", value: Math.floor(totalDownloads), icon: Download, color: "text-amber-400", bg: "bg-amber-500/15" },
@@ -114,7 +114,7 @@ export default function Analytics() {
             
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <BarChart3 className="w-6 h-6 text-violet-400" />
+              <BarChart3 className="w-6 h-6 text-blue-400" />
               <h1 className="text-3xl font-bold gradient-text text-[#3fdec7]">Creator Analytics</h1>
             </div>
             <p className="text-sm text-zinc-500">Track your performance and earnings</p>
@@ -126,7 +126,7 @@ export default function Analytics() {
                 onClick={() => setTimeRange(range)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                 timeRange === range ?
-                "bg-violet-500/20 text-violet-300" :
+                "bg-blue-500/20 text-blue-300" :
                 "text-zinc-500 hover:text-zinc-300 hover:bg-white/5"}`
                 }>
                 
@@ -180,14 +180,14 @@ export default function Analytics() {
                   <Tooltip
                     contentStyle={{
                       backgroundColor: "#18181b",
-                      border: "1px solid rgba(139,92,246,0.2)",
+                      border: "1px solid rgba(59,130,246,0.2)",
                       borderRadius: "12px",
                       fontSize: "13px",
                     }}
-                    formatter={(value) => [`$${Number(value).toFixed(2)}", "Revenue"]}
+                    formatter={(value) => ["$" + Number(value).toFixed(2), "Revenue"]}
                     labelStyle={{ color: "#a1a1aa" }}
                   />
-                  <Bar dataKey="revenue" fill="#8B5CF6" radius={[4, 4, 0, 0]} maxBarSize={24} />
+                  <Bar dataKey="revenue" fill="#3B82F6" radius={[4, 4, 0, 0]} maxBarSize={24} />
                 </BarChart>
               </ResponsiveContainer>
             ) : (
@@ -202,7 +202,7 @@ export default function Analytics() {
           <Card className="glass border-white/10">
             <CardHeader className="bg-[hsl(var(--foreground))]">
               <CardTitle className="text-white flex items-center gap-2">
-                <Music className="w-4 h-4 text-violet-400" />
+                <Music className="w-4 h-4 text-blue-400" />
                 Top Performing Tracks
               </CardTitle>
             </CardHeader>
@@ -230,7 +230,7 @@ export default function Analytics() {
                       {[...Array(7)].map((_, j) =>
                     <div
                       key={j}
-                      className="flex-1 bg-violet-500/30 rounded-sm"
+                      className="flex-1 bg-blue-500/30 rounded-sm"
                       style={{ height: (20 + Math.random() * 80) + "%" }} />
 
                     )}
@@ -245,7 +245,7 @@ export default function Analytics() {
           <Card className="glass border-white/10">
             <CardHeader className="bg-[hsl(var(--foreground))]">
               <CardTitle className="text-white flex items-center gap-2">
-                <Dna className="w-4 h-4 text-emerald-400" />
+                <Dna className="w-4 h-4 text-cyan-400" />
                 Popular Style DNA
               </CardTitle>
             </CardHeader>
@@ -259,13 +259,13 @@ export default function Analytics() {
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white truncate">{style.name}</p>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-[10px] px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400">
+                        <span className="text-[10px] px-2 py-0.5 rounded-md bg-cyan-500/15 text-cyan-400">
                           {style.genre}
                         </span>
                         <span className="text-xs text-zinc-500">{style.uses || 0} uses</span>
                       </div>
                     </div>
-                    <TrendingUp className="w-4 h-4 text-emerald-400" />
+                    <TrendingUp className="w-4 h-4 text-cyan-400" />
                   </div>
                 )
                 }
@@ -278,7 +278,7 @@ export default function Analytics() {
           <Card className="glass border-white/10">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <ShoppingBag className="w-4 h-4 text-violet-400" />
+                <ShoppingBag className="w-4 h-4 text-blue-400" />
                 Marketplace Items
               </CardTitle>
             </CardHeader>
@@ -291,7 +291,7 @@ export default function Analytics() {
                         <h4 className="text-sm font-semibold text-white">{item.title}</h4>
                         <p className="text-[10px] text-zinc-500 mt-1">{item.type?.replace("_", " ")}</p>
                       </div>
-                      <span className="text-xs font-bold text-emerald-400">${item.price}</span>
+                      <span className="text-xs font-bold text-cyan-400">${item.price}</span>
                     </div>
                     <div className="grid grid-cols-3 gap-2 pt-2 border-t border-white/5">
                       <div>
@@ -304,7 +304,7 @@ export default function Analytics() {
                       </div>
                       <div>
                         <p className="text-xs text-zinc-600">Revenue</p>
-                        <p className="text-sm font-bold text-emerald-400">
+                        <p className="text-sm font-bold text-cyan-400">
                           ${((item.sales || 0) * item.price * (item.revenue_share / 100)).toFixed(0)}
                         </p>
                       </div>

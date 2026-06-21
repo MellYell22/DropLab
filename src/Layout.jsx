@@ -77,7 +77,7 @@ export default function Layout({ children, currentPageName }) {
   }, [currentTrack, isPlaying]);
 
   return (
-    <div className="min-h-screen bg-[hsl(240,10%,4%)] text-white noise-bg">
+    <div className="min-h-screen bg-[hsl(220,15%,5%)] text-white noise-bg">
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -98,7 +98,7 @@ export default function Layout({ children, currentPageName }) {
             )}
             {/* Logo */}
             <Link to={createPageUrl("Home")} className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl gradient-purple flex items-center justify-center shadow-lg shadow-violet-500/20">
+              <div className="w-8 h-8 rounded-xl gradient-purple flex items-center justify-center shadow-lg shadow-blue-500/20">
                 <Music className="w-4 h-4 text-white" />
               </div>
               <span className="text-sm font-bold tracking-tight hidden sm:block text-white">DropLab</span>
@@ -116,7 +116,7 @@ export default function Layout({ children, currentPageName }) {
                   to={createPageUrl(item.page)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                     isActive
-                      ? "bg-violet-500/15 text-violet-300"
+                      ? "bg-blue-500/15 text-blue-300"
                       : "text-zinc-500 hover:text-zinc-300 hover:bg-white/5"
                   }`}
                 >
@@ -131,7 +131,7 @@ export default function Layout({ children, currentPageName }) {
           <div className="flex items-center gap-2">
             {user ? (
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-violet-500 to-emerald-500 flex items-center justify-center text-[10px] font-bold">
+                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-[10px] font-bold">
                   {user.full_name?.[0]?.toUpperCase() || "U"}
                 </div>
               </div>
@@ -173,7 +173,7 @@ export default function Layout({ children, currentPageName }) {
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
-              className="md:hidden fixed top-14 left-0 right-0 z-40 border-b border-white/5 bg-[hsl(240,10%,6%)]"
+              className="md:hidden fixed top-14 left-0 right-0 z-40 border-b border-white/5 bg-[hsl(220,15%,7%)]"
             >
               <div className="p-3 space-y-1">
                 {navItems.map((item) => {
@@ -186,7 +186,7 @@ export default function Layout({ children, currentPageName }) {
                       onClick={() => setMobileMenuOpen(false)}
                       className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
                         isActive
-                          ? "bg-violet-500/15 text-violet-300"
+                          ? "bg-blue-500/15 text-blue-300"
                           : "text-zinc-500 hover:text-zinc-300"
                       }`}
                     >

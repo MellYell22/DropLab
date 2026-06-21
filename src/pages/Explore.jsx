@@ -58,8 +58,8 @@ export default function Explore() {
               Discover music created by the community. Find inspiration for your next track.
             </p>
           </div>
-          <div className="absolute -right-8 -bottom-8 w-40 h-40 rounded-full bg-violet-500/10 blur-3xl" />
-          <div className="absolute -left-4 -top-4 w-32 h-32 rounded-full bg-emerald-500/10 blur-3xl" />
+          <div className="absolute -right-8 -bottom-8 w-40 h-40 rounded-full bg-blue-500/10 blur-3xl" />
+          <div className="absolute -left-4 -top-4 w-32 h-32 rounded-full bg-cyan-500/10 blur-3xl" />
         </motion.div>
 
         {/* Tabs */}
@@ -72,7 +72,7 @@ export default function Explore() {
                 onClick={() => setTab(t.id)}
                 className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-medium transition-all ${
                   tab === t.id
-                    ? "bg-violet-500/20 text-violet-300 ring-1 ring-violet-500/30"
+                    ? "bg-blue-500/20 text-blue-300 ring-1 ring-blue-500/30"
                     : "text-zinc-500 hover:text-zinc-300 hover:bg-white/5"
                 }`}
               >
@@ -87,7 +87,7 @@ export default function Explore() {
         <PullToRefresh onRefresh={handleRefresh} isLoading={isLoading}>
         {isLoading ? (
           <div className="flex items-center justify-center py-32">
-            <Loader2 className="w-6 h-6 text-violet-400 animate-spin" />
+            <Loader2 className="w-6 h-6 text-blue-400 animate-spin" />
           </div>
         ) : tracks.length === 0 ? (
           <motion.div
@@ -95,8 +95,8 @@ export default function Explore() {
             animate={{ opacity: 1 }}
             className="flex flex-col items-center justify-center py-32 text-center"
           >
-            <div className="w-16 h-16 rounded-2xl bg-violet-500/10 flex items-center justify-center mb-4">
-              <Music className="w-7 h-7 text-violet-400" />
+            <div className="w-16 h-16 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-4">
+              <Music className="w-7 h-7 text-blue-400" />
             </div>
             <h3 className="text-lg font-semibold text-zinc-300">No public tracks yet</h3>
             <p className="text-sm text-zinc-500 mt-1">Be the first to share your creation</p>

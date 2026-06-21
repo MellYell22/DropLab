@@ -33,7 +33,7 @@ export default function BottomNav({ currentPageName, onTabChange }) {
             onClick={() => handleTab(item.page)}
             className={`flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl transition-all select-none min-h-[44px] min-w-[44px] justify-center ${
               isActive
-                ? "text-violet-400"
+                ? "text-blue-400"
                 : "text-zinc-500 hover:text-zinc-300"
             }`}
           >

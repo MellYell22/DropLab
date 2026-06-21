@@ -99,7 +99,7 @@ export default function Library() {
               onClick={() => setActiveGenre(g)}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
                 activeGenre === g
-                  ? "bg-violet-500/20 text-violet-300 ring-1 ring-violet-500/30"
+                  ? "bg-blue-500/20 text-blue-300 ring-1 ring-blue-500/30"
                   : "text-zinc-500 hover:text-zinc-300 hover:bg-white/5"
               }`}
             >
@@ -112,7 +112,7 @@ export default function Library() {
         <PullToRefresh onRefresh={handleRefresh} isLoading={isLoading}>
         {isLoading ? (
           <div className="flex items-center justify-center py-32">
-            <Loader2 className="w-6 h-6 text-violet-400 animate-spin" />
+            <Loader2 className="w-6 h-6 text-blue-400 animate-spin" />
           </div>
         ) : filteredTracks.length === 0 ? (
           <motion.div
@@ -120,8 +120,8 @@ export default function Library() {
             animate={{ opacity: 1 }}
             className="flex flex-col items-center justify-center py-32 text-center"
           >
-            <div className="w-16 h-16 rounded-2xl bg-violet-500/10 flex items-center justify-center mb-4">
-              <Music className="w-7 h-7 text-violet-400" />
+            <div className="w-16 h-16 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-4">
+              <Music className="w-7 h-7 text-blue-400" />
             </div>
             <h3 className="text-lg font-semibold text-zinc-300">No tracks yet</h3>
             <p className="text-sm text-zinc-500 mt-1">Create your first track to see it here</p>

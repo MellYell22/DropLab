@@ -136,7 +136,7 @@ export default function Create() {
           <h1 className="text-3xl sm:text-4xl font-bold gradient-text">Create Music</h1>
           <p className="text-sm text-zinc-500">Describe your vision and let AI compose it</p>
           {appliedStyle && (
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-violet-500/15 text-violet-300 text-xs">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/15 text-blue-300 text-xs">
               <Sparkles className="w-3 h-3" />
               Using style: {appliedStyle}
             </div>
@@ -165,7 +165,7 @@ export default function Create() {
           className="space-y-3"
         >
           <div className="flex items-center gap-2">
-            <Music className="w-4 h-4 text-violet-400" />
+            <Music className="w-4 h-4 text-blue-400" />
             <h2 className="text-sm font-semibold text-zinc-300">Genre</h2>
           </div>
           <GenreSelector selected={genre} onSelect={setGenre} />
@@ -208,7 +208,7 @@ export default function Create() {
         >
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-              <Clock className="w-4 h-4 text-violet-400" />
+              <Clock className="w-4 h-4 text-blue-400" />
               Track Length
             </h3>
             <span className="text-xs text-zinc-500">{duration}s</span>
@@ -221,7 +221,7 @@ export default function Create() {
                 onClick={() => setDuration(len)}
                 className={`py-2 rounded-lg text-xs font-medium transition-all ${
                   duration === len
-                    ? "bg-violet-500/20 text-violet-300 ring-1 ring-violet-500/30"
+                    ? "bg-blue-500/20 text-blue-300 ring-1 ring-blue-500/30"
                     : "text-zinc-500 hover:text-zinc-300 hover:bg-white/5"
                 }`}
               >
@@ -238,7 +238,7 @@ export default function Create() {
             <button
               onClick={() => setIsLoopable(!isLoopable)}
               className={`relative w-11 h-6 rounded-full transition-all ${
-                isLoopable ? "bg-violet-500" : "bg-zinc-700"
+                isLoopable ? "bg-blue-500" : "bg-zinc-700"
               }`}
             >
               <motion.div
@@ -257,7 +257,7 @@ export default function Create() {
           className="glass rounded-2xl p-5 space-y-4"
         >
           <div className="flex items-center gap-2">
-            <GitBranch className="w-4 h-4 text-emerald-400" />
+            <GitBranch className="w-4 h-4 text-cyan-400" />
             <h2 className="text-sm font-semibold text-zinc-300">Musical Theory</h2>
           </div>
           <AdvancedControls
@@ -316,7 +316,7 @@ export default function Create() {
               <div className="glass rounded-2xl p-5 space-y-4">
                 <div className="flex items-center justify-between">
                   <h2 className="text-sm font-semibold text-zinc-300">Tempo (BPM)</h2>
-                  <span className="text-sm tabular-nums text-violet-400 font-mono">{bpm}</span>
+                  <span className="text-sm tabular-nums text-blue-400 font-mono">{bpm}</span>
                 </div>
                 <input
                   type="range"
@@ -324,7 +324,7 @@ export default function Create() {
                   max={200}
                   value={bpm}
                   onChange={(e) => setBpm(Number(e.target.value))}
-                  className="w-full accent-violet-500"
+                  className="w-full accent-blue-500"
                 />
                 <div className="flex justify-between text-[10px] text-zinc-600">
                   <span>60 - Slow</span>

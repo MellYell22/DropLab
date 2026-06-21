@@ -243,7 +243,7 @@ export default function TrackShareDialog({ track, onClose }) {
             </div>
           ) : (
             <div className="rounded-xl flex items-center justify-center" style={{ width: 240, height: 426, background: "#12121f" }}>
-              <div className="w-8 h-8 border-2 border-violet-500/20 border-t-violet-400 rounded-full animate-spin" />
+              <div className="w-8 h-8 border-2 border-blue-500/20 border-t-blue-400 rounded-full animate-spin" />
             </div>
           )}
         </div>

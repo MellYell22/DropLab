@@ -87,7 +87,7 @@ export default function MasteringControls({ track }) {
               onClick={() => setSettings({...settings, platform})}
               className={`py-2 rounded-lg text-xs font-medium transition-all capitalize ${
                 settings.platform === platform
-                  ? "bg-violet-500/20 text-violet-300"
+                  ? "bg-blue-500/20 text-blue-300"
                   : "text-zinc-500 hover:text-zinc-300 hover:bg-white/5"
               }`}
             >

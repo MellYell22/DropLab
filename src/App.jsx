@@ -24,7 +24,7 @@ const AuthenticatedApp = () => {
   if (isLoadingPublicSettings || isLoadingAuth) {
     return (
       <div className="fixed inset-0 flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-slate-200 border-t-slate-800 rounded-full animate-spin"></div>
+        <div className="w-8 h-8 border-4 border-blue-500/20 border-t-blue-400 rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -41,8 +41,8 @@ const AuthenticatedApp = () => {
   }
 
   const LoadingFallback = () => (
-    <div className="fixed inset-0 flex items-center justify-center bg-[hsl(240,10%,4%)]">
-      <div className="w-8 h-8 border-4 border-violet-500/20 border-t-violet-400 rounded-full animate-spin" />
+    <div className="fixed inset-0 flex items-center justify-center bg-[hsl(220,15%,5%)]">
+      <div className="w-8 h-8 border-4 border-blue-500/20 border-t-blue-400 rounded-full animate-spin" />
     </div>
   );
 

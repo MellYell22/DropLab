@@ -134,7 +134,7 @@ export default function StyleDNA() {
         >
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <Dna className="w-6 h-6 text-violet-400" />
+              <Dna className="w-6 h-6 text-blue-400" />
               <h1 className="text-3xl font-bold gradient-text">Style DNA</h1>
             </div>
             <p className="text-sm text-zinc-500">Save and reuse your signature music styles</p>
@@ -151,7 +151,7 @@ export default function StyleDNA() {
         {/* Styles Grid */}
         {isLoading ? (
           <div className="flex justify-center py-20">
-            <Loader2 className="w-6 h-6 text-violet-400 animate-spin" />
+            <Loader2 className="w-6 h-6 text-blue-400 animate-spin" />
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -176,7 +176,7 @@ export default function StyleDNA() {
                 </div>
 
                 <div className="flex flex-wrap gap-2">
-                  <span className="text-[10px] px-2 py-1 rounded-md bg-violet-500/15 text-violet-400">
+                  <span className="text-[10px] px-2 py-1 rounded-md bg-blue-500/15 text-blue-400">
                     {style.genre}
                   </span>
                   <span className="text-[10px] px-2 py-1 rounded-md bg-white/5 text-zinc-500">
@@ -186,7 +186,7 @@ export default function StyleDNA() {
                     {style.vocal_type?.replace("_", " ")}
                   </span>
                   {style.uses > 0 && (
-                    <span className="text-[10px] px-2 py-1 rounded-md bg-emerald-500/15 text-emerald-400">
+                    <span className="text-[10px] px-2 py-1 rounded-md bg-cyan-500/15 text-cyan-400">
                       {style.uses} uses
                     </span>
                   )}
@@ -195,7 +195,7 @@ export default function StyleDNA() {
                 <div className="flex gap-2">
                   <Button
                     onClick={() => applyStyle(style)}
-                    className="flex-1 bg-violet-500/15 hover:bg-violet-500/25 text-violet-300 rounded-xl"
+                    className="flex-1 bg-blue-500/15 hover:bg-blue-500/25 text-blue-300 rounded-xl"
                   >
                     <Play className="w-3.5 h-3.5 mr-1.5" />
                     Use Style

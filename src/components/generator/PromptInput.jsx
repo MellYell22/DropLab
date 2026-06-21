@@ -18,7 +18,7 @@ export default function PromptInput({ value, onChange, onGenerate, isGenerating 
   return (
     <div className="relative space-y-3">
       <div className="relative group">
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-600/20 via-emerald-500/20 to-sky-500/20 rounded-2xl blur-lg opacity-0 group-focus-within:opacity-100 transition-opacity duration-500" />
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600/20 via-emerald-500/20 to-sky-500/20 rounded-2xl blur-lg opacity-0 group-focus-within:opacity-100 transition-opacity duration-500" />
         <div className="relative glass-strong rounded-2xl overflow-hidden">
           <textarea
             value={value}
@@ -33,7 +33,7 @@ export default function PromptInput({ value, onChange, onGenerate, isGenerating 
             <Button
               onClick={onGenerate}
               disabled={!value.trim() || isGenerating}
-              className="gradient-purple text-white rounded-xl px-5 py-2 text-sm font-semibold shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all disabled:opacity-40"
+              className="gradient-purple text-white rounded-xl px-5 py-2 text-sm font-semibold shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all disabled:opacity-40"
             >
               {isGenerating ? (
                 <>

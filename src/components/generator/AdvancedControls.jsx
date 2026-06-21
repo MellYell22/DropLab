@@ -23,7 +23,7 @@ export default function AdvancedControls({
       {/* Musical Key */}
       <div className="space-y-3">
         <div className="flex items-center gap-2">
-          <Music2 className="w-4 h-4 text-violet-400" />
+          <Music2 className="w-4 h-4 text-blue-400" />
           <h3 className="text-sm font-semibold text-zinc-300">Musical Key</h3>
         </div>
         <div className="grid grid-cols-6 gap-2">
@@ -33,7 +33,7 @@ export default function AdvancedControls({
               onClick={() => onKeyChange(key)}
               className={`py-2 rounded-lg text-xs font-medium transition-all ${
                 musicalKey === key
-                  ? "bg-violet-500/20 text-violet-300 ring-1 ring-violet-500/30"
+                  ? "bg-blue-500/20 text-blue-300 ring-1 ring-blue-500/30"
                   : "text-zinc-500 hover:text-zinc-300 hover:bg-white/5"
               }`}
             >
