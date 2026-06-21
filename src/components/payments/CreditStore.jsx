@@ -5,9 +5,9 @@ import { motion } from "framer-motion";
 import { Sparkles, Check, Loader2, CreditCard, ArrowRight, Shield } from "lucide-react";
 
 const creditPackages = [
-  { id: "price_basic", name: "10 Credits", price: 5, credits: 10, popular: false, color: "from-violet-500 to-purple-500", priceId: "price_1TkVfBA0mO1R25OFPuKzAD4f" },
-  { id: "price_popular", name: "50 Credits", price: 20, credits: 50, popular: true, color: "from-emerald-500 to-teal-500", priceId: "price_1TkVfBA0mO1R25OFT7wySJLf" },
-  { id: "price_pro", name: "150 Credits", price: 50, credits: 150, popular: false, color: "from-amber-500 to-orange-500", priceId: "price_1TkVfBA0mO1R25OFe4tCWKxL" },
+  { id: "price_basic", name: "10 Credits", price: 5, credits: 10, popular: false, color: "from-violet-500 to-purple-500", priceId: "price_1Tka3SGDw0P2L0A1piscjECac" },
+  { id: "price_popular", name: "50 Credits", price: 20, credits: 50, popular: true, color: "from-emerald-500 to-teal-500", priceId: "price_1Tka5kGDw0P2L0A1vpHLOv6Y" },
+  { id: "price_pro", name: "150 Credits", price: 50, credits: 150, popular: false, color: "from-amber-500 to-orange-500", priceId: "price_1Tka8AGDw0P2L0A1dBwqemKK" },
 ];
 
 export default function CreditStore() {
