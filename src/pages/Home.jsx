@@ -33,8 +33,8 @@ export default function Home() {
       <section className="relative px-4 pt-16 pb-24 flex flex-col items-center text-center radial-glow">
         {/* Background effects */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-1/4 w-96 h-96 rounded-full bg-blue-600/10 blur-[120px]" />
-          <div className="absolute top-40 right-1/4 w-80 h-80 rounded-full bg-cyan-500/8 blur-[100px]" />
+          <div className="absolute top-20 left-1/4 w-96 h-96 rounded-full blur-[120px]" style={{ background: "rgba(48, 147, 160, 0.10)" }} />
+          <div className="absolute top-40 right-1/4 w-80 h-80 rounded-full blur-[100px]" style={{ background: "rgba(29, 111, 187, 0.08)" }} />
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-64 bg-gradient-to-t from-black to-transparent" />
         </div>
 
@@ -49,7 +49,7 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-xs text-blue-300"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-xs text-[#3093A0]"
           >
             <Zap className="w-3 h-3" />
             AI Music Generation
@@ -61,19 +61,19 @@ export default function Home() {
             <span className="gradient-text">With Your Words</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-zinc-400 max-w-lg mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-[#CBD5E1] max-w-lg mx-auto leading-relaxed">
             Transform text prompts into studio-quality tracks. Full control over genre, mood, vocals, and structure.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
             <Link to={createPageUrl("Create")}>
-              <Button className="gradient-purple text-white px-8 py-6 text-base rounded-2xl shadow-2xl shadow-blue-500/20 hover:shadow-blue-500/40 transition-all">
+              <Button className="gradient-purple text-white px-8 py-6 text-base rounded-2xl transition-all" style={{ boxShadow: "0 8px 32px rgba(48, 147, 160, 0.25)" }}>
                 <Sparkles className="w-5 h-5 mr-2" />
                 Start Creating — Free
               </Button>
             </Link>
             <Link to={createPageUrl("Explore")}>
-              <Button variant="ghost" className="text-zinc-400 hover:text-white px-8 py-6 text-base rounded-2xl">
+              <Button variant="ghost" className="text-[#94A3B8] hover:text-white px-8 py-6 text-base rounded-2xl">
                 <Headphones className="w-5 h-5 mr-2" />
                 Explore Tracks
               </Button>
@@ -88,7 +88,7 @@ export default function Home() {
           transition={{ delay: 0.6 }}
           className="relative z-10 w-full max-w-2xl mt-12"
         >
-          <WaveformVisualizer isPlaying={true} color="#3B82F6" bars={60} height={50} />
+          <WaveformVisualizer isPlaying={true} color="#3093A0" bars={60} height={50} />
         </motion.div>
       </section>
 
@@ -102,7 +102,7 @@ export default function Home() {
             className="text-center mb-10"
           >
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Every Genre. Every Mood.</h2>
-            <p className="text-sm text-zinc-500 mt-2">From lo-fi beats to cinematic orchestrals</p>
+            <p className="text-sm text-[#CBD5E1] mt-2">From lo-fi beats to cinematic orchestrals</p>
           </motion.div>
 
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
@@ -134,7 +134,7 @@ export default function Home() {
             className="text-center mb-12"
           >
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Everything You Need</h2>
-            <p className="text-sm text-zinc-500 mt-2">Professional music creation, simplified</p>
+            <p className="text-sm text-[#CBD5E1] mt-2">Professional music creation, simplified</p>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -158,7 +158,7 @@ export default function Home() {
                     <Icon className="w-5 h-5" style={{ color: feature.color }} />
                   </div>
                   <h3 className="text-sm font-semibold text-white">{feature.title}</h3>
-                  <p className="text-xs text-zinc-500 leading-relaxed">{feature.description}</p>
+                  <p className="text-xs text-[#CBD5E1] leading-relaxed">{feature.description}</p>
                 </motion.div>
               );
             })}
@@ -175,11 +175,11 @@ export default function Home() {
           className="max-w-2xl mx-auto text-center space-y-6"
         >
           <h2 className="text-3xl sm:text-4xl font-bold text-white">Ready to create?</h2>
-          <p className="text-sm text-zinc-400">
+          <p className="text-sm text-[#CBD5E1]">
             Start generating copyright-free music in seconds. No credit card required.
           </p>
           <Link to={createPageUrl("Create")}>
-            <Button className="gradient-purple text-white px-8 py-6 text-base rounded-2xl shadow-2xl shadow-blue-500/20">
+            <Button className="gradient-purple text-white px-8 py-6 text-base rounded-2xl transition-all" style={{ boxShadow: "0 8px 32px rgba(48, 147, 160, 0.25)" }}>
               <Sparkles className="w-5 h-5 mr-2" />
               Generate Your First Track
               <ArrowRight className="w-5 h-5 ml-2" />

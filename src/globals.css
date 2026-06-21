@@ -2,37 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ===== DropLab — Premium AI Theme ===== */
-/* Single source of truth for all global styling */
+/* ===== DropLab — GitHub-Inspired Premium Theme ===== */
+/* Colors: deep purple/navy → blue → teal → cyan-green */
 
 :root {
-  --bg-top: #132A6B;
-  --bg-mid: #0B1F4D;
-  --bg-bottom: #000000;
+  --bg-deep: #20035E;
+  --bg-purple: #210493;
+  --bg-violet: #22038A;
+  --bg-blue: #1D6FBB;
+  --bg-ocean: #227DB0;
+  --bg-teal: #3093A0;
+  --bg-seafoam: #379C7C;
 
   --text-primary: #FFFFFF;
   --text-secondary: #CBD5E1;
   --text-muted: #94A3B8;
 
-  --accent: #38BDF8;
-  --accent-soft: rgba(56, 189, 248, 0.15);
+  --accent: #3093A0;
+  --accent-soft: rgba(48, 147, 160, 0.15);
+  --accent-glow: rgba(48, 147, 160, 0.35);
+  --highlight: #227DB0;
 
-  --blue-400: #60A5FA;
-  --blue-500: #3B82F6;
-  --blue-600: #2563EB;
+  --card-bg: rgba(25, 10, 80, 0.75);
+  --card-border: rgba(48, 147, 160, 0.12);
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
 
-  --card-bg: rgba(10, 18, 40, 0.75);
-  --card-border: rgba(255, 255, 255, 0.08);
-  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
-
-  --nav-bg: rgba(8, 14, 32, 0.85);
+  --nav-bg: rgba(12, 4, 50, 0.88);
 
   --radius: 20px;
 }
 
-/* ===== Base Body — Full-screen vertical gradient ===== */
+/* ===== Base Body — Multi-stop cinematic gradient ===== */
 body {
-  background: linear-gradient(180deg, #132A6B 0%, #0B1F4D 40%, #000000 100%);
+  background: linear-gradient(
+    180deg,
+    #20035E 0%,
+    #210493 14%,
+    #22038A 28%,
+    #1D6FBB 50%,
+    #227DB0 64%,
+    #3093A0 82%,
+    #379C7C 100%
+  );
   background-attachment: fixed;
   color: var(--text-primary);
   font-family: 'Inter', system-ui, sans-serif;
@@ -52,7 +63,7 @@ body::after {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(56, 189, 248, 0.15) transparent;
+  scrollbar-color: rgba(48, 147, 160, 0.2) transparent;
 }
 
 /* ===== Glassmorphism Cards ===== */
@@ -66,10 +77,10 @@ body::after {
 }
 
 .glass-strong {
-  background: rgba(10, 18, 40, 0.88);
+  background: rgba(20, 8, 70, 0.88);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--card-border);
+  border: 1px solid rgba(48, 147, 160, 0.15);
   border-radius: var(--radius);
   box-shadow: var(--card-shadow);
 }
@@ -88,45 +99,45 @@ body::after {
   width: 600px;
   max-width: 90vw;
   height: 400px;
-  background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(48, 147, 160, 0.12) 0%, rgba(29, 111, 187, 0.05) 40%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
 
 /* ===== Gradient Utilities ===== */
 .gradient-text {
-  background: linear-gradient(135deg, #60A5FA, #38BDF8, #3B82F6);
+  background: linear-gradient(135deg, #3093A0, #227DB0, #1D6FBB);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-blue {
-  background: linear-gradient(135deg, #3B82F6, #2563EB);
+  background: linear-gradient(135deg, #1D6FBB, #3093A0);
 }
 
 .gradient-accent {
-  background: linear-gradient(135deg, #38BDF8, #06B6D4);
+  background: linear-gradient(135deg, #3093A0, #379C7C);
 }
 
 .gradient-purple {
-  background: linear-gradient(135deg, #3B82F6, #2563EB);
+  background: linear-gradient(135deg, #1D6FBB, #227DB0);
 }
 
 /* ===== Button gradient ===== */
 .btn-primary {
-  background: linear-gradient(135deg, #3B82F6, #2563EB);
+  background: linear-gradient(135deg, #1D6FBB, #3093A0);
   color: #FFFFFF;
   transition: all 0.2s ease;
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #60A5FA, #3B82F6);
-  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+  background: linear-gradient(135deg, #227DB0, #379C7C);
+  box-shadow: 0 4px 20px rgba(48, 147, 160, 0.35);
 }
 
 .btn-primary:active {
-  background: linear-gradient(135deg, #2563EB, #1D4ED8);
+  background: linear-gradient(135deg, #1D6FBB, #227DB0);
 }
 
 /* ===== Navigation overlays ===== */
@@ -145,8 +156,8 @@ body::after {
 
 /* ===== Animations ===== */
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(56, 189, 248, 0.2); }
-  50% { box-shadow: 0 0 40px rgba(56, 189, 248, 0.4); }
+  0%, 100% { box-shadow: 0 0 20px rgba(48, 147, 160, 0.25); }
+  50% { box-shadow: 0 0 40px rgba(48, 147, 160, 0.5); }
 }
 
 @keyframes waveform {

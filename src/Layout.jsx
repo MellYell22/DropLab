@@ -98,7 +98,7 @@ export default function Layout({ children, currentPageName }) {
             )}
             {/* Logo */}
             <Link to={createPageUrl("Home")} className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl gradient-purple flex items-center justify-center shadow-lg shadow-blue-500/20">
+              <div className="w-8 h-8 rounded-xl flex items-center justify-center shadow-lg" style={{ background: "linear-gradient(135deg, #1D6FBB, #3093A0)", boxShadow: "0 4px 16px rgba(48, 147, 160, 0.3)" }}>
                 <Music className="w-4 h-4 text-white" />
               </div>
               <span className="text-sm font-bold tracking-tight hidden sm:block text-white">DropLab</span>
@@ -116,7 +116,7 @@ export default function Layout({ children, currentPageName }) {
                   to={createPageUrl(item.page)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                     isActive
-                      ? "bg-[#38BDF8]/15 text-[#38BDF8]"
+                      ? "bg-[#3093A0]/15 text-[#3093A0]"
                       : "text-[#94A3B8] hover:text-[#CBD5E1] hover:bg-white/5"
                   }`}
                 >
@@ -131,7 +131,7 @@ export default function Layout({ children, currentPageName }) {
           <div className="flex items-center gap-2">
             {user ? (
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-[10px] font-bold">
+                <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold" style={{ background: "linear-gradient(135deg, #1D6FBB, #3093A0)" }}>
                   {user.full_name?.[0]?.toUpperCase() || "U"}
                 </div>
               </div>
@@ -173,7 +173,7 @@ export default function Layout({ children, currentPageName }) {
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
-              className="md:hidden fixed top-14 left-0 right-0 z-40 border-b border-white/[0.06]" style={{ background: "rgba(8, 14, 32, 0.92)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}
+              className="md:hidden fixed top-14 left-0 right-0 z-40 border-b border-white/[0.06]" style={{ background: "rgba(12, 4, 50, 0.92)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}
             >
               <div className="p-3 space-y-1">
                 {navItems.map((item) => {
@@ -186,7 +186,7 @@ export default function Layout({ children, currentPageName }) {
                       onClick={() => setMobileMenuOpen(false)}
                       className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
                         isActive
-                          ? "bg-[#38BDF8]/15 text-[#38BDF8]"
+                          ? "bg-[#3093A0]/15 text-[#3093A0]"
                           : "text-zinc-500 hover:text-zinc-300"
                       }`}
                     >
@@ -221,7 +221,7 @@ export default function Layout({ children, currentPageName }) {
                 if (!hasVisited) return null;
                 return (
                   <div key={tab} style={{ display: isActive ? "block" : "none" }}>
-                    <Suspense fallback={<div className="flex justify-center py-20"><div className="w-6 h-6 border-2 border-blue-500/20 border-t-blue-400 rounded-full animate-spin" /></div>}>
+                    <Suspense fallback={<div className="flex justify-center py-20"><div className="w-6 h-6 border-2 border-[#3093A0]/20 border-t-[#3093A0] rounded-full animate-spin" /></div>}>
                       <TabComponent />
                     </Suspense>
                   </div>

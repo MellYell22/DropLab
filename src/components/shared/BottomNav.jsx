@@ -22,7 +22,7 @@ export default function BottomNav({ currentPageName, onTabChange }) {
   return (
     <nav
       className="md:hidden fixed bottom-0 left-0 right-0 z-40 h-16 border-t border-white/[0.06] flex items-center justify-around"
-      style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)", background: "rgba(8, 14, 32, 0.88)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}
+      style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)", background: "rgba(12, 4, 50, 0.88)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}
     >
       {bottomNavItems.map((item) => {
         const Icon = item.icon;
@@ -33,7 +33,7 @@ export default function BottomNav({ currentPageName, onTabChange }) {
             onClick={() => handleTab(item.page)}
             className={`flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl transition-all select-none min-h-[44px] min-w-[44px] justify-center ${
               isActive
-                ? "text-[#38BDF8]"
+                ? "text-[#3093A0]"
                 : "text-[#94A3B8] hover:text-[#CBD5E1]"
             }`}
           >
