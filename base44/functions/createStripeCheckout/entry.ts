@@ -2,7 +2,7 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 import Stripe from 'npm:stripe@17.7.0';
 
 const PRICE_MAP = {
-  price_basic: "price_1Tka3SGDw0P2L0A1piscjECac",
+  price_basic: "price_1Tka3SGDw0P2L0A1piscjECa",
   price_popular: "price_1Tka5kGDw0P2L0A1vpHLOv6Y",
   price_pro: "price_1Tka8AGDw0P2L0A1dBwqemKK",
 };
@@ -39,7 +39,7 @@ Deno.serve(async (req) => {
 
     return Response.json({ url: session.url });
   } catch (error) {
-    console.error("Checkout error:", error.message);
+    console.error("Checkout error full:", error.message, error.stack);
     return Response.json({ error: "Failed to create checkout session" }, { status: 500 });
   }
 });
