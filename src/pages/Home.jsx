@@ -56,9 +56,9 @@ export default function Home() {
           </motion.div>
 
           <h1 className="text-5xl sm:text-7xl font-bold leading-[1.1] tracking-tight">
-            <span className="text-white">Create Music</span>
+            <span className="gradient-text">DropLab</span>
             <br />
-            <span className="gradient-text">With Your Words</span>
+            <span className="text-white text-4xl sm:text-5xl">Create Music With Your Words</span>
           </h1>
 
           <p className="text-base sm:text-lg text-zinc-400 max-w-lg mx-auto leading-relaxed">
