@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { base44 } from "@/api/base44Client";
 import { motion } from "framer-motion";
 import { Play, Pause, Heart, Download, Share2, MoreHorizontal, Clock, Music, Edit } from "lucide-react";
 import WaveformVisualizer from "./WaveformVisualizer";
@@ -25,6 +26,17 @@ export default function TrackCard({ track, onPlay, isPlaying, variant = "default
   const [showEditor, setShowEditor] = useState(false);
   const [showShare, setShowShare] = useState(false);
   const color = genreColors[track.genre] || "#8B5CF6";
+
+  const handleLike = async (e) => {
+    e.stopPropagation();
+    const newLiked = !liked;
+    setLiked(newLiked);
+    try {
+      await base44.entities.Track.update(track.id, {
+        likes: (track.likes || 0) + (newLiked ? 1 : -1),
+      });
+    } catch {}
+  };
 
   const formatDuration = (seconds) => {
     if (!seconds) return "3:24";
@@ -158,7 +170,7 @@ export default function TrackCard({ track, onPlay, isPlaying, variant = "default
           </div>
           <div className="flex items-center gap-2">
             <button
-              onClick={(e) => { e.stopPropagation(); setLiked(!liked); }}
+              onClick={handleLike}
               className="p-1 hover:bg-white/5 rounded-md transition-colors"
             >
               <Heart

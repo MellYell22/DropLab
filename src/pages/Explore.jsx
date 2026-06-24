@@ -40,6 +40,13 @@ export default function Explore() {
     { id: "top", label: "Top Rated", icon: Flame },
   ];
 
+  const sortedTracks = [...tracks].sort((a, b) => {
+    if (tab === "trending") return (b.plays || 0) - (a.plays || 0);
+    if (tab === "recent") return new Date(b.created_date) - new Date(a.created_date);
+    if (tab === "top") return (b.likes || 0) - (a.likes || 0);
+    return 0;
+  });
+
   return (
     <div className="min-h-screen pb-32">
       <div className="max-w-6xl mx-auto px-4 pt-8 space-y-8">
@@ -103,7 +110,7 @@ export default function Explore() {
           </motion.div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {tracks.map((track) => (
+            {sortedTracks.map((track) => (
               <TrackCard
                 key={track.id}
                 track={track}

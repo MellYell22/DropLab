@@ -109,6 +109,7 @@ export default function TrackEditor({ track, onClose }) {
                       variant="outline"
                       className="w-full text-xs"
                       disabled={isProcessing}
+                      onClick={() => track.audio_url ? window.open(track.audio_url, '_blank') : alert("Generate stems first")}
                     >
                       <Download className="w-3 h-3 mr-1" />
                       Export
@@ -142,23 +143,23 @@ export default function TrackEditor({ track, onClose }) {
                 Use AI to create variations and remixes of your track.
               </p>
               <div className="grid grid-cols-2 gap-3">
-                <Button variant="outline" className="h-20 flex flex-col gap-2">
-                  <Wand2 className="w-5 h-5" />
-                  <span className="text-xs">Speed Up/Down</span>
-                </Button>
-                <Button variant="outline" className="h-20 flex flex-col gap-2">
-                  <GitBranch className="w-5 h-5" />
-                  <span className="text-xs">Change Key</span>
-                </Button>
-                <Button variant="outline" className="h-20 flex flex-col gap-2">
-                  <Layers className="w-5 h-5" />
-                  <span className="text-xs">Add Layer</span>
-                </Button>
-                <Button variant="outline" className="h-20 flex flex-col gap-2">
-                  <Scissors className="w-5 h-5" />
-                  <span className="text-xs">Trim/Loop</span>
-                </Button>
+                {[
+                  { icon: Wand2, label: "Speed Up/Down", desc: "Adjust tempo while preserving pitch" },
+                  { icon: GitBranch, label: "Change Key", desc: "Transpose to a different key" },
+                  { icon: Layers, label: "Add Layer", desc: "Generate an additional instrument layer" },
+                  { icon: Scissors, label: "Trim/Loop", desc: "Set loop points for seamless looping" },
+                ].map(({ icon: Icon, label, desc }) => (
+                  <button
+                    key={label}
+                    onClick={() => alert(`"${label}" is a Pro feature — coming soon!`)}
+                    className="h-20 flex flex-col items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all group"
+                  >
+                    <Icon className="w-5 h-5 text-zinc-400 group-hover:text-blue-400 transition-colors" />
+                    <span className="text-xs text-zinc-400 group-hover:text-white transition-colors">{label}</span>
+                  </button>
+                ))}
               </div>
+              <p className="text-xs text-zinc-600 text-center">AI remix features are coming in the next update</p>
             </div>
           )}
 
