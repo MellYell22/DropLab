@@ -60,23 +60,29 @@ export default function Analytics() {
 
   }
 
-  const totalRevenue = purchases.reduce((sum, p) => sum + (p.creator_revenue || 0), 0);
-  const totalSales = purchases.length;
-  const totalPlays = tracks.reduce((sum, t) => sum + (t.plays || 0), 0);
-  const totalLikes = tracks.reduce((sum, t) => sum + (t.likes || 0), 0);
-  const totalDownloads = tracks.reduce((sum, t) => sum + (t.plays || 0) * 0.3, 0); // Estimate
+  const rangeDays = timeRange === "7d" ? 7 : timeRange === "30d" ? 30 : timeRange === "90d" ? 90 : null;
+  const rangeStart = rangeDays ? moment().subtract(rangeDays, "days") : null;
+  const filteredTracks = rangeStart ? tracks.filter(t => moment(t.created_date).isAfter(rangeStart)) : tracks;
+  const filteredPurchases = rangeStart ? purchases.filter(p => moment(p.created_date).isAfter(rangeStart)) : purchases;
+
+  const totalRevenue = filteredPurchases.reduce((sum, p) => sum + (p.creator_revenue || 0), 0);
+  const totalSales = filteredPurchases.length;
+  const totalPlays = filteredTracks.reduce((sum, t) => sum + (t.plays || 0), 0);
+  const totalLikes = filteredTracks.reduce((sum, t) => sum + (t.likes || 0), 0);
+  const totalDownloads = filteredTracks.reduce((sum, t) => sum + (t.plays || 0) * 0.3, 0); // Estimate
   const avgRating = items.length > 0 ?
   (items.reduce((sum, i) => sum + (i.rating || 0), 0) / items.length).toFixed(1) :
   0;
 
-  // Build daily revenue chart data for last 30 days
+  // Build daily revenue chart data for selected range
   const dailyRevenue = (() => {
+    const numDays = rangeDays || 30;
     const days = [];
-    for (let i = 29; i >= 0; i--) {
+    for (let i = numDays - 1; i >= 0; i--) {
       const date = moment().subtract(i, "days").format("YYYY-MM-DD");
       days.push({ date, revenue: 0 });
     }
-    purchases.forEach((p) => {
+    filteredPurchases.forEach((p) => {
       const day = moment(p.created_date).format("YYYY-MM-DD");
       const entry = days.find((d) => d.date === day);
       if (entry) entry.revenue += p.creator_revenue || 0;
@@ -86,7 +92,7 @@ export default function Analytics() {
 
   const hasRevenueData = dailyRevenue.some((d) => d.revenue > 0);
 
-  const topTracks = [...tracks].
+  const topTracks = [...filteredTracks].
   sort((a, b) => (b.plays || 0) - (a.plays || 0)).
   slice(0, 5);
 

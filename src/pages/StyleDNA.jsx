@@ -120,7 +120,7 @@ export default function StyleDNA() {
 
   const applyStyle = (style) => {
     localStorage.setItem("applied_style_dna", JSON.stringify(style));
-    window.location.href = "/?page=Create";
+    window.location.href = "/Create";
   };
 
   return (

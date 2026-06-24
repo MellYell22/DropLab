@@ -18,6 +18,8 @@ export default function PlayerBar({ track, isPlaying, onTogglePlay }) {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [liked, setLiked] = useState(false);
+  const [repeat, setRepeat] = useState(false);
+  const [shuffled, setShuffled] = useState(false);
 
   // Load and play audio when track changes
   useEffect(() => {
@@ -83,7 +85,7 @@ export default function PlayerBar({ track, isPlaying, onTogglePlay }) {
         ref={audioRef}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleTimeUpdate}
-        onEnded={() => onTogglePlay()}
+        onEnded={() => { if (repeat && audioRef.current) { audioRef.current.currentTime = 0; audioRef.current.play(); } else { onTogglePlay(); } }}
       />
       <motion.div
         initial={{ y: 100, opacity: 0 }}
@@ -127,10 +129,16 @@ export default function PlayerBar({ track, isPlaying, onTogglePlay }) {
 
           {/* Controls */}
           <div className="flex items-center gap-3">
-            <button className="text-zinc-500 hover:text-white transition-colors">
+            <button
+              onClick={() => setShuffled(!shuffled)}
+              className={`transition-colors ${shuffled ? "text-blue-400" : "text-zinc-500 hover:text-white"}`}
+            >
               <Shuffle className="w-3.5 h-3.5" />
             </button>
-            <button className="text-zinc-400 hover:text-white transition-colors">
+            <button
+              onClick={() => { if (audioRef.current) { audioRef.current.currentTime = 0; setProgress(0); }}}
+              className="text-zinc-400 hover:text-white transition-colors"
+            >
               <SkipBack className="w-4 h-4" />
             </button>
             <motion.button
@@ -142,10 +150,16 @@ export default function PlayerBar({ track, isPlaying, onTogglePlay }) {
             >
               {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
             </motion.button>
-            <button className="text-zinc-400 hover:text-white transition-colors">
+            <button
+              onClick={() => { if (audioRef.current) { audioRef.current.currentTime = audioRef.current.duration || 0; }}}
+              className="text-zinc-400 hover:text-white transition-colors"
+            >
               <SkipForward className="w-4 h-4" />
             </button>
-            <button className="text-zinc-500 hover:text-white transition-colors">
+            <button
+              onClick={() => setRepeat(!repeat)}
+              className={`transition-colors ${repeat ? "text-blue-400" : "text-zinc-500 hover:text-white"}`}
+            >
               <Repeat className="w-3.5 h-3.5" />
             </button>
           </div>

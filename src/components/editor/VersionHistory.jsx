@@ -39,7 +39,12 @@ export default function VersionHistory({ track }) {
                   </div>
                   <p className="text-xs text-zinc-500 mt-1">{version.changes}</p>
                 </div>
-                <Button size="sm" variant="outline">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => version.audio_url && window.open(version.audio_url, '_blank')}
+                  disabled={!version.audio_url}
+                >
                   <Download className="w-3 h-3 mr-1" />
                   Export
                 </Button>
