@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { Settings2, ChevronDown, ChevronUp, Sliders, Mic2, LayoutList, Music, Clock, Repeat, Sparkles, Piano, GitBranch, Loader2 } from "lucide-react";
 import PromptInput from "../components/generator/PromptInput";
@@ -53,47 +53,37 @@ export default function Create() {
     }
   }, []);
 
-  const generateMutation = useMutation({
-    onMutate: () => {
-      setIsGenerating(true);
-    },
-    mutationFn: async () => {
+  const handleGenerate = async () => {
+    if (isGenerating) return;
+    setIsGenerating(true);
+    try {
       const desc = prompt.trim() || `${genre} music in ${musicalKey} ${keyMode} at ${bpm} BPM`;
-      
-      // Generate a title using LLM
-      const titleResult = await base44.integrations.Core.InvokeLLM({
-        prompt: `Generate a creative, short (2-4 words) song title for this music: "${desc}". Genre: ${genre}. Mood: energy ${mood.energy}/100, complexity ${mood.complexity}/100. Just return the title, nothing else.`,
-      });
 
-      // Generate cover art
-      const coverResult = await base44.integrations.Core.GenerateImage({
-        prompt: `Abstract album cover art for ${genre} music. ${desc}. Minimal, modern, dark background with vibrant ${genre === 'edm' ? 'neon purple and cyan' : genre === 'lofi' ? 'warm sunset tones' : genre === 'cinematic' ? 'gold and deep blue' : 'violet and emerald'} accents. No text, artistic, high quality.`,
-      });
+      // Run title + cover + music generation in parallel
+      const [titleResult, coverResult, musicResult] = await Promise.all([
+        base44.integrations.Core.InvokeLLM({
+          prompt: `Generate a creative, short (2-4 words) song title for this music: "${desc}". Genre: ${genre}. Mood: energy ${mood.energy}/100, complexity ${mood.complexity}/100. Just return the title, nothing else.`,
+        }).catch(() => `${genre} track`),
+        base44.integrations.Core.GenerateImage({
+          prompt: `Abstract album cover art for ${genre} music. ${desc}. Minimal, modern, dark background with vibrant ${genre === 'edm' ? 'neon purple and cyan' : genre === 'lofi' ? 'warm sunset tones' : genre === 'cinematic' ? 'gold and deep blue' : 'violet and emerald'} accents. No text, artistic, high quality.`,
+        }).catch(() => ({ url: "" })),
+        base44.functions.invoke('generateMusic', {
+          prompt: desc, genre, mood, duration, bpm, key: musicalKey,
+          vocalType, structure, instruments, melodyComplexity, harmonicComplexity, isLoopable
+        }),
+      ]);
 
-      // Generate actual music
-      const musicResult = await base44.functions.invoke('generateMusic', {
-        prompt: desc,
-        genre,
-        mood,
-        duration,
-        bpm,
-        key: musicalKey,
-        vocalType,
-        structure,
-        instruments,
-        melodyComplexity,
-        harmonicComplexity,
-        isLoopable
-      });
+      const title = typeof titleResult === 'string' ? titleResult.trim().replace(/"/g, "") : `${genre} track`;
+      const coverUrl = coverResult?.url || "";
+      const audioUrl = musicResult?.data?.audio_url || `https://www.soundhelix.com/examples/mp3/SoundHelix-Song-${Math.floor(Math.random() * 16) + 1}.mp3`;
+
+      const dominantMood = Object.entries(mood).sort((a, b) => b[1] - a[1])[0]?.[0] || "calm";
 
       const track = await base44.entities.Track.create({
-        title: typeof titleResult === 'string' ? titleResult.trim().replace(/"/g, "") : `${genre} track`,
+        title,
         prompt: desc,
         genre,
-        mood: Object.keys(mood).reduce((acc, k) => {
-          if (mood[k] > 60) return k;
-          return acc;
-        }, "calm"),
+        mood: dominantMood,
         bpm,
         key: musicalKey,
         key_mode: keyMode,
@@ -108,31 +98,23 @@ export default function Create() {
         complexity: mood.complexity,
         darkness: mood.darkness,
         status: "completed",
-        cover_url: coverResult?.url || "",
-        audio_url: musicResult.data?.audio_url || `https://www.soundhelix.com/examples/mp3/SoundHelix-Song-${Math.floor(Math.random() * 16) + 1}.mp3`,
+        cover_url: coverUrl,
+        audio_url: audioUrl,
         is_public: false,
         likes: 0,
         plays: 0,
       });
 
-      return track;
-    },
-    onSuccess: (track) => {
       queryClient.invalidateQueries({ queryKey: ["tracks"] });
-      setIsGenerating(false);
       setGeneratedTrack(track);
       toast.success("Track created! Listen below.");
-    },
-    onError: (error) => {
-      setIsGenerating(false);
-      const msg = error?.response?.data?.error 
-        || error?.data?.error 
-        || error?.message 
-        || "Something went wrong. Please try again.";
-      toast.error(msg);
+    } catch (error) {
       console.error("Generation failed:", error);
-    },
-  });
+      toast.error(error?.message || "Generation failed. Please try again.");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   return (
     <div className="min-h-screen pb-32">
@@ -166,7 +148,7 @@ export default function Create() {
           <PromptInput
             value={prompt}
             onChange={setPrompt}
-            onGenerate={() => generateMutation.mutate()}
+            onGenerate={handleGenerate}
             isGenerating={isGenerating}
           />
         </motion.div>
@@ -359,7 +341,7 @@ export default function Create() {
             className="flex justify-center pt-2"
           >
             <Button
-              onClick={() => generateMutation.mutate()}
+              onClick={handleGenerate}
               disabled={isGenerating}
               className="gradient-purple text-white rounded-xl px-10 py-6 text-base font-bold shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 transition-all disabled:opacity-40"
               size="lg"
