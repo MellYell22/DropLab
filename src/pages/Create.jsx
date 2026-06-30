@@ -14,6 +14,7 @@ import GeneratingOverlay from "../components/shared/GeneratingOverlay";
 import InlineTrackPlayer from "../components/generator/InlineTrackPlayer";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { useAuth } from "@/lib/AuthContext";
 
 export default function Create() {
   const [prompt, setPrompt] = useState("");
@@ -35,6 +36,7 @@ export default function Create() {
   const [appliedStyle, setAppliedStyle] = useState(null);
 
   const queryClient = useQueryClient();
+  const { isAuthenticated, navigateToLogin } = useAuth();
 
   // Check for applied Style DNA
   React.useEffect(() => {
@@ -55,6 +57,11 @@ export default function Create() {
 
   const handleGenerate = async () => {
     if (isGenerating) return;
+    if (!isAuthenticated) {
+      toast.error("Please sign in to generate tracks.");
+      navigateToLogin();
+      return;
+    }
     setIsGenerating(true);
     try {
       const desc = prompt.trim() || `${genre} music in ${musicalKey} ${keyMode} at ${bpm} BPM`;
