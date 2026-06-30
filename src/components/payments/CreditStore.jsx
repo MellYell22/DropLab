@@ -39,8 +39,8 @@ export default function CreditStore() {
         cancelUrl: `${window.location.origin}/Credits?canceled=true`,
       });
 
-      if (result?.url) {
-        window.location.href = result.url;
+      if (result?.data?.url) {
+        window.location.href = result.data.url;
       } else {
         throw new Error("No checkout URL returned");
       }
