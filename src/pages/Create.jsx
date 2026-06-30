@@ -63,14 +63,14 @@ export default function Create() {
       const [titleResult, coverResult, musicResult] = await Promise.all([
         base44.integrations.Core.InvokeLLM({
           prompt: `Generate a creative, short (2-4 words) song title for this music: "${desc}". Genre: ${genre}. Mood: energy ${mood.energy}/100, complexity ${mood.complexity}/100. Just return the title, nothing else.`,
-        }).catch(() => `${genre} track`),
+        }).catch((e) => { console.warn("Title gen failed:", e); return `${genre} track`; }),
         base44.integrations.Core.GenerateImage({
           prompt: `Abstract album cover art for ${genre} music. ${desc}. Minimal, modern, dark background with vibrant ${genre === 'edm' ? 'neon purple and cyan' : genre === 'lofi' ? 'warm sunset tones' : genre === 'cinematic' ? 'gold and deep blue' : 'violet and emerald'} accents. No text, artistic, high quality.`,
-        }).catch(() => ({ url: "" })),
+        }).catch((e) => { console.warn("Cover gen failed:", e); return { url: "" }; }),
         base44.functions.invoke('generateMusic', {
           prompt: desc, genre, mood, duration, bpm, key: musicalKey,
           vocalType, structure, instruments, melodyComplexity, harmonicComplexity, isLoopable
-        }),
+        }).catch((e) => { console.warn("Music gen failed:", e); return { data: {} }; }),
       ]);
 
       const title = typeof titleResult === 'string' ? titleResult.trim().replace(/"/g, "") : `${genre} track`;
