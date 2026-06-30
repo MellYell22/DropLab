@@ -2,9 +2,9 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 import Stripe from 'npm:stripe@17.7.0';
 
 const PRICE_MAP = {
-  price_basic: "price_1Tka3SGDw0P2L0A1piscjECa",
-  price_popular: "price_1Tka5kGDw0P2L0A1vpHLOv6Y",
-  price_pro: "price_1Tka8AGDw0P2L0A1dBwqemKK",
+  price_basic: "price_1TkVfBA0mO1R25OFPuKzAD4f",
+  price_popular: "price_1TkVfBA0mO1R25OFT7wySJLf",
+  price_pro: "price_1TkVfBA0mO1R25OFe4tCWKxL",
 };
 
 Deno.serve(async (req) => {
