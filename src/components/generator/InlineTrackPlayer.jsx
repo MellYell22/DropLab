@@ -33,14 +33,8 @@ export default function InlineTrackPlayer({ track, onDismiss, onSwitchVersion })
     if (!audioRef.current) return;
     if (isPlaying) {
       audioRef.current.pause();
-      setIsPlaying(false);
     } else {
-      audioRef.current.play()
-        .then(() => setIsPlaying(true))
-        .catch((e) => {
-          console.error("Playback failed:", e);
-          setIsPlaying(false);
-        });
+      audioRef.current.play().catch((e) => console.error("Playback failed:", e));
     }
   };
 
@@ -105,7 +99,9 @@ export default function InlineTrackPlayer({ track, onDismiss, onSwitchVersion })
         ref={audioRef}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleTimeUpdate}
-        onEnded={() => { setIsPlaying(false); setProgress(0); setCurrentTime(0); }}
+        onPlaying={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+        onEnded={() => { setProgress(0); setCurrentTime(0); }}
       />
       
       <div className="glass rounded-2xl p-5 space-y-4 border border-white/5">
