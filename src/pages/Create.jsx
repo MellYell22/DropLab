@@ -16,6 +16,21 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useAuth } from "@/lib/AuthContext";
 
+const genreInstruments = {
+  pop: ["piano", "guitar", "drums"],
+  edm: ["synth", "drums", "bass"],
+  hip_hop: ["drums", "bass", "synth"],
+  rock: ["guitar", "drums", "bass"],
+  classical: ["piano", "strings", "brass"],
+  lofi: ["piano", "drums", "bass"],
+  ambient: ["synth", "strings", "piano"],
+  cinematic: ["strings", "piano", "drums"],
+  jazz: ["piano", "bass", "drums"],
+  rnb: ["piano", "bass", "drums"],
+  folk: ["guitar", "piano", "strings"],
+  metal: ["guitar", "drums", "bass"],
+};
+
 export default function Create() {
   const [prompt, setPrompt] = useState("");
   const [genre, setGenre] = useState("cinematic");
@@ -39,6 +54,17 @@ export default function Create() {
 
   const queryClient = useQueryClient();
   const { isAuthenticated } = useAuth();
+
+  const handleGenreSelect = (newGenre) => {
+    setGenre(newGenre);
+    setInstruments(genreInstruments[newGenre] || ["piano", "drums", "bass"]);
+  };
+
+  const handleMoodChange = (newMood) => {
+    setMood(newMood);
+    // Auto-adjust tempo: calm (low energy) = slow, intense (high energy) = fast
+    setBpm(Math.round(60 + (newMood.energy / 100) * 140));
+  };
 
   // Check for applied Style DNA
   React.useEffect(() => {
@@ -182,7 +208,7 @@ export default function Create() {
             <Music className="w-4 h-4 text-blue-400" />
             <h2 className="text-sm font-semibold text-zinc-300">Genre</h2>
           </div>
-          <GenreSelector selected={genre} onSelect={setGenre} />
+          <GenreSelector selected={genre} onSelect={handleGenreSelect} />
         </motion.div>
 
         {/* Instruments */}
@@ -210,7 +236,7 @@ export default function Create() {
             <Sliders className="w-4 h-4 text-amber-400" />
             <h2 className="text-sm font-semibold text-zinc-300">Mood & Feel</h2>
           </div>
-          <MoodSliders values={mood} onChange={setMood} />
+          <MoodSliders values={mood} onChange={handleMoodChange} />
         </motion.div>
 
         {/* Track Length */}
