@@ -35,8 +35,12 @@ export default function InlineTrackPlayer({ track, onDismiss, onSwitchVersion })
       audioRef.current.pause();
       setIsPlaying(false);
     } else {
-      audioRef.current.play().catch((e) => console.error("Playback failed:", e));
-      setIsPlaying(true);
+      audioRef.current.play()
+        .then(() => setIsPlaying(true))
+        .catch((e) => {
+          console.error("Playback failed:", e);
+          setIsPlaying(false);
+        });
     }
   };
 
@@ -76,6 +80,7 @@ export default function InlineTrackPlayer({ track, onDismiss, onSwitchVersion })
       URL.revokeObjectURL(url);
     } catch (err) {
       console.error("Download failed:", err);
+      window.open(track.audio_url, "_blank");
     } finally {
       setIsDownloading(false);
     }
@@ -101,7 +106,6 @@ export default function InlineTrackPlayer({ track, onDismiss, onSwitchVersion })
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleTimeUpdate}
         onEnded={() => { setIsPlaying(false); setProgress(0); setCurrentTime(0); }}
-        crossOrigin="anonymous"
       />
       
       <div className="glass rounded-2xl p-5 space-y-4 border border-white/5">
