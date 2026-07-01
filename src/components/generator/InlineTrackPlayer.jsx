@@ -23,18 +23,22 @@ export default function InlineTrackPlayer({ track, onDismiss, onSwitchVersion })
     if (track?.audio_url && audioRef.current) {
       audioRef.current.src = track.audio_url;
       audioRef.current.load();
+      setIsPlaying(false);
+      setProgress(0);
+      setCurrentTime(0);
     }
-  }, [track]);
+  }, [track?.audio_url]);
 
-  useEffect(() => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.play().catch(console.error);
-      } else {
-        audioRef.current.pause();
-      }
+  const togglePlay = () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      audioRef.current.play().catch((e) => console.error("Playback failed:", e));
+      setIsPlaying(true);
     }
-  }, [isPlaying]);
+  };
 
   const handleTimeUpdate = () => {
     if (audioRef.current) {
@@ -92,7 +96,13 @@ export default function InlineTrackPlayer({ track, onDismiss, onSwitchVersion })
       exit={{ opacity: 0, y: 20, height: 0 }}
       className="overflow-hidden"
     >
-      <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} onLoadedMetadata={handleTimeUpdate} />
+      <audio
+        ref={audioRef}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleTimeUpdate}
+        onEnded={() => { setIsPlaying(false); setProgress(0); setCurrentTime(0); }}
+        crossOrigin="anonymous"
+      />
       
       <div className="glass rounded-2xl p-5 space-y-4 border border-white/5">
         {/* Header */}
@@ -138,7 +148,7 @@ export default function InlineTrackPlayer({ track, onDismiss, onSwitchVersion })
           <motion.button
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.92 }}
-            onClick={() => setIsPlaying(!isPlaying)}
+            onClick={togglePlay}
             className="w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg"
             style={{ background: color }}
           >
