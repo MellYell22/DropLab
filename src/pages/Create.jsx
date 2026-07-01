@@ -34,6 +34,7 @@ export default function Create() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedTrack, setGeneratedTrack] = useState(null);
   const [genError, setGenError] = useState(null);
+  const [needsAuth, setNeedsAuth] = useState(false);
   const [appliedStyle, setAppliedStyle] = useState(null);
 
   const queryClient = useQueryClient();
@@ -59,10 +60,11 @@ export default function Create() {
   const handleGenerate = async () => {
     if (isGenerating) return;
     setGenError(null);
-    if (!isAuthenticated) {
-      const msg = "Please sign in to generate tracks. Use the avatar menu in the top-right corner.";
-      setGenError(msg);
-      toast.error(msg);
+    setNeedsAuth(false);
+    const authed = await base44.auth.isAuthenticated();
+    if (!authed) {
+      setNeedsAuth(true);
+      toast.error("Please sign in to generate tracks.");
       return;
     }
     setIsGenerating(true);
@@ -348,14 +350,31 @@ export default function Create() {
           )}
         </AnimatePresence>
 
-        {/* Inline Error */}
-        {genError && !isGenerating && !generatedTrack && (
+        {/* Auth Required / Inline Error */}
+        {(needsAuth || (genError && !isGenerating && !generatedTrack)) && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="glass rounded-xl p-4 border border-red-500/20 bg-red-500/5 text-sm text-red-300 text-center"
+            className={`rounded-xl p-5 text-center space-y-3 ${
+              needsAuth
+                ? "glass border border-blue-500/30 bg-blue-500/5"
+                : "glass border border-red-500/20 bg-red-500/5"
+            }`}
           >
-            {genError}
+            {needsAuth ? (
+              <>
+                <p className="text-sm text-blue-300 font-medium">Sign in to generate music</p>
+                <p className="text-xs text-zinc-500">You need an account to create and save tracks.</p>
+                <Button
+                  onClick={() => base44.auth.redirectToLogin(window.location.href)}
+                  className="gradient-purple text-white rounded-xl"
+                >
+                  Sign In
+                </Button>
+              </>
+            ) : (
+              <p className="text-sm text-red-300">{genError}</p>
+            )}
           </motion.div>
         )}
 
