@@ -26,12 +26,12 @@ export default function AdvancedControls({
           <Music2 className="w-4 h-4 text-blue-400" />
           <h3 className="text-sm font-semibold text-zinc-300">Musical Key</h3>
         </div>
-        <div className="grid grid-cols-6 gap-2">
+        <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
           {musicalKeys.map((key) => (
             <button
               key={key}
               onClick={() => onKeyChange(key)}
-              className={`py-2 rounded-lg text-xs font-medium transition-all ${
+              className={`min-h-[44px] py-2 rounded-lg text-xs font-medium transition-all ${
                 musicalKey === key
                   ? "bg-blue-500/20 text-blue-300 ring-1 ring-blue-500/30"
                   : "text-zinc-500 hover:text-zinc-300 hover:bg-white/5"
@@ -51,7 +51,7 @@ export default function AdvancedControls({
             <button
               key={mode}
               onClick={() => onModeChange(mode)}
-              className={`py-2 rounded-lg text-xs font-medium transition-all ${
+              className={`min-h-[44px] py-2 rounded-lg text-xs font-medium transition-all ${
                 keyMode === mode
                   ? "bg-emerald-500/20 text-emerald-300 ring-1 ring-emerald-500/30"
                   : "text-zinc-500 hover:text-zinc-300 hover:bg-white/5"

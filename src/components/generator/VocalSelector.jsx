@@ -24,7 +24,7 @@ export default function VocalSelector({ selected, onSelect }) {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => onSelect(type.id)}
-            className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+            className={`flex items-center gap-1.5 min-h-[44px] px-3 py-2 rounded-lg text-xs font-medium transition-all ${
               isSelected
                 ? "bg-violet-500/20 text-violet-300 ring-1 ring-violet-500/40"
                 : "bg-white/5 text-zinc-500 hover:text-zinc-300 hover:bg-white/8"

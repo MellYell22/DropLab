@@ -222,7 +222,7 @@ export default function Create() {
               <button
                 key={len}
                 onClick={() => setDuration(len)}
-                className={`py-2 rounded-lg text-xs font-medium transition-all ${
+                className={`min-h-[44px] py-2 rounded-lg text-xs font-medium transition-all ${
                   duration === len
                     ? "bg-blue-500/20 text-blue-300 ring-1 ring-blue-500/30"
                     : "text-zinc-500 hover:text-zinc-300 hover:bg-white/5"
