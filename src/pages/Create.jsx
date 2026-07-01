@@ -31,6 +31,8 @@ const genreInstruments = {
   metal: ["guitar", "drums", "bass"],
 };
 
+const energyToBpm = (energy) => Math.round(55 + (energy / 100) * 90);
+
 export default function Create() {
   const [prompt, setPrompt] = useState("");
   const [genre, setGenre] = useState("cinematic");
@@ -64,7 +66,7 @@ export default function Create() {
     setMood(newMood);
     // Auto-adjust tempo only when energy changes: calm = slow, intense = fast
     if (newMood.energy !== mood.energy) {
-      setBpm(Math.round(60 + (newMood.energy / 100) * 140));
+      setBpm(energyToBpm(newMood.energy));
     }
   };
 
@@ -99,6 +101,25 @@ export default function Create() {
     try {
       const desc = prompt.trim() || `${genre} music in ${musicalKey} ${keyMode} at ${bpm} BPM`;
 
+      // Build a rich generation prompt with explicit mood/tempo instructions
+      const energyLabel = mood.energy <= 35 ? "calm, slow, relaxed" : mood.energy >= 70 ? "energetic, driving, upbeat" : "moderate";
+      const tempoRule = mood.energy <= 35
+        ? "CRITICAL: Create a calm, slow, relaxed track. Avoid upbeat, dance, high-energy, bright-pop, fast drums, and driving rhythm."
+        : bpm <= 85
+          ? "Keep the composition slow and spacious."
+          : "";
+      const generationPrompt = [
+        desc,
+        `Genre: ${genre}`,
+        `Tempo: ${bpm} BPM`,
+        `Mood: energy ${mood.energy}/100 (${energyLabel}), complexity ${mood.complexity}/100, darkness ${mood.darkness}/100`,
+        `Key: ${musicalKey} ${keyMode}`,
+        `Instruments: ${instruments.join(", ")}`,
+        `Structure: ${structure.join(" → ")}`,
+        `Vocals: ${vocalType}`,
+        tempoRule,
+      ].filter(Boolean).join("\n");
+
       // Run title + cover + music generation in parallel
       const [titleResult, coverResult, musicResult] = await Promise.all([
         base44.integrations.Core.InvokeLLM({
@@ -108,7 +129,7 @@ export default function Create() {
           prompt: `Abstract album cover art for ${genre} music. ${desc}. Minimal, modern, dark background with vibrant ${genre === 'edm' ? 'neon purple and cyan' : genre === 'lofi' ? 'warm sunset tones' : genre === 'cinematic' ? 'gold and deep blue' : 'violet and emerald'} accents. No text, artistic, high quality.`,
         }).catch((e) => { console.warn("Cover gen failed:", e); return { url: "" }; }),
         base44.functions.invoke('generateMusic', {
-          prompt: desc, genre, mood, duration, bpm, key: musicalKey,
+          prompt: generationPrompt, genre, mood, duration, bpm, key: musicalKey,
           vocalType, structure, instruments, melodyComplexity, harmonicComplexity, isLoopable
         }),
       ]);
