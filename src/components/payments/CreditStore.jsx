@@ -138,7 +138,7 @@ export default function CreditStore() {
               }`}
             >
               {pkg.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-cyan-500 text-white text-[10px] font-bold">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-cyan-500 text-white text-xs font-bold">
                   BEST VALUE
                 </div>
               )}

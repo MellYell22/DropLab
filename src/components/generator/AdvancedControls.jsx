@@ -79,7 +79,7 @@ export default function AdvancedControls({
           step={1}
           className="cursor-pointer"
         />
-        <div className="flex justify-between text-[10px] text-zinc-600">
+        <div className="flex justify-between text-xs text-zinc-600">
           <span>Simple</span>
           <span>Intricate</span>
         </div>
@@ -101,7 +101,7 @@ export default function AdvancedControls({
           step={1}
           className="cursor-pointer"
         />
-        <div className="flex justify-between text-[10px] text-zinc-600">
+        <div className="flex justify-between text-xs text-zinc-600">
           <span>Basic</span>
           <span>Complex</span>
         </div>

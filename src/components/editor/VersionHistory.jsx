@@ -32,7 +32,7 @@ export default function VersionHistory({ track }) {
                       Version {version.version_number}
                     </h4>
                     {version.is_active && (
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400">
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400">
                         Active
                       </span>
                     )}
@@ -49,7 +49,7 @@ export default function VersionHistory({ track }) {
                   Export
                 </Button>
               </div>
-              <div className="flex items-center gap-2 text-[10px] text-zinc-600">
+              <div className="flex items-center gap-2 text-xs text-zinc-600">
                 <Clock className="w-3 h-3" />
                 {new Date(version.created_date).toLocaleString()}
               </div>

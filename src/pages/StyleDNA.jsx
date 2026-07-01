@@ -176,17 +176,17 @@ export default function StyleDNA() {
                 </div>
 
                 <div className="flex flex-wrap gap-2">
-                  <span className="text-[10px] px-2 py-1 rounded-md bg-blue-500/15 text-blue-400">
+                  <span className="text-xs px-2 py-1 rounded-md bg-blue-500/15 text-blue-400">
                     {style.genre}
                   </span>
-                  <span className="text-[10px] px-2 py-1 rounded-md bg-white/5 text-zinc-500">
+                  <span className="text-xs px-2 py-1 rounded-md bg-white/5 text-zinc-500">
                     {style.bpm} BPM
                   </span>
-                  <span className="text-[10px] px-2 py-1 rounded-md bg-white/5 text-zinc-500">
+                  <span className="text-xs px-2 py-1 rounded-md bg-white/5 text-zinc-500">
                     {style.vocal_type?.replace("_", " ")}
                   </span>
                   {style.uses > 0 && (
-                    <span className="text-[10px] px-2 py-1 rounded-md bg-cyan-500/15 text-cyan-400">
+                    <span className="text-xs px-2 py-1 rounded-md bg-cyan-500/15 text-cyan-400">
                       {style.uses} uses
                     </span>
                   )}

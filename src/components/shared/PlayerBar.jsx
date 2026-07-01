@@ -120,7 +120,7 @@ export default function PlayerBar({ track, isPlaying, onTogglePlay }) {
             </div>
             <div className="min-w-0">
               <p className="text-xs font-medium text-white truncate">{track.title}</p>
-              <p className="text-[10px] text-zinc-500 truncate">{track.genre?.replace("_", " ")}</p>
+              <p className="text-xs text-zinc-500 truncate">{track.genre?.replace("_", " ")}</p>
             </div>
             <button onClick={() => setLiked(!liked)} className="flex-shrink-0">
               <Heart className={`w-3.5 h-3.5 ${liked ? "fill-pink-500 text-pink-500" : "text-zinc-600"}`} />
@@ -166,7 +166,7 @@ export default function PlayerBar({ track, isPlaying, onTogglePlay }) {
 
           {/* Time + Volume */}
           <div className="flex items-center gap-3 w-64 justify-end">
-            <span className="text-[10px] tabular-nums text-zinc-500">
+            <span className="text-xs tabular-nums text-zinc-500">
               {formatTime(currentTime)} / {formatTime(duration || track.duration || 0)}
             </span>
             <button onClick={() => setMuted(!muted)} className="text-zinc-500 hover:text-white transition-colors">

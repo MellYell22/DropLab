@@ -60,7 +60,7 @@ export default function PromptInput({ value, onChange, onGenerate, isGenerating 
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => onChange(suggestion)}
-            className="text-[11px] text-zinc-500 hover:text-zinc-300 bg-white/5 hover:bg-white/8 px-3 py-1.5 rounded-lg transition-colors"
+            className="text-xs text-zinc-500 hover:text-zinc-300 bg-white/5 hover:bg-white/8 px-3 py-1.5 rounded-lg transition-colors"
           >
             {suggestion}
           </motion.button>

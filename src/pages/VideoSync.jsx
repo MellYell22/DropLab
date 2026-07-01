@@ -192,7 +192,7 @@ export default function VideoSync() {
                   <p className="text-xs text-zinc-400 font-medium">Key Sync Points Detected:</p>
                   <div className="space-y-1">
                     {project.sync_points.slice(0, 5).map((point, i) => (
-                      <div key={i} className="flex items-center gap-2 text-[11px] text-zinc-500">
+                      <div key={i} className="flex items-center gap-2 text-xs text-zinc-500">
                         <span className="tabular-nums">{point.timestamp}s</span>
                         <span>•</span>
                         <span>{point.event}</span>

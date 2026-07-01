@@ -75,7 +75,7 @@ export default function TrackCard({ track, onPlay, isPlaying, variant = "default
         {/* Info */}
         <div className="flex-1 min-w-0">
           <h4 className="text-sm font-medium text-white truncate">{track.title}</h4>
-          <p className="text-[11px] text-zinc-500 truncate">{track.prompt}</p>
+          <p className="text-xs text-zinc-500 truncate">{track.prompt}</p>
         </div>
 
         {/* Waveform */}
@@ -85,12 +85,12 @@ export default function TrackCard({ track, onPlay, isPlaying, variant = "default
 
         {/* Meta */}
         <div className="flex items-center gap-3">
-          <span className="text-[11px] text-zinc-600 flex items-center gap-1">
+          <span className="text-xs text-zinc-600 flex items-center gap-1">
             <Clock className="w-3 h-3" />
             {formatDuration(track.duration)}
           </span>
           <span
-            className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-md"
+            className="text-xs font-semibold uppercase tracking-wider px-2 py-0.5 rounded-md"
             style={{ background: `${color}20`, color }}
           >
             {track.genre?.replace("_", " ")}
@@ -147,7 +147,7 @@ export default function TrackCard({ track, onPlay, isPlaying, variant = "default
 
         {/* Genre badge */}
         <div
-          className="absolute top-3 left-3 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-lg"
+          className="absolute top-3 left-3 text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-lg"
           style={{ background: `${color}30`, color }}
         >
           {track.genre?.replace("_", " ")}
@@ -158,13 +158,13 @@ export default function TrackCard({ track, onPlay, isPlaying, variant = "default
       <div className="p-4 space-y-3">
         <div>
           <h3 className="text-sm font-semibold text-white truncate">{track.title}</h3>
-          <p className="text-[11px] text-zinc-500 mt-0.5 truncate">{track.prompt}</p>
+          <p className="text-xs text-zinc-500 mt-0.5 truncate">{track.prompt}</p>
         </div>
 
         <WaveformVisualizer isPlaying={isPlaying} color={color} bars={30} height={28} />
 
         <div className="flex items-center justify-between pt-1">
-          <div className="flex items-center gap-1 text-zinc-600 text-[11px]">
+          <div className="flex items-center gap-1 text-zinc-600 text-xs">
             <Clock className="w-3 h-3" />
             {formatDuration(track.duration)}
           </div>

@@ -31,8 +31,8 @@ export default function MoodSliders({ values, onChange }) {
               className="cursor-pointer"
             />
             <div className="flex justify-between">
-              <span className="text-[10px] text-zinc-600">{slider.low}</span>
-              <span className="text-[10px] text-zinc-600">{slider.high}</span>
+              <span className="text-xs text-zinc-600">{slider.low}</span>
+              <span className="text-xs text-zinc-600">{slider.high}</span>
             </div>
           </div>
         );

@@ -137,7 +137,7 @@ export default function InlineTrackPlayer({ track, onDismiss, onSwitchVersion })
             step={0.1}
             className="cursor-pointer"
           />
-          <div className="flex justify-between text-[10px] text-zinc-500 tabular-nums">
+          <div className="flex justify-between text-xs text-zinc-500 tabular-nums">
             <span>{formatTime(currentTime)}</span>
             <span>{formatTime(duration || track.duration || 0)}</span>
           </div>

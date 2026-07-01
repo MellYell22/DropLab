@@ -80,11 +80,11 @@ export default function DashboardTrackList({ tracks }) {
                 {track.title}
               </p>
               <div className="flex items-center gap-2 mt-0.5">
-                <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 text-zinc-500 capitalize">
+                <span className="text-xs px-1.5 py-0.5 rounded-md bg-white/5 text-zinc-500 capitalize">
                   {(track.genre || "").replace("_", " ")}
                 </span>
                 {track.bpm && (
-                  <span className="text-[10px] text-zinc-600">{track.bpm} BPM</span>
+                  <span className="text-xs text-zinc-600">{track.bpm} BPM</span>
                 )}
               </div>
             </div>

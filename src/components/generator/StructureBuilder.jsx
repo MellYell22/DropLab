@@ -46,7 +46,7 @@ export default function StructureBuilder({ structure, onChange }) {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
-                className="flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-semibold uppercase tracking-wider"
+                className="flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold uppercase tracking-wider"
                 style={{
                   background: `${section.color}20`,
                   color: section.color,
@@ -73,7 +73,7 @@ export default function StructureBuilder({ structure, onChange }) {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => addSection(section.id)}
-            className="flex items-center gap-1 min-h-[44px] px-3 py-2 rounded-md text-[11px] font-medium bg-white/5 text-zinc-500 hover:text-zinc-300 transition-colors"
+            className="flex items-center gap-1 min-h-[44px] px-3 py-2 rounded-md text-xs font-medium bg-white/5 text-zinc-500 hover:text-zinc-300 transition-colors"
           >
             <Plus className="w-3 h-3" />
             {section.label}

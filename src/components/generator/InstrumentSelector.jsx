@@ -37,7 +37,7 @@ export default function InstrumentSelector({ selected, onChange }) {
             }`}
           >
             <Icon className="w-4 h-4" />
-            <span className="text-[10px] font-medium">{inst.label}</span>
+            <span className="text-xs font-medium">{inst.label}</span>
           </button>
         );
       })}

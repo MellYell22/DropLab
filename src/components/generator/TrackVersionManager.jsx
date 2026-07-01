@@ -158,7 +158,7 @@ export default function TrackVersionManager({ track, onSwitchVersion }) {
                           : "hover:bg-white/5 border border-transparent"
                       }`}
                     >
-                      <div className={`w-6 h-6 rounded-md flex items-center justify-center text-[10px] font-bold ${
+                      <div className={`w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold ${
                         isActive ? "bg-blue-500/30 text-blue-300" : "bg-white/5 text-zinc-500"
                       }`}>
                         v{v.version_number}
@@ -168,7 +168,7 @@ export default function TrackVersionManager({ track, onSwitchVersion }) {
                           {v.title}
                         </p>
                         {v.changes && (
-                          <p className="text-[10px] text-zinc-500 truncate">{v.changes}</p>
+                          <p className="text-xs text-zinc-500 truncate">{v.changes}</p>
                         )}
                       </div>
                       {isActive && <Check className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" />}

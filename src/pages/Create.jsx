@@ -329,7 +329,7 @@ export default function Create() {
                   onChange={(e) => setBpm(Number(e.target.value))}
                   className="w-full accent-blue-500"
                 />
-                <div className="flex justify-between text-[10px] text-zinc-600">
+                <div className="flex justify-between text-xs text-zinc-600">
                   <span>60 - Slow</span>
                   <span>120 - Medium</span>
                   <span>200 - Fast</span>

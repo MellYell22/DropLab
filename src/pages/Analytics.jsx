@@ -260,7 +260,7 @@ export default function Analytics() {
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-zinc-100 truncate">{style.name}</p>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-[10px] px-2 py-0.5 rounded-md bg-cyan-500/15 text-cyan-400">
+                        <span className="text-xs px-2 py-0.5 rounded-md bg-cyan-500/15 text-cyan-400">
                           {style.genre}
                         </span>
                         <span className="text-xs text-zinc-500">{style.uses || 0} uses</span>
@@ -304,7 +304,7 @@ export default function Analytics() {
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <h4 className="text-sm font-semibold text-zinc-100">{item.title}</h4>
-                        <p className="text-[10px] text-zinc-500 mt-1">{item.type?.replace("_", " ")}</p>
+                        <p className="text-xs text-zinc-500 mt-1">{item.type?.replace("_", " ")}</p>
                       </div>
                       <span className="text-xs font-bold text-cyan-400">${item.price}</span>
                     </div>

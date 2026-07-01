@@ -44,7 +44,7 @@ export default function GenreSelector({ selected, onSelect }) {
               style={{ color: isSelected ? genre.color : "#71717a" }}
             />
             <span
-              className="text-[11px] font-medium tracking-wide transition-colors"
+              className="text-xs font-medium tracking-wide transition-colors"
               style={{ color: isSelected ? "#fff" : "#71717a" }}
             >
               {genre.label}

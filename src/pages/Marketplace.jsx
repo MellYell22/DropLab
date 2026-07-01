@@ -144,7 +144,7 @@ export default function Marketplace() {
                       </div>
                       <div>
                         <h3 className="text-sm font-semibold text-white">{item.title}</h3>
-                        <p className="text-[10px] text-zinc-500">
+                        <p className="text-xs text-zinc-500">
                           {item.sales || 0} sales
                         </p>
                       </div>
@@ -159,7 +159,7 @@ export default function Marketplace() {
                   {item.tags && (
                     <div className="flex flex-wrap gap-1">
                       {item.tags.slice(0, 3).map((tag) => (
-                        <span key={tag} className="text-[10px] px-2 py-0.5 rounded-md bg-white/5 text-zinc-500">
+                        <span key={tag} className="text-xs px-2 py-0.5 rounded-md bg-white/5 text-zinc-500">
                           {tag}
                         </span>
                       ))}
