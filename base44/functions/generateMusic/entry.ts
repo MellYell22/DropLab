@@ -9,6 +9,14 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    // Credit check: one credit per generation, block if zero
+    const currentCredits = user.credits || 0;
+    if (currentCredits < 1) {
+      return Response.json({ error: 'You need at least 1 credit to generate a track.', code: 'INSUFFICIENT_CREDITS' }, { status: 402 });
+    }
+    await base44.asServiceRole.entities.User.update(user.id, { credits: currentCredits - 1 });
+    console.log(`Deducted 1 credit from user ${user.id}. Balance: ${currentCredits} -> ${currentCredits - 1}`);
+
     const body = await req.json();
 
     const {

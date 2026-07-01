@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Settings2, ChevronDown, ChevronUp, Sliders, Mic2, LayoutList, Music, Clock, Repeat, Sparkles, Piano, GitBranch, Loader2 } from "lucide-react";
 import PromptInput from "../components/generator/PromptInput";
@@ -57,6 +58,13 @@ export default function Create() {
   const queryClient = useQueryClient();
   const { isAuthenticated } = useAuth();
 
+  const { data: user } = useQuery({
+    queryKey: ["currentUser"],
+    queryFn: () => base44.auth.me(),
+    retry: false,
+    staleTime: 30000,
+  });
+
   const handleGenreSelect = (newGenre) => {
     setGenre(newGenre);
     setInstruments(genreInstruments[newGenre] || ["piano", "drums", "bass"]);
@@ -95,6 +103,13 @@ export default function Create() {
     if (!authed) {
       setNeedsAuth(true);
       toast.error("Please sign in to generate tracks.");
+      return;
+    }
+    const me = user ?? (await base44.auth.me());
+    const credits = me?.credits ?? 0;
+    if (credits < 1) {
+      setGenError("No credits remaining. Each generation costs 1 credit.");
+      toast.error("Out of credits — visit the Credits page to buy more.");
       return;
     }
     setIsGenerating(true);
@@ -171,6 +186,7 @@ export default function Create() {
       });
 
       queryClient.invalidateQueries({ queryKey: ["tracks"] });
+      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
       setGeneratedTrack(track);
       toast.success("Track created! Listen below.");
     } catch (error) {
@@ -407,7 +423,9 @@ export default function Create() {
             className={`rounded-xl p-5 text-center space-y-3 ${
               needsAuth
                 ? "glass border border-blue-500/30 bg-blue-500/5"
-                : "glass border border-red-500/20 bg-red-500/5"
+                : (user && (user.credits ?? 0) < 1)
+                  ? "glass border border-amber-500/30 bg-amber-500/5"
+                  : "glass border border-red-500/20 bg-red-500/5"
             }`}
           >
             {needsAuth ? (
@@ -421,10 +439,27 @@ export default function Create() {
                   Sign In
                 </Button>
               </>
+            ) : (user && (user.credits ?? 0) < 1) ? (
+              <>
+                <p className="text-sm text-amber-300 font-medium">No credits remaining</p>
+                <p className="text-xs text-zinc-500">Each generation costs 1 credit. Buy credits to continue creating.</p>
+                <Link to="/Credits">
+                  <Button className="gradient-purple text-white rounded-xl">Buy Credits</Button>
+                </Link>
+              </>
             ) : (
               <p className="text-sm text-red-300">{genError}</p>
             )}
           </motion.div>
+        )}
+
+        {/* Credit balance */}
+        {user && (
+          <div className="flex items-center justify-center gap-2 text-xs text-zinc-500">
+            <span>Credits remaining:</span>
+            <span className={`font-bold ${user.credits > 0 ? "text-cyan-400" : "text-red-400"}`}>{user.credits ?? 0}</span>
+            <Link to="/Credits" className="text-blue-400 hover:underline">Buy more</Link>
+          </div>
         )}
 
         {/* Generate Button */}
