@@ -62,8 +62,10 @@ export default function Create() {
 
   const handleMoodChange = (newMood) => {
     setMood(newMood);
-    // Auto-adjust tempo: calm (low energy) = slow, intense (high energy) = fast
-    setBpm(Math.round(60 + (newMood.energy / 100) * 140));
+    // Auto-adjust tempo only when energy changes: calm = slow, intense = fast
+    if (newMood.energy !== mood.energy) {
+      setBpm(Math.round(60 + (newMood.energy / 100) * 140));
+    }
   };
 
   // Check for applied Style DNA

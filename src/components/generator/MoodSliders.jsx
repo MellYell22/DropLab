@@ -13,7 +13,7 @@ export default function MoodSliders({ values, onChange }) {
     <div className="space-y-5">
       {sliders.map((slider) => {
         const Icon = slider.icon;
-        const val = values[slider.key] || 50;
+        const val = values[slider.key] ?? 50;
         return (
           <div key={slider.key} className="space-y-2">
             <div className="flex items-center justify-between">
