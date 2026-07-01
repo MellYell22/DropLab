@@ -33,10 +33,11 @@ export default function Create() {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedTrack, setGeneratedTrack] = useState(null);
+  const [genError, setGenError] = useState(null);
   const [appliedStyle, setAppliedStyle] = useState(null);
 
   const queryClient = useQueryClient();
-  const { isAuthenticated, navigateToLogin } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   // Check for applied Style DNA
   React.useEffect(() => {
@@ -57,9 +58,11 @@ export default function Create() {
 
   const handleGenerate = async () => {
     if (isGenerating) return;
+    setGenError(null);
     if (!isAuthenticated) {
-      toast.error("Please sign in to generate tracks.");
-      navigateToLogin();
+      const msg = "Please sign in to generate tracks. Use the avatar menu in the top-right corner.";
+      setGenError(msg);
+      toast.error(msg);
       return;
     }
     setIsGenerating(true);
@@ -77,12 +80,16 @@ export default function Create() {
         base44.functions.invoke('generateMusic', {
           prompt: desc, genre, mood, duration, bpm, key: musicalKey,
           vocalType, structure, instruments, melodyComplexity, harmonicComplexity, isLoopable
-        }).catch((e) => { console.warn("Music gen failed:", e); return { data: {} }; }),
+        }),
       ]);
+
+      const audioUrl = musicResult?.data?.audio_url;
+      if (!audioUrl) {
+        throw new Error(musicResult?.data?.error || "Song generation service is not configured yet. No audio was returned from the backend.");
+      }
 
       const title = typeof titleResult === 'string' ? titleResult.trim().replace(/"/g, "") : `${genre} track`;
       const coverUrl = coverResult?.url || "";
-      const audioUrl = musicResult?.data?.audio_url || `https://www.soundhelix.com/examples/mp3/SoundHelix-Song-${Math.floor(Math.random() * 16) + 1}.mp3`;
 
       const dominantMood = Object.entries(mood).sort((a, b) => b[1] - a[1])[0]?.[0] || "calm";
 
@@ -117,7 +124,9 @@ export default function Create() {
       toast.success("Track created! Listen below.");
     } catch (error) {
       console.error("Generation failed:", error);
-      toast.error(error?.message || "Generation failed. Please try again.");
+      const msg = error?.message || "Generation failed. Please try again.";
+      setGenError(msg);
+      toast.error(msg);
     } finally {
       setIsGenerating(false);
     }
@@ -338,6 +347,17 @@ export default function Create() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Inline Error */}
+        {genError && !isGenerating && !generatedTrack && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="glass rounded-xl p-4 border border-red-500/20 bg-red-500/5 text-sm text-red-300 text-center"
+          >
+            {genError}
+          </motion.div>
+        )}
 
         {/* Generate Button */}
         {!generatedTrack && (
