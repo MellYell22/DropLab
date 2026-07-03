@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
@@ -20,6 +20,13 @@ const LayoutWrapper = ({ children, currentPageName }) => Layout ?
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin, isAuthenticated } = useAuth();
 
+  // Main page acts as a login gate: redirect unauthenticated visitors to the login/create-account page
+  useEffect(() => {
+    if (!isAuthenticated && !isLoadingAuth && !isLoadingPublicSettings && !authError) {
+      navigateToLogin();
+    }
+  }, [isAuthenticated, isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin]);
+
   // Show loading spinner while checking app public settings or auth
   if (isLoadingPublicSettings || isLoadingAuth) {
     return (
@@ -37,9 +44,7 @@ const AuthenticatedApp = () => {
     // For auth_required or unknown errors, just render the app — pages handle auth themselves
   }
 
-  // Main page acts as a login gate: redirect unauthenticated visitors to the login page
   if (!isAuthenticated) {
-    navigateToLogin();
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-[hsl(220,15%,5%)]">
         <div className="w-8 h-8 border-4 border-blue-500/20 border-t-blue-400 rounded-full animate-spin"></div>
